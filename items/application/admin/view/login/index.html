@@ -8,38 +8,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
-    <link rel="stylesheet" href="/static/layui/css/admin.css" media="all">
     <link rel="stylesheet" href="/static/layui/css/login.css" media="all">
-    <link id="layuicss-layer" rel="stylesheet" href="/static/layui/css/layer.css" media="all">
+    <link id="layuicss-layer" rel="stylesheet" href="/static/layui/css/modules/layer/default/layer.css" media="all">
 </head>
 
 <body layadmin-themealias="default">
-    <div class="layadmin-user-login layadmin-user-display-show" id="login" style="display: none;">
-        <div class="layadmin-user-login-main">
-            <div class="layadmin-user-login-box layadmin-user-login-header">
+    <div class="user-login user-display-show" id="login" style="display: none;">
+        <div class="user-login-main">
+            <div class="user-login-box user-login-header">
                 <h2>系统登录</h2>
             </div>
-            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="user-login-box user-login-body layui-form">
                 <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-username" for="login-username"></label>
-                    <input type="text" name="username" id="login-username" lay-verify="required" placeholder="账号"
-                        class="layui-input">
+                    <label class="user-login-icon layui-icon layui-icon-username" for="login-username"></label>
+                    <input type="text" name="username" id="login-username" lay-verify="required" placeholder="账号" class="layui-input">
                 </div>
                 <div class="layui-form-item">
-                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="login-password"></label>
-                    <input type="password" name="password" id="login-password" lay-verify="required"
-                        placeholder="密码" class="layui-input">
+                    <label class="user-login-icon layui-icon layui-icon-password" for="login-password"></label>
+                    <input type="password" name="password" id="login-password" lay-verify="required" placeholder="密码"
+                        class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-row">
                         <div class="layui-col-xs7">
-                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="login-vercode"></label>
-                            <input type="text" name="vercode" id="login-vercode" lay-verify="required"
-                                placeholder="图形验证码" class="layui-input">
+                            <label class="user-login-icon layui-icon layui-icon-vercode" for="login-vercode"></label>
+                            <input type="text" name="vercode" id="login-vercode" lay-verify="required" placeholder="图形验证码"
+                                class="layui-input">
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="/static/layui/css/captcha" class="layadmin-user-login-codeimg" id="get-vercode">
+                                <img src="/static/layui/css/captcha" class="user-login-codeimg" id="get-vercode">
                             </div>
                         </div>
                     </div>
@@ -52,17 +50,17 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login-submit">登 入</button>
+                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login-submit">登 录</button>
                 </div>
             </div>
         </div>
-        <div class="layui-trans layadmin-user-login-footer">
+        <div class="layui-trans user-login-footer">
             <p>
                 © 2018
             </p>
         </div>
     </div>
-    <script src="/static/layui/layui.js"></script>
+    <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script>
         layui.use('form', function () {
             var form = layui.form;
@@ -71,22 +69,10 @@
             form.on('submit(login-submit)', function (obj) {
                 //请求登入接口
                 admin.req({
-                    url: layui.setter.base + 'json/user/login.js', //实际使用请改成服务端真实接口
+                    url: layui.setter.base + 'json/user/login.js',
                     data: obj.field,
                     done: function (res) {
-                        //请求成功后，写入 access_token
-                        layui.data(setter.tableName, {
-                            key: setter.request.tokenName,
-                            value: res.data.access_token
-                        });
-                        //登入成功的提示与跳转
-                        layer.msg('登入成功', {
-                            offset: '15px',
-                            icon: 1,
-                            time: 1000
-                        }, function () {
-                            location.href = '../'; //后台主页
-                        });
+
                     }
                 });
             });
