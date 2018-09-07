@@ -11,6 +11,13 @@ class Login extends Admin
         return View();
     }
 
+    public function signIn()
+    {
+        if (request()->isGet()) {
+            return toJsonData(0, null, "不被接受的请求",true);
+        }
+    }
+
     public function captcha()
     {
         $captcha = new Captcha();

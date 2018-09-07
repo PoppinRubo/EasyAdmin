@@ -2,14 +2,8 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>系统登录</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="/static/layui/css/layui.css" media="all">
+    {include file="global.php" title="系统登录"/}
     <link rel="stylesheet" href="/static/layui/css/login.css" media="all">
-    <link id="layuicss-layer" rel="stylesheet" href="/static/layui/css/modules/layer/default/layer.css" media="all">
 </head>
 
 <body layadmin-themealias="default">
@@ -25,15 +19,13 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="user-login-icon layui-icon layui-icon-password" for="login-password"></label>
-                    <input type="password" name="password" lay-verify="required" placeholder="密码"
-                        class="layui-input">
+                    <input type="password" name="password" lay-verify="required" placeholder="密码" class="layui-input">
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-row">
                         <div class="layui-col-xs7">
                             <label class="user-login-icon layui-icon layui-icon-vercode" for="login-vercode"></label>
-                            <input type="text" name="vercode" lay-verify="required" placeholder="图形验证码"
-                                class="layui-input">
+                            <input type="text" name="vercode" lay-verify="required" placeholder="图形验证码" class="layui-input">
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
@@ -60,19 +52,37 @@
             </p>
         </div>
     </div>
-    <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script>
         layui.use('form', function () {
             var form = layui.form;
             form.render();
             //提交
             form.on('submit(login-submit)', function (obj) {
-                //请求登入接口
-                admin.req({
-                    url: layui.setter.base + 'json/user/login.js',
-                    data: obj.field,
-                    done: function (res) {
+                $.ajax({
+                    url: '/admin/login/signIn',
+                    type: 'POST', //GET
+                    async: true, //或false,是否异步
+                    timeout: 6000, //超时时间
+                    data: obj.field, //请求对象
+                    dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+                    success: function (data) {
+                        if (data.code === 1) {
+                            layer.msg(data.message, {
+                                    time: 500,
+                                    icon: 1
+                                },
+                                function () {
 
+                                });
+                        } else {
+                            layer.msg(data.message, {
+                                time: 500,
+                                icon: 5
+                            });
+                        }
+                    },
+                    error: function (xhr, textStatus) {
+                        ajaxErrMsg(xhr, textStatus);
                     }
                 });
             });
