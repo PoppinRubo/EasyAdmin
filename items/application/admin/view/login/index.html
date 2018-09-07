@@ -29,7 +29,7 @@
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="/admin/login/captcha" class="user-login-codeimg" onclick="this.src=this.src;">
+                                <img src="/admin/login/captcha" id="captcha" class="user-login-codeimg" onclick="this.src=this.src;">
                             </div>
                         </div>
                     </div>
@@ -73,12 +73,17 @@
                                 },
                                 function () {
 
-                                });
+                                }
+                            );
                         } else {
                             layer.msg(data.message, {
-                                time: 500,
-                                icon: 5
-                            });
+                                    time: 1000,
+                                    icon: 5
+                                },
+                                function () {
+                                    $("#captcha").get(0).src = $("#captcha").get(0).src;
+                                }
+                            );
                         }
                     },
                     error: function (xhr, textStatus) {
