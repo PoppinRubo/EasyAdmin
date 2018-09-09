@@ -22,6 +22,10 @@ class Login extends Admin
             return toJsonData(0, null, "验证码错误");
         }
         $user = db('sys_user')->where(array("Account" => input("account"), "Password" => input("password")))->find();
+        if ($user == null) {
+            return toJsonData(0, null, "账号或密码错误");
+        }
+        
         return toJsonData(0, $user, "验证码错误");
     }
 
