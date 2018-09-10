@@ -1,9 +1,9 @@
 <?php
-namespace app\admin\controller;
+namespace app\controller;
 
 use think\Controller;
 
-class Admin extends Controller
+class Basic extends Controller
 {
     public function __construct()
     {

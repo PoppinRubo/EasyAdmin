@@ -1,9 +1,7 @@
 <?php
-namespace app\admin\controller;
+namespace app\controller;
 
-use think\Controller;
-
-class Home extends Admin
+class Home extends Basic
 {
     //系统主页 view
     public function index()
