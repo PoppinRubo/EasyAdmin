@@ -4,6 +4,7 @@ namespace app\admin\controller;
 use think\captcha\Captcha;
 use think\Controller;
 use think\Exception;
+use think\Session;
 
 class Login extends Admin
 {

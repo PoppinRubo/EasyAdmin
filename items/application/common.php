@@ -1,4 +1,5 @@
 <?php
+use think\Session;
 /**
  * 封装需要的json格式
  * @param $code int 返回的状态码
