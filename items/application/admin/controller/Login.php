@@ -35,7 +35,7 @@ class Login extends Admin
             if (getUserAuthentication() == null) {
                 return toJsonData(0, null, "登录失败,请联系管理员");
             }
-            return toJsonData(1, null, "登录成功");
+            return toJsonData(1, "/admin/home", "登录成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
         }
