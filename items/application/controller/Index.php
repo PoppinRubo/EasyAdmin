@@ -2,15 +2,20 @@
 namespace app\controller;
 
 use think\captcha\Captcha;
+use think\Controller;
 use think\Exception;
 use think\Session;
 
-class Login extends Basic
+class Index extends Controller
 {
     //登录 view
     public function index()
     {
-        return View();
+        //检测登录状态,已登录不停留在登录页面
+        if (getUserAuthentication() == null) {
+            return View();
+        }
+        $this->redirect('/home');
     }
 
     //登录
