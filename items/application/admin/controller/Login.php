@@ -3,6 +3,7 @@ namespace app\admin\controller;
 
 use think\captcha\Captcha;
 use think\Controller;
+use think\Exception;
 
 class Login extends Admin
 {
@@ -15,18 +16,28 @@ class Login extends Admin
     //登录
     public function signIn()
     {
-        if (request()->isGet()) {
-            return toJsonData(0, null, "不被接受的请求", true);
+        try {
+            if (request()->isGet()) {
+                return toJsonData(0, null, "不被接受的请求", true);
+            }
+            if (!$this->checkCaptcha(input('vercode'))) {
+                return toJsonData(0, null, "登录失败,验证码错误");
+            }
+            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => input("password"), "IsDel" => 0))->find();
+            if ($user == null) {
+                return toJsonData(0, null, "登录失败,账号或密码错误");
+            }
+            if (!$user['IsValid']) {
+                return toJsonData(0, null, "账号无效,请联系管理员");
+            }
+            Session::set('Authentication', $user);
+            if (getUserAuthentication() == null) {
+                return toJsonData(0, null, "登录失败,请联系管理员");
+            }
+            return toJsonData(1, null, "登录成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
         }
-        if (!$this->checkCaptcha(input('vercode'))) {
-            return toJsonData(0, null, "登录失败,验证码错误");
-        }
-        $user = db('sys_user')->where(array("Account" => input("account"), "Password" => input("password")))->find();
-        if ($user == null) {
-            return toJsonData(0, null, "登录失败,账号或密码错误");
-        }
-        
-        return toJsonData(0, $user, "验证码错误");
     }
 
     //生成验证码
@@ -45,6 +56,8 @@ class Login extends Admin
         $captcha->imageW = 120;
         //验证码图片高度，设置为0为自动计算
         $captcha->imageH = 40;
+        // 设置验证码字符为纯数字
+        $captcha->codeSet = '0123456789';
         return $captcha->entry('signIn');
     }
 
@@ -58,20 +71,24 @@ class Login extends Admin
     //退出登录
     public function signOut()
     {
-        if (getUserAuthentication() != null) {
-            // 清除session（当前作用域）
-            Session::clear();
+        try {
             if (getUserAuthentication() != null) {
-                return toJsonData(0, null, "退出时出现问题，请稍后重试！");
-            }
-            //清理cookie记录,马上过期
-            if (setcookie("AutoVerify", "Clear", time(), "/")) {
-                return toJsonData(1);
+                // 清除session（当前作用域）
+                Session::clear();
+                if (getUserAuthentication() != null) {
+                    return toJsonData(0, null, "退出时出现问题，请稍后重试！");
+                }
+                //清理cookie记录,马上过期
+                if (setcookie("autoSignIn", "Clear", time(), "/")) {
+                    return toJsonData(1);
+                } else {
+                    return toJsonData(-2, null, "登录状态清除失败,可手动清理浏览器cookie");
+                }
             } else {
-                return toJsonData(-2, null, "HipHop:登录状态清除失败,可手动清理浏览器cookie");
+                return toJsonData(1);
             }
-        } else {
-            return toJsonData(1);
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
         }
     }
 }

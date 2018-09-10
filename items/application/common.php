@@ -17,3 +17,12 @@ function toJsonData($code, $data = null, $message = "", $json = false)
     $result = $json ? json_encode($result) : $result;
     return $result;
 }
+
+/**
+ * 用于验证当前登录状态,返回用户信息
+ * @return bool|mixed
+ */
+function getUserAuthentication()
+{
+    return Session::get('Authentication');
+}
