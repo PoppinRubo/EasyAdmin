@@ -16,7 +16,7 @@ class Home extends Basic
         for ($i = 0; $i < 10; $i++) {
             $data[] = array(
                 "id" => $i+1,
-                "text" => "一级".$i+1,
+                "text" => "一级".($i+1),
             );
         }
         echo json_encode($data);
