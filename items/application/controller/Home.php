@@ -12,10 +12,13 @@ class Home extends Basic
     //获取菜单树
     public function getMenuTree()
     {
-        $data=array(
-            "id"=>1,
-            "name"=>"一级"
-        );
-        return json_encode($data);
+        $data = array();
+        for ($i = 0; $i < 10; $i++) {
+            $data[] = array(
+                "id" => $i+1,
+                "text" => "一级".$i+1,
+            );
+        }
+        echo json_encode($data);
     }
 }
