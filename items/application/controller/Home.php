@@ -8,4 +8,14 @@ class Home extends Basic
     {
         return View();
     }
+
+    //获取菜单树
+    public function getMenuTree()
+    {
+        $data=array(
+            "id"=>1,
+            "name"=>"一级"
+        );
+        return json_encode($data);
+    }
 }

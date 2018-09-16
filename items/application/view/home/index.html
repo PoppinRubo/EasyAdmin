@@ -3,6 +3,10 @@
 
 <head>
     {include file="global.php" title="系统主页"/}
+    <script type="text/javascript" src="/static/tree/jquery.parser.js"></script>
+    <script type="text/javascript" src="/static/tree/jquery.tree.js"></script>
+    <script type="text/javascript" src="/static/script/home.js"></script>
+    <link rel="stylesheet" href="/static/tree/tree.css" media="all">
 </head>
 
 <body class="layui-layout-body">
@@ -39,8 +43,9 @@
 
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
+                <ul id="menu-tree" class="easyui-tree"></ul>
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <!-- <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">所有商品</a>
                         <dl class="layui-nav-child">
@@ -60,7 +65,7 @@
                     </li>
                     <li class="layui-nav-item"><a href="">云市场</a></li>
                     <li class="layui-nav-item"><a href="">发布商品</a></li>
-                </ul>
+                </ul> -->
             </div>
         </div>
 
