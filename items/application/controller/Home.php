@@ -13,11 +13,23 @@ class Home extends Basic
     public function getMenuTree()
     {
         $data = array();
-        for ($i = 0; $i < 10; $i++) {
-            $data[] = array(
-                "id" => $i+1,
-                "text" => "一级".($i+1),
-            );
+        for ($i = 0; $i < 30; $i++) {
+            $a = ["text" => "一级 " . ($i + 1)];
+            if ($i % 2 == 0) {
+                $a = array(
+                    "text" => "一级 " . ($i + 1),
+                    "children" => [
+                        ["text" => "二级 1",
+                            "children" => [
+                                ["text" => "三级 1"],
+                                ["text" => "三级 2"],
+                            ]
+                        ], 
+                        ["text" => "二级 2"],
+                    ],
+                );
+            }
+            array_push($data, $a);
         }
         echo json_encode($data);
     }
