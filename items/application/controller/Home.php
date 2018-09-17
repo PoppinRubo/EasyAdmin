@@ -19,10 +19,11 @@ class Home extends Basic
                 $a = array(
                     "text" => "一级 " . ($i + 1),
                     "state" => "closed",
+                    "iconCls" => "layui-icon-cellphone-fine",
                     "children" => [
                         ["text" => "二级 1",
                             "children" => [
-                                ["text" => "三级 1"],
+                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine"],
                                 ["text" => "三级 2"],
                             ],
                         ],

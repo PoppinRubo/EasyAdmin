@@ -200,12 +200,25 @@
 }
 
 /*菜单树*/
-.tree-hit {
+#menu-tree .tree-hit,
+#menu-tree .tree-icon {
   font-family: layui-icon !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
+}
+
+#menu-tree .tree-folder,
+#menu-tree .tree-file {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  line-height: 18px;
+  margin: 4px;
+  vertical-align: middle;
+  overflow: hidden;
+  background: none;
 }
 
 #menu-tree,
