@@ -3,22 +3,27 @@
   padding: 0;
   list-style-type: none;
 }
+
 .tree li {
   white-space: nowrap;
 }
+
 .tree li ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
+
 .tree-node {
   height: 26px;
   white-space: nowrap;
   cursor: pointer;
 }
+
 .tree-hit {
   cursor: pointer;
 }
+
 .tree-expanded,
 .tree-collapsed,
 .tree-folder,
@@ -32,64 +37,83 @@
   vertical-align: middle;
   overflow: hidden;
 }
+
 .tree-expanded {
   background: url('images/tree_icons.png') no-repeat -18px 0px;
 }
+
 .tree-expanded-hover {
   background: url('images/tree_icons.png') no-repeat -50px 0px;
 }
+
 .tree-collapsed {
   background: url('images/tree_icons.png') no-repeat 0px 0px;
 }
+
 .tree-collapsed-hover {
   background: url('images/tree_icons.png') no-repeat -32px 0px;
 }
+
 .tree-lines .tree-expanded,
 .tree-lines .tree-root-first .tree-expanded {
   background: url('images/tree_icons.png') no-repeat -144px 0;
 }
+
 .tree-lines .tree-collapsed,
 .tree-lines .tree-root-first .tree-collapsed {
   background: url('images/tree_icons.png') no-repeat -128px 0;
 }
+
 .tree-lines .tree-node-last .tree-expanded,
 .tree-lines .tree-root-one .tree-expanded {
   background: url('images/tree_icons.png') no-repeat -80px 0;
 }
+
 .tree-lines .tree-node-last .tree-collapsed,
 .tree-lines .tree-root-one .tree-collapsed {
   background: url('images/tree_icons.png') no-repeat -64px 0;
 }
+
 .tree-line {
   background: url('images/tree_icons.png') no-repeat -176px 0;
 }
+
 .tree-join {
   background: url('images/tree_icons.png') no-repeat -192px 0;
 }
+
 .tree-joinbottom {
   background: url('images/tree_icons.png') no-repeat -160px 0;
 }
+
 .tree-folder {
   background: url('images/tree_icons.png') no-repeat -208px 0;
 }
+
 .tree-folder-open {
   background: url('images/tree_icons.png') no-repeat -224px 0;
 }
+
 .tree-file {
   background: url('images/tree_icons.png') no-repeat -240px 0;
 }
+
 .tree-loading {
   background: url('images/loading.gif') no-repeat center center;
 }
+
 .tree-checkbox0 {
   background: url('images/tree_icons.png') no-repeat -208px -18px;
 }
+
 .tree-checkbox1 {
   background: url('images/tree_icons.png') no-repeat -224px -18px;
 }
+
 .tree-checkbox2 {
   background: url('images/tree_icons.png') no-repeat -240px -18px;
 }
+
 .tree-title {
   font-size: 14px;
   display: inline-block;
@@ -101,6 +125,7 @@
   height: 18px;
   line-height: 18px;
 }
+
 .tree-node-proxy {
   font-size: 14px;
   line-height: 20px;
@@ -109,6 +134,7 @@
   border-style: solid;
   z-index: 9900000;
 }
+
 .tree-dnd-icon {
   display: inline-block;
   position: absolute;
@@ -118,21 +144,27 @@
   top: 50%;
   margin-top: -9px;
 }
+
 .tree-dnd-yes {
   background: url('images/tree_icons.png') no-repeat -256px 0;
 }
+
 .tree-dnd-no {
   background: url('images/tree_icons.png') no-repeat -256px -18px;
 }
+
 .tree-node-top {
   border-top: 1px dotted red;
 }
+
 .tree-node-bottom {
   border-bottom: 1px dotted red;
 }
+
 .tree-node-append .tree-title {
   border: 1px dotted red;
 }
+
 .tree-editor {
   border: 1px solid #95B8E7;
   font-size: 14px;
@@ -146,19 +178,65 @@
   position: absolute;
   top: 0;
 }
+
 .tree-node-proxy {
   background-color: #ffffff;
   color: #000000;
   border-color: #95B8E7;
 }
+
 .tree-node-hover {
   background: #eaf2ff;
   color: #000000;
 }
+
 .tree-node-selected {
   background: #ffe48d;
   color: #000000;
 }
+
 .tree-node-hidden {
   display: none;
 }
+
+/*菜单树*/
+.tree-hit {
+  font-family: layui-icon !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+#menu-tree,
+#menu-tree>li {
+  padding: 0;
+  margin: 0;
+}
+
+#menu-tree>li>.tree-node>.tree-expanded,
+#menu-tree>li>.tree-node>.tree-collapsed {
+  background: none;
+  float: right;
+  margin: 0 5% 0 0;
+}
+
+#menu-tree>li>.tree-node>.tree-collapsed:before {
+  content: "\e61a";
+}
+
+#menu-tree>li>.tree-node>.tree-expanded:before {
+  content: "\e619";
+}
+
+#menu-tree .tree-node-hover {
+  background: #1e282c;
+  color: #ffffff;
+}
+
+#menu-tree .tree-node-selected {
+  background: #1e282c;
+  color: #ffffff;
+}
+
+/*菜单树*/

@@ -13,18 +13,19 @@ class Home extends Basic
     public function getMenuTree()
     {
         $data = array();
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 5; $i++) {
             $a = ["text" => "一级 " . ($i + 1)];
             if ($i % 2 == 0) {
                 $a = array(
                     "text" => "一级 " . ($i + 1),
+                    "state" => "closed",
                     "children" => [
                         ["text" => "二级 1",
                             "children" => [
                                 ["text" => "三级 1"],
                                 ["text" => "三级 2"],
-                            ]
-                        ], 
+                            ],
+                        ],
                         ["text" => "二级 2"],
                     ],
                 );
