@@ -214,11 +214,24 @@
   margin: 0;
 }
 
+#menu-tree .tree-node {
+  height: 45px;
+  line-height: 45px;
+}
+
+#menu-tree .tree-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70%;
+}
+
 #menu-tree>li>.tree-node>.tree-expanded,
 #menu-tree>li>.tree-node>.tree-collapsed {
   background: none;
   float: right;
-  margin: 0 5% 0 0;
+  height: 45px;
+  margin: 0 10px 0 0;
 }
 
 #menu-tree>li>.tree-node>.tree-collapsed:before {
