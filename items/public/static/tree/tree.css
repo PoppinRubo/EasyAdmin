@@ -217,6 +217,7 @@
 #menu-tree .tree-node {
   height: 45px;
   line-height: 45px;
+  padding: 0 5px;
 }
 
 #menu-tree .tree-title {
