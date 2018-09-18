@@ -222,11 +222,6 @@
   background: none;
 }
 
-#menu-tree,
-#menu-tree>li {
-  padding: 0;
-  margin: 0;
-}
 
 #menu-tree .tree-node {
   height: 45px;

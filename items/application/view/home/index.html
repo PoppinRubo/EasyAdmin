@@ -12,47 +12,73 @@
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo" style="color: #ffffff;">系统主页</div>
-            <!-- 头部区域-->
+            <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" title="侧边伸缩">
-                        <i class="layui-icon layui-icon-shrink-right"></i>
+                <li class="layui-nav-item layadmin-flexible" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
                     </a>
                 </li>
-                <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" title="菜单刷新">
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
+                <span class="layui-nav-bar" style="left: 38px; top: 48px; width: 0px; opacity: 0;"></span>
             </ul>
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        贤心
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                <li class="layui-nav-item" lay-unselect="">
+                    <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                        <i class="layui-icon layui-icon-notice"></i>
+                        <!-- 如果有新消息，则显示小圆点 -->
+                        <span class="layui-badge-dot"></span>
                     </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="theme">
+                        <i class="layui-icon layui-icon-theme"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="note">
+                        <i class="layui-icon layui-icon-note"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="fullscreen">
+                        <i class="layui-icon layui-icon-screen-full"></i>
+                    </a>
+                </li>
+                <li class="layui-nav-item" lay-unselect="">
+                    <a href="javascript:;">
+                        <cite>贤心</cite>
+                        <span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">修改密码</a></dd>
-                        <dd><a href="">安全退出</a></dd>
+                        <dd><a lay-href="set/user/info.html">基本资料</a></dd>
+                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                        <hr>
+                        <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                     </dl>
                 </li>
+
+                <li class="layui-nav-item layui-hide-xs" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect="">
+                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+                <span class="layui-nav-bar"></span>
             </ul>
-        </div>
-
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll" style="width:auto;">
-                <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo">
+                        <span>管理主页</span>
+                    </div>
+                    <ul id="menu-tree" class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="layadmin-system-side-menu"></ul>
+                </div>
             </div>
-        </div>
-        <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域</div>
-        </div>
-
-        <div class="layui-footer" style="text-align: center;">
-            <!-- 底部固定区域 -->
-            ThinkAdmin © 2018
         </div>
     </div>
     <script>
