@@ -87,7 +87,7 @@ class Index extends Controller
                 if (setcookie("autoSignIn", "Clear", time(), "/")) {
                     return toJsonData(1);
                 } else {
-                    return toJsonData(-2, null, "登录状态清除失败,可手动清理浏览器cookie");
+                    return toJsonData(-2, null, "记住密码清除失败,可手动清理浏览器cookie");
                 }
             } else {
                 return toJsonData(1);
