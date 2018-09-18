@@ -13,9 +13,9 @@ class Home extends Basic
     public function getMenuTree()
     {
         $data = array();
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $a = ["text" => "一级 " . ($i + 1), "iconCls" => "layui-icon-cellphone-fine"];
-            if ($i % 2 == 0) {
+            if ($i <= 10) {
                 $a = array(
                     "text" => "一级 " . ($i + 1),
                     "state" => "closed",

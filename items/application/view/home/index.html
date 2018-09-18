@@ -5,7 +5,7 @@
     {include file="global.php" title="系统主页"/}
     <script type="text/javascript" src="/static/tree/jquery.parser.js"></script>
     <script type="text/javascript" src="/static/tree/jquery.tree.js"></script>
-    <script type="text/javascript" src="/static/script/home.js"></script>
+    <link rel="stylesheet" href="/static/style/home.css" media="all">
     <link rel="stylesheet" href="/static/tree/tree.css" media="all">
 </head>
 
@@ -20,7 +20,7 @@
                     </a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" layadmin-event="refresh" title="刷新">
+                    <a href="javascript:;" layadmin-event="refresh" title="菜单刷新">
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
@@ -40,11 +40,11 @@
                     </a>
                 </li>
                 <li class="layui-nav-item layui-hide-xs">
-                    <a href="javascript:;" layadmin-event="fullscreen">
+                    <a href="javascript:;" lay-filter="fullscreen">
                         <i class="layui-icon layui-icon-screen-full"></i>
                     </a>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item" style="margin:0 20px 0 0;">
                     <a href="javascript:;">
                         <cite>贤心</cite>
                         <span class="layui-nav-more"></span></a>
@@ -54,13 +54,6 @@
                         <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
                     </dl>
                 </li>
-
-                <li class="layui-nav-item layui-hide-xs">
-                    <a href="javascript:;" layadmin-event="about"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                </li>
-                <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm">
-                    <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                </li>
             </ul>
             <!-- 侧边菜单 -->
             <div class="layui-side layui-side-menu">
@@ -68,17 +61,20 @@
                     <div class="layui-logo">
                         <span>管理主页</span>
                     </div>
-                    <ul id="menu-tree" class="layui-nav layui-nav-tree" lay-shrink="all" lay-filter="layadmin-system-side-menu"></ul>
+                    <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        //JavaScript代码区域
-        layui.use('element', function () {
-            var element = layui.element;
-
-        });
+    <script type="text/javascript">
+        //设置模块
+        layui.config({
+            //模块路径
+            base: '/static/script/'
+        }).extend({
+            //设定模块别名
+            home: 'home'
+        }).use('home');
     </script>
 </body>
 

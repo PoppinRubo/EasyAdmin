@@ -11,3 +11,6 @@
         }
     });
 });
+layui.define("home", function (e) {
+
+});
