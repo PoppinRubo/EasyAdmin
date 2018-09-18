@@ -1,17 +1,28 @@
-﻿layui.define(function (exports) {
+﻿layui.define("layer", function (exports) {
     //菜单树
     var body = $("body"),
         home = {
             tree: function () {
+                layer.load(1, {
+                    shade: [0.1, '#fff']
+                });
                 $('#menu-tree').tree({
                     url: "/home/getMenuTree",
                     method: "post",
                     animate: true,
                     onSelect: function (node) {
+                        //节点被选中前触发，返回 false 则取消选择动作
+                        //单击节点展开||关闭
                         if (node.state == "closed")
                             $(this).tree('expand', node.target);
                         else
                             $(this).tree('collapse', node.target);
+                    },
+                    onLoadSuccess: function () {
+                        //当数据加载成功时触发
+                    },
+                    onLoadError: function () {
+                        //当数据加载失败时触发
                     }
                 });
             },
