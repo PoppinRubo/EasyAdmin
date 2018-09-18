@@ -226,7 +226,7 @@
 #menu-tree .tree-node {
   height: 45px;
   line-height: 45px;
-  padding: 0 5px;
+  padding: 0 10px;
 }
 
 #menu-tree .tree-title {
@@ -234,6 +234,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 70%;
+}
+
+#menu-tree>li>.tree-node>.tree-indent {
+  display: none;
 }
 
 #menu-tree>li>ul {
@@ -256,18 +260,18 @@
   content: "\e619";
 }
 
-#menu-tree>li>ul>li>.tree-node>.tree-expanded,
-#menu-tree>li>ul>li>.tree-node>.tree-collapsed {
+#menu-tree>li>ul>li .tree-node>.tree-expanded,
+#menu-tree>li>ul>li .tree-node>.tree-collapsed {
   margin: 0;
   background: none;
   height: 45px;
 }
 
-#menu-tree>li>ul>li>.tree-node>.tree-collapsed:before {
+#menu-tree>li>ul>li .tree-node>.tree-collapsed:before {
   content: "\e623";
 }
 
-#menu-tree>li>ul>li>.tree-node>.tree-expanded:before {
+#menu-tree>li>ul>li .tree-node>.tree-expanded:before {
   content: "\e625";
 }
 

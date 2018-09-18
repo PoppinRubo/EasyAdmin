@@ -22,9 +22,13 @@ class Home extends Basic
                     "iconCls" => "layui-icon-cellphone-fine",
                     "children" => [
                         ["text" => "二级 1",
+                            "state" => "closed",
                             "iconCls" => "layui-icon-cellphone-fine",
                             "children" => [
-                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine"],
+                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine", "state" => "closed","children" => [
+                                    ["text" => "四级 1", "iconCls" => "layui-icon-cellphone-fine"],
+                                    ["text" => "四级 2", "iconCls" => "layui-icon-cellphone-fine"],
+                                ]],
                                 ["text" => "三级 2", "iconCls" => "layui-icon-cellphone-fine"],
                             ],
                         ],
