@@ -14,7 +14,7 @@ class Home extends Basic
     {
         $data = array();
         for ($i = 0; $i < 5; $i++) {
-            $a = ["text" => "一级 " . ($i + 1)];
+            $a = ["text" => "一级 " . ($i + 1), "iconCls" => "layui-icon-cellphone-fine"];
             if ($i % 2 == 0) {
                 $a = array(
                     "text" => "一级 " . ($i + 1),
@@ -25,10 +25,10 @@ class Home extends Basic
                             "iconCls" => "layui-icon-cellphone-fine",
                             "children" => [
                                 ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine"],
-                                ["text" => "三级 2"],
+                                ["text" => "三级 2", "iconCls" => "layui-icon-cellphone-fine"],
                             ],
                         ],
-                        ["text" => "二级 2"],
+                        ["text" => "二级 2", "iconCls" => "layui-icon-cellphone-fine"],
                     ],
                 );
             }

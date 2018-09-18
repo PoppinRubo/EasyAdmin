@@ -216,7 +216,7 @@
   height: 18px;
   width: 18px;
   line-height: 18px;
-  margin: 4px 0;
+  margin: 5px;
   vertical-align: middle;
   overflow: hidden;
   background: none;
@@ -261,7 +261,6 @@
 #menu-tree>li>ul>li>.tree-node>.tree-collapsed {
   background: none;
   height: 45px;
-  margin: 0 10px 0 0;
 }
 
 #menu-tree>li>ul>li>.tree-node>.tree-collapsed:before {
