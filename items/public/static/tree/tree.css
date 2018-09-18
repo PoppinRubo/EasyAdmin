@@ -241,6 +241,10 @@
   max-width: 70%;
 }
 
+#menu-tree>li>ul {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
 #menu-tree>li>.tree-node>.tree-expanded,
 #menu-tree>li>.tree-node>.tree-collapsed {
   background: none;
@@ -259,6 +263,7 @@
 
 #menu-tree>li>ul>li>.tree-node>.tree-expanded,
 #menu-tree>li>ul>li>.tree-node>.tree-collapsed {
+  margin: 0;
   background: none;
   height: 45px;
 }
@@ -272,12 +277,12 @@
 }
 
 #menu-tree .tree-node-hover {
-  background: #1e282c;
+  background: #4E5465;
   color: #ffffff;
 }
 
 #menu-tree .tree-node-selected {
-  background: #1e282c;
+  background-color: #009688 !important;
   color: #ffffff;
 }
 
