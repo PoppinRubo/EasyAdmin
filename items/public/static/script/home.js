@@ -27,6 +27,10 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
+            refresh: function () {
+                //刷新菜单树
+                this.tree();
+            },
             click: function () {
                 var t = this;
                 body.on("click", "*[admin-event]", function () {
@@ -39,6 +43,8 @@
         }
     //开启事件
     home.click();
+    //生成树
+    home.tree();
     //输出
     exports('home', home);
 });
