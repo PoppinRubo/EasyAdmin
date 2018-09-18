@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li class="layui-nav-item layui-hide-xs">
-                    <a href="javascript:;" lay-filter="fullscreen">
+                    <a href="javascript:;" admin-event="fullscreen">
                         <i class="layui-icon layui-icon-screen-full"></i>
                     </a>
                 </li>
@@ -74,7 +74,11 @@
         }).extend({
             //设定模块别名
             home: 'home'
-        }).use('home');
+        }).use(['home'], function () {
+            var home = layui.home;
+            //生成树
+            home.tree();
+        });
     </script>
 </body>
 
