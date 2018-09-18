@@ -200,6 +200,7 @@
 }
 
 /*菜单树*/
+
 #menu-tree .tree-hit,
 #menu-tree .tree-icon {
   font-family: layui-icon !important;
@@ -215,7 +216,7 @@
   height: 18px;
   width: 18px;
   line-height: 18px;
-  margin: 4px;
+  margin: 4px 0;
   vertical-align: middle;
   overflow: hidden;
   background: none;
@@ -254,6 +255,21 @@
 
 #menu-tree>li>.tree-node>.tree-expanded:before {
   content: "\e619";
+}
+
+#menu-tree>li>ul>li>.tree-node>.tree-expanded,
+#menu-tree>li>ul>li>.tree-node>.tree-collapsed {
+  background: none;
+  height: 45px;
+  margin: 0 10px 0 0;
+}
+
+#menu-tree>li>ul>li>.tree-node>.tree-collapsed:before {
+  content: "\e623";
+}
+
+#menu-tree>li>ul>li>.tree-node>.tree-expanded:before {
+  content: "\e625";
 }
 
 #menu-tree .tree-node-hover {

@@ -22,6 +22,7 @@ class Home extends Basic
                     "iconCls" => "layui-icon-cellphone-fine",
                     "children" => [
                         ["text" => "二级 1",
+                            "iconCls" => "layui-icon-cellphone-fine",
                             "children" => [
                                 ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine"],
                                 ["text" => "三级 2"],
