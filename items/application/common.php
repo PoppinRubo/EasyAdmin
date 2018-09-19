@@ -14,7 +14,7 @@ function toJsonData($code, $data = null, $msg = "")
         "data" => $data,
         "msg" => $msg,
     );
-    return json_encode($result);
+    echo json_encode($result);
 }
 
 /**

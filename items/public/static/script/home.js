@@ -10,10 +10,18 @@
                     onBeforeLoad: function () {
                         //当加载数据的请求发出前触发
                     },
-                    onLoadSuccess: function () {
+                    onLoadSuccess: function (node, data) {
                         //当数据加载成功时触发
+                        if (data.code === 0) {
+                            layer.msg(data.msg, {
+                                time: 1000,
+                                icon: 5
+                            }, function () {
+                                window.location.href = data.url;
+                            });
+                        }
                     },
-                    onLoadError: function () {
+                    onLoadError: function (arguments) {
                         //当数据加载失败时触发
                     },
                     onSelect: function (node) {
