@@ -20,25 +20,24 @@ class Home extends Basic
     {
         $data = array();
         for ($i = 0; $i < 20; $i++) {
-            $a = ["text" => "一级 " . ($i + 1), "iconCls" => "layui-icon-cellphone-fine"];
+            $a = ["text" => "一级 " . ($i + 1) ];
             if ($i <= 10) {
                 $a = array(
                     "text" => "一级 " . ($i + 1),
                     "state" => "closed",
-                    "iconCls" => "layui-icon-cellphone-fine",
+                    
                     "children" => [
                         ["text" => "二级 1",
                             "state" => "closed",
-                            "iconCls" => "layui-icon-cellphone-fine",
                             "children" => [
-                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine", "state" => "closed", "children" => [
-                                    ["text" => "四级 1", "iconCls" => "layui-icon-cellphone-fine"],
-                                    ["text" => "四级 2", "iconCls" => "layui-icon-cellphone-fine"],
+                                ["text" => "三级 1",  "state" => "closed", "children" => [
+                                    ["text" => "四级 1"],
+                                    ["text" => "四级 2"],
                                 ]],
-                                ["text" => "三级 2", "iconCls" => "layui-icon-cellphone-fine"],
+                                ["text" => "三级 2"],
                             ],
                         ],
-                        ["text" => "二级 2", "iconCls" => "layui-icon-cellphone-fine"],
+                        ["text" => "二级 2"],
                     ],
                 );
             }
