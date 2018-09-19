@@ -203,8 +203,8 @@
 
 #menu-tree .tree-hit,
 #menu-tree .tree-icon {
-  font-family: layui-icon !important;
-  font-size: 16px;
+  font-family: icomoon !important;
+  font-size: 18px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale
@@ -252,11 +252,11 @@
 }
 
 #menu-tree>li>.tree-node>.tree-collapsed:before {
-  content: "\e61a";
+  content: "\e952";
 }
 
 #menu-tree>li>.tree-node>.tree-expanded:before {
-  content: "\e619";
+  content: "\e955";
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-expanded,
@@ -267,11 +267,11 @@
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-collapsed:before {
-  content: "\e623";
+  content: "\e97c";
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-expanded:before {
-  content: "\e625";
+  content: "\e97a";
 }
 
 #menu-tree .tree-node-hover {
