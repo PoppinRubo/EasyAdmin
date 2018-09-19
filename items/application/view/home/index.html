@@ -15,12 +15,12 @@
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                    <a href="javascript:;" admin-event="flexible" title="侧边伸缩">
+                    <a href="javascript:void(0);" admin-event="flexible" title="侧边伸缩">
                         <i class="layui-icon layui-icon-shrink-right"></i>
                     </a>
                 </li>
                 <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:;" admin-event="refresh" title="菜单刷新">
+                    <a href="javascript:void(0);" admin-event="refresh" title="菜单刷新">
                         <i class="layui-icon layui-icon-refresh-3"></i>
                     </a>
                 </li>
@@ -35,23 +35,23 @@
                     </a>
                 </li>
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" admin-event="theme">
+                    <a href="javascript:void(0);" admin-event="theme">
                         <i class="layui-icon layui-icon-theme"></i>
                     </a>
                 </li>
                 <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:;" admin-event="fullscreen">
+                    <a href="javascript:void(0);" admin-event="fullscreen">
                         <i class="layui-icon layui-icon-screen-full"></i>
                     </a>
                 </li>
                 <li class="layui-nav-item" style="margin:0 20px 0 0;">
-                    <a href="javascript:;">
-                        <cite>贤心</cite>
+                    <a href="javascript:void(0);">
+                        <cite>{$user["Username"]}</cite>
                         <span class="layui-nav-more"></span></a>
                     <dl class="layui-nav-child">
                         <dd><a lay-href="set/user/password.html">修改密码</a></dd>
                         <hr>
-                        <dd admin-event="logout" style="text-align: center;"><a>退出</a></dd>
+                        <dd admin-event="logout" style="text-align: center;"><a href="javascript:void(0);">退出</a></dd>
                     </dl>
                 </li>
             </ul>

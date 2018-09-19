@@ -6,6 +6,12 @@ class Home extends Basic
     //系统主页 view
     public function index()
     {
+        $user = getUserAuthentication();
+        $this->assign(
+            array(
+                'user' => $user,
+            )
+        );
         return View();
     }
 
@@ -25,7 +31,7 @@ class Home extends Basic
                             "state" => "closed",
                             "iconCls" => "layui-icon-cellphone-fine",
                             "children" => [
-                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine", "state" => "closed","children" => [
+                                ["text" => "三级 1", "iconCls" => "layui-icon-cellphone-fine", "state" => "closed", "children" => [
                                     ["text" => "四级 1", "iconCls" => "layui-icon-cellphone-fine"],
                                     ["text" => "四级 2", "iconCls" => "layui-icon-cellphone-fine"],
                                 ]],
