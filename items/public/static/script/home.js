@@ -52,7 +52,12 @@
                     dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
                     success: function (result) {
                         if (result.code === 1) {
-                            window.location.reload();
+                            layer.msg(result.message, {
+                                time: 500,
+                                icon: 1
+                            }, function () {
+                                window.location.reload();
+                            });
                         } else {
                             layer.msg(result.message, {
                                 time: 1000,

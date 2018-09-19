@@ -85,12 +85,12 @@ class Index extends Controller
                 }
                 //清理cookie记录,马上过期
                 if (setcookie("autoSignIn", "Clear", time(), "/")) {
-                    return toJsonData(1);
+                    return toJsonData(1, null, "退出成功");
                 } else {
-                    return toJsonData(-2, null, "记住密码清除失败,可手动清理浏览器cookie");
+                    return toJsonData(0, null, "记住密码清除失败,可手动清理浏览器cookie");
                 }
             } else {
-                return toJsonData(1);
+                return toJsonData(1, null, "退出成功");
             }
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
