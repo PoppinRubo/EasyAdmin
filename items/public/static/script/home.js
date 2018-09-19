@@ -52,14 +52,14 @@
                     dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
                     success: function (result) {
                         if (result.code === 1) {
-                            layer.msg(result.message, {
+                            layer.msg(result.msg, {
                                 time: 500,
                                 icon: 1
                             }, function () {
                                 window.location.reload();
                             });
                         } else {
-                            layer.msg(result.message, {
+                            layer.msg(result.msg, {
                                 time: 1000,
                                 icon: 5
                             });

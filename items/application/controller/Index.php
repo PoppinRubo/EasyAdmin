@@ -26,7 +26,7 @@ class Index extends Controller
                 return toJsonData(0, null, "不被接受的请求", true);
             }
             if (!$this->checkCaptcha(input('vercode'))) {
-                return toJsonData(0, null, "登录失败,验证码错误");
+                return toJsonData(0, null, "登录失败,验证码错误或已过期");
             }
             $user = db('sys_user')->where(array("Account" => input("account"), "Password" => input("password"), "IsDel" => 0))->find();
             if ($user == null) {
