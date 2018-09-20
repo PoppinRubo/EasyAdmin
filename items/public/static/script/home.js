@@ -1,6 +1,7 @@
-﻿layui.define("layer", function (exports) {
+﻿layui.define(['layer', 'element'], function (exports) {
     //菜单树
     var body = $("body"),
+        element = layui.element,
         home = {
             tree: function () {
                 $('#menu-tree').tree({
@@ -27,10 +28,12 @@
                     onSelect: function (node) {
                         //节点被选中前触发，返回 false 则取消选择动作
                         //单击节点展开||关闭
-                        if (node.state == "closed")
+                        if (node.state == "closed") {
                             $(this).tree('expand', node.target);
-                        else
+                        } else {
                             $(this).tree('collapse', node.target);
+                        }
+                        home.tabsPage(node);
                     }
                 });
             },
@@ -48,8 +51,20 @@
                 }
             },
             tabsPage: function (e) {
-                //右侧选项卡内容页
-                return a(h).find("." + b).eq(e || 0)
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
+                    content: '内容' + (Math.random() * 1000 | 0),
+                    id: new Date().getTime()
+                });
+                //增加点击关闭事件  
+                var r = $(".layui-tab-title").find("li");
+                //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件  
+                r.eq(r.length - 1).children("i").on("click", function () {
+                    alert($(this).parent("li").attr('lay-id'));
+                    element.tabDelete("demo", $(this).parent("li").attr('lay-id'));
+                }), element.tabChange("demo", r.length - 1);
+                element.init();
             },
             refresh: function () {
                 //刷新菜单树
@@ -70,7 +85,7 @@
                                 time: 500,
                                 icon: 1
                             }, function () {
-                                window.location.href=result.data;
+                                window.location.href = result.data;
                             });
                         } else {
                             layer.msg(result.msg, {
