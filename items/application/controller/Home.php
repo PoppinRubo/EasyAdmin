@@ -25,7 +25,7 @@ class Home extends Basic
                 $a = array(
                     "text" => "一级 " . ($i + 1),
                     "state" => "closed",
-                    
+                    "iconCls"=>"icon-spoon-knife",
                     "children" => [
                         ["text" => "二级 1",
                             "state" => "closed",

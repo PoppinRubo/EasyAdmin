@@ -210,6 +210,10 @@
   -moz-osx-font-smoothing: grayscale
 }
 
+#menu-tree .tree-folder-open {
+  background: none;
+}
+
 #menu-tree .tree-folder,
 #menu-tree .tree-file {
   display: inline-block;
@@ -220,6 +224,11 @@
   vertical-align: middle;
   overflow: hidden;
   background: none;
+}
+
+.tree-folder::before,
+.tree-file::before {
+  content: "\edd9";
 }
 
 #menu-tree .tree-node {
