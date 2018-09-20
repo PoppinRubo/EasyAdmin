@@ -64,7 +64,7 @@
                 //新增一个Tab项
                 element.tabAdd(tabs, {
                     title: '<i class="' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
-                    content: '内容' + (Math.random() * 1000 | 0),
+                    content: '<iframe data-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
                     id: e.id
                 });
                 //增加点击关闭事件  
@@ -72,7 +72,7 @@
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件  
                 r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
-                }), element.tabChange("tabs-header", r.length - 1);
+                }), element.tabChange(r.length - 1);
                 element.init();
             },
             tabDelete: function (id) {
