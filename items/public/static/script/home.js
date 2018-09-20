@@ -70,7 +70,7 @@
                 //增加点击关闭事件  
                 var r = $(".layui-tab-title").find("li");
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件  
-                r.eq(r.length - 1).children("i").on("click", function () {
+                r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
                 }), element.tabChange("tabs-header", r.length - 1);
                 element.init();
