@@ -61,21 +61,19 @@
         <div class="layui-side layui-side-menu">
             <div class="layui-side-scroll">
                 <div class="layui-logo">
-                    <span>管理主页</span>
+                    <h4>管理主页</h4>
                 </div>
                 <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
             </div>
         </div>
         <!-- 页面标签 -->
         <div class="page-tabs" id="tabs">
-            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
+            <div class="layui-icon layadmin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
+            <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="admin-layout-tabs">
                 <ul class="layui-tab-title" id="tabs-header">
                     <li lay-id="/icon/index.html" lay-attr="/icon/index.html" class="layui-this">
                         <i class="layui-icon layui-icon-home"></i>
-                    </li>
-                    <li lay-id="template/search.html" lay-attr="template/search.html">
-                        <span>搜索结果</span>
-                        <i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
                     </li>
                 </ul>
             </div>

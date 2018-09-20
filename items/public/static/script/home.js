@@ -2,6 +2,7 @@
     //菜单树
     var body = $("body"),
         element = layui.element,
+        tabs = "admin-layout-tabs",
         home = {
             tree: function () {
                 $('#menu-tree').tree({
@@ -33,7 +34,7 @@
                         } else {
                             $(this).tree('collapse', node.target);
                         }
-                        home.tabsPage(node);
+                        home.tabAdd(node);
                     }
                 });
             },
@@ -50,21 +51,37 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
-            tabsPage: function (e) {
+            tabAdd: function (e) {
+                var t = this;
+                //父模块不开新窗口
+                if (e.children && e.children.length > 0) {
+                    return;
+                }
+                //判断是否存在tab
+                if ($("li[lay-id='" + e.id + "']").length > 0) {
+                    return;
+                }
                 //新增一个Tab项
-                element.tabAdd('demo', {
-                    title: '新选项<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
+                element.tabAdd(tabs, {
+                    title: '<i class="' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
                     content: '内容' + (Math.random() * 1000 | 0),
-                    id: new Date().getTime()
+                    id: e.id
                 });
                 //增加点击关闭事件  
                 var r = $(".layui-tab-title").find("li");
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件  
                 r.eq(r.length - 1).children("i").on("click", function () {
-                    alert($(this).parent("li").attr('lay-id'));
-                    element.tabDelete("demo", $(this).parent("li").attr('lay-id'));
-                }), element.tabChange("demo", r.length - 1);
+                    t.tabDelete($(this).parent("li").attr('lay-id'));
+                }), element.tabChange("tabs-header", r.length - 1);
                 element.init();
+            },
+            tabDelete: function (id) {
+                //删除指定Tab项
+                element.tabDelete(tabs, id);
+            },
+            tabChange: function (id) {
+                //切换到指定Tab项
+                element.tabChange(tabs, id);
             },
             refresh: function () {
                 //刷新菜单树
