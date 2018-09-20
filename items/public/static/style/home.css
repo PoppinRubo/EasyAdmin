@@ -63,21 +63,21 @@ html {
     background-position: center center
 }
 
-.layadmin-pagetabs,
+.page-tabs,
 .layui-layout-admin .layui-body,
 .layui-layout-admin .layui-footer,
 .layui-layout-admin .layui-layout-left {
     left: 220px
 }
 
-.layadmin-pagetabs {
+.page-tabs {
     position: fixed;
     top: 50px;
     right: 0;
     z-index: 999
 }
 
-.layadmin-pagetabs .layui-breadcrumb {
+.page-tabs .layui-breadcrumb {
     padding: 0 15px
 }
 
@@ -114,7 +114,7 @@ html {
     background: 0 0
 }
 
-.layadmin-pagetabs,
+.page-tabs,
 .layui-layout-admin .layui-body,
 .layui-layout-admin .layui-footer,
 .layui-layout-admin .layui-header .layui-layout-right,
@@ -350,7 +350,7 @@ html {
         width: 220px
     }
 
-    .layadmin-pagetabs,
+    .page-tabs,
     .layui-layout-admin .layui-body,
     .layui-layout-admin .layui-footer,
     .layui-layout-admin .layui-layout-left {
@@ -372,7 +372,7 @@ html {
     width: 60px
 }
 
-.layadmin-side-shrink .layadmin-pagetabs,
+.layadmin-side-shrink .page-tabs,
 .layadmin-side-shrink .layui-layout-admin .layui-body,
 .layadmin-side-shrink .layui-layout-admin .layui-footer,
 .layadmin-side-shrink .layui-layout-admin .layui-layout-left {
@@ -404,7 +404,7 @@ html {
     background: rgba(0, 0, 0, .3)
 }
 
-.layadmin-side-spread-sm .layadmin-pagetabs,
+.layadmin-side-spread-sm .page-tabs,
 .layadmin-side-spread-sm .layui-layout-admin .layui-body,
 .layadmin-side-spread-sm .layui-layout-admin .layui-footer,
 .layadmin-side-spread-sm .layui-layout-admin .layui-layout-left {
@@ -427,22 +427,22 @@ html {
     display: block
 }
 
-.layadmin-pagetabs .layui-tab-title li:first-child .layui-tab-close,
+.page-tabs .layui-tab-title li:first-child .layui-tab-close,
 .layadmin-tabs-select.layui-nav .layui-nav-bar,
 .layadmin-tabs-select.layui-nav .layui-nav-more {
     display: none
 }
 
-.layadmin-pagetabs {
+.page-tabs {
     height: 40px;
     line-height: 40px;
-    padding: 0 80px 0 40px;
+    padding: 0 80px 0 10px;
     background-color: #fff;
     box-sizing: border-box;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1)
 }
 
-.layadmin-pagetabs .layadmin-tabs-control {
+.page-tabs .layadmin-tabs-control {
     position: absolute;
     top: 0;
     width: 40px;
@@ -455,21 +455,21 @@ html {
     border-left: 1px solid #f6f6f6
 }
 
-.layadmin-pagetabs .layadmin-tabs-control:hover {
+.page-tabs .layadmin-tabs-control:hover {
     background-color: #f6f6f6
 }
 
-.layadmin-pagetabs .layui-icon-prev {
+.page-tabs .layui-icon-prev {
     left: 0;
     border-left: none;
     border-right: 1px solid #f6f6f6
 }
 
-.layadmin-pagetabs .layui-icon-next {
+.page-tabs .layui-icon-next {
     right: 40px
 }
 
-.layadmin-pagetabs .layui-icon-down {
+.page-tabs .layui-icon-down {
     right: 0
 }
 
@@ -507,17 +507,17 @@ html {
     color: #333
 }
 
-.layadmin-pagetabs .layui-tab {
+.page-tabs .layui-tab {
     margin: 0;
     overflow: hidden
 }
 
-.layadmin-pagetabs .layui-tab-title {
+.page-tabs .layui-tab-title {
     height: 40px;
     border: none
 }
 
-.layadmin-pagetabs .layui-tab-title li {
+.page-tabs .layui-tab-title li {
     min-width: 0;
     line-height: 40px;
     max-width: 160px;
@@ -528,11 +528,11 @@ html {
     vertical-align: top
 }
 
-.layadmin-pagetabs .layui-tab-title li:first-child {
+.page-tabs .layui-tab-title li:first-child {
     padding-right: 15px
 }
 
-.layadmin-pagetabs .layui-tab-title li .layui-tab-close {
+.page-tabs .layui-tab-title li .layui-tab-close {
     position: absolute;
     right: 8px;
     top: 50%;
@@ -544,7 +544,7 @@ html {
     font-size: 12px
 }
 
-.layadmin-pagetabs .layui-tab-title li:after {
+.page-tabs .layui-tab-title li:after {
     content: '';
     position: absolute;
     top: 0;
@@ -557,16 +557,16 @@ html {
     -webkit-transition: all .3s
 }
 
-.layadmin-pagetabs .layui-tab-title li:hover:after {
+.page-tabs .layui-tab-title li:hover:after {
     width: 100%
 }
 
-.layadmin-pagetabs .layui-tab-title li.layui-this,
-.layadmin-pagetabs .layui-tab-title li:hover {
+.page-tabs .layui-tab-title li.layui-this,
+.page-tabs .layui-tab-title li:hover {
     background-color: #f6f6f6
 }
 
-.layadmin-pagetabs .layui-tab-title li.layui-this:after {
+.page-tabs .layui-tab-title li.layui-this:after {
     width: 100%;
     border: none;
     height: 2px;

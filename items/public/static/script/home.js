@@ -35,6 +35,7 @@
                 });
             },
             fullscreen: function (e) {
+                //全屏切换
                 var a = "layui-icon-screen-full",
                     i = "layui-icon-screen-restore",
                     t = e.children("i");
@@ -46,11 +47,16 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
+            tabsPage: function (e) {
+                //右侧选项卡内容页
+                return a(h).find("." + b).eq(e || 0)
+            },
             refresh: function () {
                 //刷新菜单树
                 this.tree();
             },
             logout: function () {
+                //退出登录
                 $.ajax({
                     url: '/index/signOut',
                     type: 'POST', //GET
@@ -84,7 +90,7 @@
                     var e = $(this);
                     var i = e.attr("admin-event");
                     //方法调用
-                    eval("t." + i + "($(this))");
+                    eval("t." + i + "(e)");
                 })
             }
         }
@@ -92,6 +98,6 @@
     home.click();
     //生成树
     home.tree();
-    //输出
+    //输出模块
     exports('home', home);
 });
