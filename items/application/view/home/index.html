@@ -56,23 +56,30 @@
                     </dl>
                 </li>
             </ul>
-            <!-- 侧边菜单 -->
-            <div class="layui-side layui-side-menu">
-                <div class="layui-side-scroll">
-                    <div class="layui-logo">
-                        <span>管理主页</span>
-                    </div>
-                    <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
+        </div>
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo">
+                    <span>管理主页</span>
                 </div>
+                <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
             </div>
-            <div class="page-tabs" id="tabs">
-                <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
-                    <ul class="layui-tab-title" id="tabs-header">
-                        <li lay-id="https://www.baidu.com/" lay-attr="https://www.baidu.com/" class="layui-this">
-                            <i class="layui-icon layui-icon-home"></i>
-                        </li>
-                    </ul>
-                </div>
+        </div>
+        <!-- 页面标签 -->
+        <div class="page-tabs" id="tabs">
+            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="layadmin-layout-tabs">
+                <ul class="layui-tab-title" id="tabs-header">
+                    <li lay-id="/icon/index.html" lay-attr="/icon/index.html" class="layui-this">
+                        <i class="layui-icon layui-icon-home"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 主体内容 -->
+        <div class="layui-body" id="tabs-body">
+            <div class="layadmin-tabsbody-item layui-show">
+                <iframe src="/icon/index.html" frameborder="0" class="layadmin-iframe"></iframe>
             </div>
         </div>
     </div>
