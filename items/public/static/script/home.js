@@ -64,7 +64,7 @@
                                 time: 500,
                                 icon: 1
                             }, function () {
-                                window.location.reload();
+                                window.location.href=result.data;
                             });
                         } else {
                             layer.msg(result.msg, {
