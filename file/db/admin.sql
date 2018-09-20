@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-09-20 11:17:26
+Backup Time: 2018-09-20 13:50:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -113,7 +113,7 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 11:08:49', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 1, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 11:17:04', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

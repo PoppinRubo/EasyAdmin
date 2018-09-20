@@ -16,33 +16,33 @@ class Home extends Basic
     }
 
     //获取菜单树
-    public function getMenuTree()
+    public function getMenuTree($id = 0)
     {
-        $data = array();
-        for ($i = 0; $i < 20; $i++) {
-            $a = ["text" => "一级 " . ($i + 1) ];
-            if ($i <= 10) {
-                $a = array(
-                    "text" => "一级 " . ($i + 1),
-                    "state" => "closed",
-                    "iconCls"=>"icon-spoon-knife",
-                    "children" => [
-                        ["text" => "二级 1",
-                            "state" => "closed",
-                            "children" => [
-                                ["text" => "三级 1",  "state" => "closed", "children" => [
-                                    ["text" => "四级 1"],
-                                    ["text" => "四级 2"],
-                                ]],
-                                ["text" => "三级 2"],
-                            ],
-                        ],
-                        ["text" => "二级 2"],
-                    ],
+        try {
+            $pid = empty(input("pid")) ? $id : input("pid");
+            $module = db('sys_module')->query("
+            SELECT t1.Id,t1.Pid,t1.Name,t1.Icon,t1.Link,t1.Sort,
+            (SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0 AND t2.IsValid=1) AS Son
+            FROM sys_module AS t1 WHERE t1.IsDel=0 AND t1.IsValid=1 AND t1.Pid={$pid} ORDER BY t1.Sort ASC
+            ");
+            $tree = array();
+            foreach ($module as $m) {
+                $state = $m["Son"] > 0 ? "closed" : "";
+                $tree[] = array(
+                    "id" => $m["Id"],
+                    "state" => $state,
+                    "text" => $m["Name"],
+                    "iconCls" => $m["Icon"],
+                    "link" => $m["Link"],
+                    "children" => $m["Son"] > 0 ? $this->getMenuTree($m["Id"]) : []
                 );
             }
-            array_push($data, $a);
+            if ($id > 0) {
+                return $tree;
+            }
+            echo json_encode($tree);
+        } catch (Exception $e) {
+            echo json_encode($e->getMessage());
         }
-        echo json_encode($data);
     }
 }
