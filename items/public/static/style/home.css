@@ -1403,3 +1403,7 @@ html {
         overflow: auto
     }
 }
+
+.tabs-icon {
+    margin-right: 5px;
+}
