@@ -11,80 +11,102 @@
 </head>
 
 <body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <!-- 头部区域 -->
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                    <a href="javascript:void(0);" admin-event="flexible" title="侧边伸缩">
-                        <i class="layui-icon layui-icon-shrink-right"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item" lay-unselect>
-                    <a href="javascript:void(0);" admin-event="refresh" title="菜单刷新">
-                        <i class="layui-icon layui-icon-refresh-3"></i>
-                    </a>
-                </li>
-            </ul>
-            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
 
-                <li class="layui-nav-item" lay-unselect>
-                    <a lay-href="app/message/index.html" admin-event="message" lay-text="消息中心">
-                        <i class="layui-icon layui-icon-notice"></i>
-                        <!-- 如果有新消息，则显示小圆点 -->
-                        <!-- <span class="layui-badge-dot"></span> -->
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:void(0);" admin-event="theme">
-                        <i class="layui-icon layui-icon-theme"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                    <a href="javascript:void(0);" admin-event="fullscreen">
-                        <i class="layui-icon layui-icon-screen-full"></i>
-                    </a>
-                </li>
-                <li class="layui-nav-item" style="margin:0 20px 0 0;">
-                    <a href="javascript:void(0);">
-                        <cite>{$user["Username"]}</cite>
-                        <span class="layui-nav-more"></span></a>
-                    <dl class="layui-nav-child">
-                        <dd><a lay-href="set/user/password.html">修改密码</a></dd>
-                        <hr>
-                        <dd admin-event="logout" style="text-align: center;"><a href="javascript:void(0);">退出</a></dd>
-                    </dl>
-                </li>
-            </ul>
-        </div>
-        <!-- 侧边菜单 -->
-        <div class="layui-side layui-side-menu">
-            <div class="layui-side-scroll">
-                <div class="layui-logo">
-                    <h4>管理主页</h4>
-                </div>
-                <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
-            </div>
-        </div>
-        <!-- 页面标签 -->
-        <div class="page-tabs">
-            <div class="layui-tab" lay-unauto lay-allowclose="true" lay-filter="admin-layout-tabs">
-                <ul class="layui-tab-title page-tabs-title">
-                    <div class="layui-icon layadmin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
-                    <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
-                    <li lay-id="first" lay-attr="https://www.baidu.com/" class="layui-this">
-                        <i class="layui-icon layui-icon-home"></i>
+    <div id="LAY_app">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <!-- 头部区域 -->
+                <ul class="layui-nav layui-layout-left">
+                    <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                        <a href="javascript:void(0);" layadmin-event="flexible" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:void(0);" admin-event="refresh" title="刷新菜单">
+                            <i class="layui-icon layui-icon-refresh-3"></i>
+                        </a>
                     </li>
                 </ul>
-                <!-- 主体内容 -->
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        主页
+                <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+
+                    <li class="layui-nav-item" lay-unselect>
+                        <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
+                            <i class="layui-icon layui-icon-notice"></i>
+                            <!-- 如果有新消息，则显示小圆点 -->
+                            <span class="layui-badge-dot"></span>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:void(0);" layadmin-event="theme">
+                            <i class="layui-icon layui-icon-theme"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                        <a href="javascript:void(0);" admin-event="fullscreen">
+                            <i class="layui-icon layui-icon-screen-full"></i>
+                        </a>
+                    </li>
+                    <li class="layui-nav-item" lay-unselect style="margin:0 10px 0 0;">
+                        <a href="javascript:void(0);">
+                            <cite>{$user["Username"]}</cite>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <hr>
+                            <dd admin-event="logout" style="text-align: center;">
+                                <a href="javascript:void(0);">退出</a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 侧边菜单 -->
+            <div class="layui-side layui-side-menu">
+                <div class="layui-side-scroll">
+                    <div class="layui-logo">
+                        <h4>管理主页</h4>
                     </div>
+                    <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
                 </div>
             </div>
+            <!-- 页面标签 -->
+            <div class="layadmin-pagetabs" id="LAY_app_tabs">
+                <div class="layui-icon layadmin-tabs-control layui-icon-prev" layadmin-event="leftPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
+                <div class="layui-icon layadmin-tabs-control layui-icon-down">
+                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
+                        <li class="layui-nav-item" lay-unselect>
+                            <a href="javascript:void(0);"></a>
+                            <dl class="layui-nav-child layui-anim-fadein">
+                                <dd layadmin-event="closeThisTabs"><a href="javascript:void(0);">关闭当前标签页</a></dd>
+                                <dd layadmin-event="closeOtherTabs"><a href="javascript:void(0);">关闭其它标签页</a></dd>
+                                <dd layadmin-event="closeAllTabs"><a href="javascript:void(0);">关闭全部标签页</a></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
+                    <ul class="layui-tab-title" id="LAY_app_tabsheader">
+                        <li lay-id="first" lay-attr="https://www.baidu.com/" class="layui-this">
+                            <i class="layui-icon layui-icon-home"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- 主体内容 -->
+            <div class="layui-body" id="LAY_app_body">
+                <div class="layadmin-tabsbody-item layui-show">
+                    <iframe src="https://www.baidu.com/" frameborder="0" class="layadmin-iframe"></iframe>
+                </div>
+            </div>
+            <!-- 移动设备下遮罩 -->
+            <div class="layadmin-body-shade" layadmin-event="shade"></div>
         </div>
     </div>
+
+    <script src="/static/layui/layui.js"></script>
     <script type="text/javascript">
         //设置模块
         layui.config({
