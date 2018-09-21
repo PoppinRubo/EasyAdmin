@@ -74,7 +74,7 @@
                     content: '<iframe lay-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
                     id: e.id
                 });
-                //增加点击关闭事件  
+                //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件
                 var r = $(".layui-tab-title").find("li");
                 //加点击关闭事件  
                 r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
