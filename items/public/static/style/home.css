@@ -71,7 +71,9 @@ html {
 }
 
 .page-tabs {
+
     position: fixed;
+    height: 100%;
     top: 50px;
     right: 0;
     z-index: 999
@@ -433,9 +435,6 @@ html {
     display: none
 }
 
-.page-tabs {
-    line-height: 40px;
-}
 
 .page-tabs-title {
     line-height: 40px;
@@ -517,7 +516,8 @@ html {
 
 .page-tabs .layui-tab-title {
     height: 40px;
-    border: none
+    border: none;
+    z-index: 1000;
 }
 
 .page-tabs .layui-tab-title li {
