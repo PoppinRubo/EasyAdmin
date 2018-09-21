@@ -53,7 +53,7 @@
             },
             tabAdd: function (e) {
                 var t = this;
-                //父模块不开新窗口
+                //父模块不开新窗口,
                 if (e.children && e.children.length > 0) {
                     return;
                 }
@@ -61,9 +61,16 @@
                 if ($("li[lay-id='" + e.id + "']").length > 0) {
                     return;
                 }
+                //未配置链接
+                if (!$.trim(e.link)) {
+                    layer.tips('未配置链接地址', '#' + e.domId, {
+                        tips: [4, $(e.target).css('background-color')]
+                    });
+                    return;
+                }
                 //新增一个Tab项
                 element.tabAdd(tabs, {
-                    title: '<i class="' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
+                    title: '<i class="layui-icon tabs-icon ' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
                     content: '<iframe data-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
                     id: e.id
                 });
