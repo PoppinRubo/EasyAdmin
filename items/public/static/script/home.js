@@ -92,9 +92,9 @@
                 //切换到指定Tab项
                 element.tabChange(tabs, id);
             },
-            tabsBody: function (e) {
+            showBody: function (i) {
                 //显示月面内容
-                return $("#tabs-body").find(".body-item").eq(e || 0)
+                return $("#tabs-body").find(".body-item").eq(i)
             },
             refresh: function () {
                 //刷新菜单树
