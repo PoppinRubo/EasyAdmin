@@ -52,6 +52,7 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
+            pageIndex: 0,
             tabAdd: function (e) {
                 var t = this;
                 //父模块不开新窗口,
@@ -101,16 +102,18 @@
                 });
             },
             tabChange: function (id) {
-                //隐藏其他iframe
+                //切换到指定Tab项
                 var item = tabBody.find(".body-item");
+                //隐藏其他iframe
                 item.removeClass("layui-show");
-                item.each(function () {
+                item.each(function (index) {
                     if ($(this).children().data("id") == id) {
                         //显示指定页面
                         $(this).addClass("layui-show");
+                        //记录当前页面索引
+                        pageIndex = index;
                     }
                 });
-                //切换到指定Tab项
                 element.tabChange(tabs, id);
             },
             refresh: function () {
@@ -156,6 +159,16 @@
                 })
             }
         }
+    //监听Tab切换
+    element.on('tab(' + tabs + ')', function (obj) {
+        if (pageIndex == obj.index) {
+            //点击当前显示不处理
+            return;
+        }
+        var e = $(".layui-tab-title").find("li")[obj.index];
+        var id = $(e).data("id") || $(e).attr('lay-id');
+        home.tabChange(id);
+    });
     //开启事件
     home.click();
     //生成树
