@@ -71,15 +71,17 @@
                 //新增一个Tab项
                 element.tabAdd(tabs, {
                     title: '<i class="layui-icon tabs-icon ' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
-                    content: '<iframe data-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
+                    content: '<iframe lay-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
                     id: e.id
                 });
                 //增加点击关闭事件  
                 var r = $(".layui-tab-title").find("li");
-                //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件  
+                //加点击关闭事件  
                 r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
-                }), element.tabChange(r.length - 1);
+                });
+                //切换到该tab
+                t.tabChange(e.id);
                 element.init();
             },
             tabDelete: function (id) {
@@ -89,6 +91,10 @@
             tabChange: function (id) {
                 //切换到指定Tab项
                 element.tabChange(tabs, id);
+            },
+            tabsBody: function (e) {
+                //显示月面内容
+                return $("#tabs-body").find(".body-item").eq(e || 0)
             },
             refresh: function () {
                 //刷新菜单树

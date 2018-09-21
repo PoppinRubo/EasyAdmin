@@ -13,7 +13,7 @@ html {
     color: #666
 }
 
-.layadmin-tabsbody-item,
+.body-item,
 [template] {
     display: none
 }
@@ -86,7 +86,7 @@ html {
     bottom: 0
 }
 
-.layui-layout-admin .layui-body .layadmin-tabsbody-item {
+.layui-layout-admin .layui-body .body-item {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -1398,7 +1398,7 @@ html {
         display: block
     }
 
-    .layui-layout-admin .layui-body .layadmin-tabsbody-item {
+    .layui-layout-admin .layui-body .body-item {
         -webkit-overflow-scrolling: touch;
         overflow: auto
     }
