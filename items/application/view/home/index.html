@@ -72,21 +72,9 @@
                 </div>
             </div>
             <!-- 页面标签 -->
-            <div class="layadmin-pagetabs" id="LAY_app_tabs">
-                <div class="layui-icon layadmin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
-                <div class="layui-icon layadmin-tabs-control layui-icon-next" admin-event="rightPage"></div>
-                <div class="layui-icon layadmin-tabs-control layui-icon-down">
-                    <ul class="layui-nav layadmin-tabs-select" lay-filter="layadmin-pagetabs-nav">
-                        <li class="layui-nav-item" lay-unselect>
-                            <a href="javascript:void(0);"></a>
-                            <dl class="layui-nav-child layui-anim-fadein">
-                                <dd layadmin-event="closeThisTabs"><a href="javascript:void(0);">关闭当前标签页</a></dd>
-                                <dd layadmin-event="closeOtherTabs"><a href="javascript:void(0);">关闭其它标签页</a></dd>
-                                <dd layadmin-event="closeAllTabs"><a href="javascript:void(0);">关闭全部标签页</a></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+            <div class="admin-page-tabs">
+                <div class="layui-icon admin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
+                <div class="layui-icon admin-tabs-control layui-icon-next" admin-event="rightPage"></div>
                 <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="admin-layout-tabs">
                     <ul class="layui-tab-title">
                         <li data-id="first" class="layui-this">
@@ -94,6 +82,17 @@
                         </li>
                     </ul>
                 </div>
+                <!--右键菜单-->
+                <ul class="layui-nav tabs-menu">
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:void(0);"></a>
+                        <dl class="layui-nav-child layui-anim-fadein">
+                            <dd layadmin-event="closeThisTabs"><a href="javascript:void(0);">关闭当前标签页</a></dd>
+                            <dd layadmin-event="closeOtherTabs"><a href="javascript:void(0);">关闭其它标签页</a></dd>
+                            <dd layadmin-event="closeAllTabs"><a href="javascript:void(0);">关闭全部标签页</a></dd>
+                        </dl>
+                    </li>
+                </ul>
             </div>
             <!-- 主体内容 -->
             <div class="layui-body" id="tab-body">

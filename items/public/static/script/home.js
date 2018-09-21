@@ -86,6 +86,8 @@
                 element.init();
                 //切换到该tab
                 t.tabChange(e.id);
+                //开启右键菜单
+                home.contextmenu();
             },
             tabDelete: function (id) {
                 var t = this;
@@ -157,6 +159,13 @@
                     //方法调用
                     eval("t." + i + "(e)");
                 })
+            },
+            contextmenu: function () {
+                // 阻止浏览器鼠标右键单击事件
+                $('.layui-tab-title li').on('contextmenu', function () {
+                    return false;
+                })
+
             }
         }
     //监听Tab切换
@@ -171,6 +180,8 @@
     });
     //开启事件
     home.click();
+    //开启右键菜单
+    home.contextmenu();
     //生成树
     home.tree();
     //输出模块
