@@ -68,20 +68,20 @@
         </div>
         <!-- 页面标签 -->
         <div class="page-tabs">
-            <div class="layui-tab" lay-unauto="" lay-allowclose="true" lay-filter="admin-layout-tabs">
-                <div class="layui-icon layadmin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
-                <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
-                <ul class="layui-tab-title">
+            <div class="layui-tab" lay-unauto lay-allowclose="true" lay-filter="admin-layout-tabs">
+                <ul class="layui-tab-title page-tabs-title">
+                    <div class="layui-icon layadmin-tabs-control layui-icon-prev" admin-event="leftPage"></div>
+                    <div class="layui-icon layadmin-tabs-control layui-icon-next" layadmin-event="rightPage"></div>
                     <li lay-id="first" lay-attr="https://www.baidu.com/" class="layui-this">
                         <i class="layui-icon layui-icon-home"></i>
                     </li>
                 </ul>
-            </div>
-        </div>
-        <!-- 主体内容 -->
-        <div class="layui-body" id="tabs-body">
-            <div class="body-item layui-show">
-                <iframe lay-id="first" src="https://www.baidu.com/" frameborder="0" class="admin-iframe"></iframe>
+                <!-- 主体内容 -->
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        主页
+                    </div>
+                </div>
             </div>
         </div>
     </div>

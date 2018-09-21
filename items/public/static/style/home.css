@@ -64,7 +64,7 @@ html {
 }
 
 .page-tabs,
-.layui-layout-admin .layui-body,
+.layui-layout-admin,
 .layui-layout-admin .layui-footer,
 .layui-layout-admin .layui-layout-left {
     left: 220px
@@ -81,12 +81,12 @@ html {
     padding: 0 15px
 }
 
-.layui-layout-admin .layui-body {
+.layui-layout-admin {
     top: 90px;
     bottom: 0
 }
 
-.layui-layout-admin .layui-body .body-item {
+.layui-layout-admin {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -115,7 +115,7 @@ html {
 }
 
 .page-tabs,
-.layui-layout-admin .layui-body,
+.layui-layout-admin,
 .layui-layout-admin .layui-footer,
 .layui-layout-admin .layui-header .layui-layout-right,
 .layui-layout-admin .layui-header .layui-nav .layui-nav-item,
@@ -351,7 +351,7 @@ html {
     }
 
     .page-tabs,
-    .layui-layout-admin .layui-body,
+    .layui-layout-admin,
     .layui-layout-admin .layui-footer,
     .layui-layout-admin .layui-layout-left {
         left: 0
@@ -373,7 +373,7 @@ html {
 }
 
 .layadmin-side-shrink .page-tabs,
-.layadmin-side-shrink .layui-layout-admin .layui-body,
+.layadmin-side-shrink .layui-layout-admin,
 .layadmin-side-shrink .layui-layout-admin .layui-footer,
 .layadmin-side-shrink .layui-layout-admin .layui-layout-left {
     left: 60px
@@ -405,7 +405,7 @@ html {
 }
 
 .layadmin-side-spread-sm .page-tabs,
-.layadmin-side-spread-sm .layui-layout-admin .layui-body,
+.layadmin-side-spread-sm .layui-layout-admin,
 .layadmin-side-spread-sm .layui-layout-admin .layui-footer,
 .layadmin-side-spread-sm .layui-layout-admin .layui-layout-left {
     left: 0;
@@ -434,7 +434,10 @@ html {
 }
 
 .page-tabs {
-    height: 40px;
+    line-height: 40px;
+}
+
+.page-tabs-title {
     line-height: 40px;
     padding: 0 80px 0 40px;
     background-color: #fff;
@@ -578,7 +581,7 @@ html {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05)
 }
 
-.layadmin-tabspage-none .layui-layout-admin .layui-body {
+.layadmin-tabspage-none .layui-layout-admin {
     top: 50px
 }
 
@@ -1394,11 +1397,11 @@ html {
         width: auto
     }
 
-    .layui-body .layui-nav .layui-nav-item {
+    .layui-nav .layui-nav-item {
         display: block
     }
 
-    .layui-layout-admin .layui-body .body-item {
+    .layui-layout-admin {
         -webkit-overflow-scrolling: touch;
         overflow: auto
     }
