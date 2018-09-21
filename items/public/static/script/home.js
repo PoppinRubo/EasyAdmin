@@ -3,6 +3,7 @@
     var body = $("body"),
         element = layui.element,
         tabs = "admin-layout-tabs",
+        tabBody = $("#tab-body"),
         home = {
             tree: function () {
                 $('#menu-tree').tree({
@@ -71,24 +72,44 @@
                 //新增一个Tab项
                 element.tabAdd(tabs, {
                     title: '<i class="layui-icon tabs-icon ' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
-                    content: '<iframe lay-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>',
                     id: e.id
                 });
+                var iframe = '<iframe data-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>';
+                tabBody.append('<div class="body-item">' + iframe + '</div>');
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件
                 var r = $(".layui-tab-title").find("li");
                 //加点击关闭事件  
                 r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
                 });
+                element.init();
                 //切换到该tab
                 t.tabChange(e.id);
-                element.init();
             },
             tabDelete: function (id) {
+                var t = this;
                 //删除指定Tab项
                 element.tabDelete(tabs, id);
+                //移除iframe
+                var iframe = tabBody.find(".admin-iframe");
+                iframe.each(function (index) {
+                    if ($(this).data("id") == id) {
+                        $(this).parent().remove();
+                        //显示前一个iframe
+                        t.tabChange($(iframe[index - 1]).data("id"));
+                    }
+                });
             },
             tabChange: function (id) {
+                //隐藏其他iframe
+                var item = tabBody.find(".body-item");
+                item.removeClass("layui-show");
+                item.each(function () {
+                    if ($(this).children().data("id") == id) {
+                        //显示指定页面
+                        $(this).addClass("layui-show");
+                    }
+                });
                 //切换到指定Tab项
                 element.tabChange(tabs, id);
             },
