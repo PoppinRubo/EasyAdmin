@@ -427,10 +427,17 @@ html {
     display: block
 }
 
-.admin-page-tabs .layui-tab-title li:first-child .layui-tab-close,
-.tabs-menu.layui-nav .layui-nav-bar,
-.tabs-menu.layui-nav .layui-nav-more {
+.admin-page-tabs .layui-tab-title li:first-child .layui-tab-close {
     display: none
+}
+
+.tabs-menu {
+    display: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 5px 20px;
+    width: 100px;
+    background-color: #ffffff;
+    border-radius: 0 0 5px 5px;
 }
 
 .admin-page-tabs {
@@ -469,39 +476,7 @@ html {
     right: 0;
 }
 
-.tabs-menu.layui-nav {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    background: 0 0
-}
 
-.tabs-menu.layui-nav .layui-nav-item {
-    line-height: 40px
-}
-
-.tabs-menu.layui-nav .layui-nav-item>a {
-    height: 40px
-}
-
-.tabs-menu.layui-nav .layui-nav-item a {
-    color: #666
-}
-
-.tabs-menu.layui-nav .layui-nav-child {
-    top: 40px;
-    left: auto;
-    right: 0
-}
-
-.tabs-menu.layui-nav .layui-nav-child dd.layui-this,
-.tabs-menu.layui-nav .layui-nav-child dd.layui-this a {
-    background-color: #f2f2f2 !important;
-    color: #333
-}
 
 .admin-page-tabs .layui-tab {
     margin: 0;

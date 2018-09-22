@@ -161,11 +161,20 @@
                 })
             },
             contextmenu: function () {
-                // 阻止浏览器鼠标右键单击事件
+                // 阻止浏览器鼠标右键单击事件，生成右键菜单
                 $('.layui-tab-title li').on('contextmenu', function () {
+                    var x = $(this).position().left;
+                    var menu = $("#context-menu");
+                    menu.css({
+                        "margin-left": x + "px"
+                    }).addClass("layui-show");
+                    $(document).mousemove(function (e) {
+                        if (e.target.className != "layui-this" && e.target.localName != "i" && e.target.id != "context-menu") {
+                            menu.removeClass("layui-show");
+                        }
+                    });
                     return false;
                 })
-
             }
         }
     //监听Tab切换
