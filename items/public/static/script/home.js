@@ -5,7 +5,8 @@
         tabs = "admin-layout-tabs",
         contextmenu = $("#context-menu"),
         tabBody = $("#tab-body"),
-        pageIndex = 0,
+        pageId = "first",
+        selectPageIndex = 0,
         home = {
             tree: function () {
                 $('#menu-tree').tree({
@@ -114,7 +115,7 @@
                         //显示指定页面
                         $(this).addClass("layui-show");
                         //记录当前页面索引
-                        pageIndex = index;
+                        selectPageIndex = index;
                     }
                 });
                 element.tabChange(tabs, id);
@@ -126,7 +127,11 @@
             refreshThisTabs: function () {
                 //刷新当前标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe[pageIndex].src = iframe[pageIndex].src;
+                iframe.each(function () {
+                    if ($(this).data("id") == pageId) {
+                        this.src = this.src;
+                    }
+                });
                 contextmenu.removeClass("layui-show");
             },
             closeTabs: function (id) {
@@ -138,16 +143,14 @@
                 contextmenu.removeClass("layui-show");
             },
             closeThisTabs: function () {
-                //关闭当前标签页，第一个不允许关闭
-                var id = $(tabBody.find(".admin-iframe")[pageIndex]).data("id");
-                this.closeTabs(id);
+                this.closeTabs(pageId);
             },
             closeOtherTabs: function () {
                 var t = this;
                 //关闭其他标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function (index) {
-                    if (pageIndex != index) {
+                iframe.each(function () {
+                    if ($(this).data("id") != pageId) {
                         t.closeTabs($(this).data("id"));
                     }
                 });
@@ -156,7 +159,7 @@
                 var t = this;
                 //关闭全部标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function (index) {
+                iframe.each(function () {
                     t.closeTabs($(this).data("id"));
                 });
             },
@@ -201,6 +204,7 @@
             contextMenu: function () {
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
                 $('.layui-tab-title li').on('contextmenu', function () {
+                    pageId = $(this).data("id") || $(this).attr('lay-id');;
                     var x = $(this).position().left;
                     contextmenu.css({
                         "margin-left": x + "px"
@@ -219,7 +223,7 @@
                     //生成屏蔽首页关闭标签页样式
                     var a = $(contextmenu.find("a")[1]);
                     a.addClass("layui-disabled");
-                    if (pageIndex != 0) {
+                    if (pageId != "first") {
                         a.removeClass("layui-disabled");
                     }
                     return false;
@@ -228,7 +232,7 @@
         }
     //监听Tab切换
     element.on('tab(' + tabs + ')', function (obj) {
-        if (pageIndex == obj.index) {
+        if (selectPageIndex == obj.index) {
             //点击当前显示不处理
             return;
         }
