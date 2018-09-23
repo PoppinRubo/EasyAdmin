@@ -129,15 +129,36 @@
                 iframe[pageIndex].src = iframe[pageIndex].src;
                 contextmenu.removeClass("layui-show");
             },
-            closeThisTabs: function () {
-                if (pageIndex == 0) {
+            closeTabs: function (id) {
+                //关闭标签页
+                if (id == "first") {
                     return;
                 }
-                //关闭当前标签页
-                var iframe = tabBody.find(".admin-iframe");
-                var id = $(iframe[pageIndex]).data("id");
                 this.tabDelete(id);
                 contextmenu.removeClass("layui-show");
+            },
+            closeThisTabs: function () {
+                //关闭当前标签页，第一个不允许关闭
+                var id = $(tabBody.find(".admin-iframe")[pageIndex]).data("id");
+                this.closeTabs(id);
+            },
+            closeOtherTabs: function () {
+                var t = this;
+                //关闭其他标签页
+                var iframe = tabBody.find(".admin-iframe");
+                iframe.each(function (index) {
+                    if (pageIndex != index) {
+                        t.closeTabs($(this).data("id"));
+                    }
+                });
+            },
+            closeAllTabs: function () {
+                var t = this;
+                //关闭全部标签页
+                var iframe = tabBody.find(".admin-iframe");
+                iframe.each(function (index) {
+                    t.closeTabs($(this).data("id"));
+                });
             },
             logout: function () {
                 //退出登录
