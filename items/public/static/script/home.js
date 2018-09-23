@@ -168,10 +168,16 @@
                     menu.css({
                         "margin-left": x + "px"
                     }).addClass("layui-show");
-                    $(document).mousemove(function (e) {
-                        if (e.target.className != "layui-this" && e.target.localName != "i" && e.target.id != "context-menu") {
-                            menu.removeClass("layui-show");
-                        }
+                    //隐藏显示控制
+                    $(".layui-this").hover(function () {
+
+                    }, function () {
+                        menu.removeClass("layui-show");
+                    });
+                    $("#context-menu").hover(function () {
+                        menu.addClass("layui-show");
+                    }, function () {
+                        menu.removeClass("layui-show");
                     });
                     return false;
                 })
