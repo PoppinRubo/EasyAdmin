@@ -129,6 +129,16 @@
                 iframe[pageIndex].src = iframe[pageIndex].src;
                 contextmenu.removeClass("layui-show");
             },
+            closeThisTabs: function () {
+                if (pageIndex == 0) {
+                    return;
+                }
+                //关闭当前标签页
+                var iframe = tabBody.find(".admin-iframe");
+                var id = $(iframe[pageIndex]).data("id");
+                this.tabDelete(id);
+                contextmenu.removeClass("layui-show");
+            },
             logout: function () {
                 //退出登录
                 $.ajax({
@@ -185,6 +195,12 @@
                     }, function () {
                         contextmenu.removeClass("layui-show");
                     });
+                    //生成屏蔽首页关闭标签页样式
+                    var a = $(contextmenu.find("a")[1]);
+                    a.addClass("layui-disabled");
+                    if (pageIndex != 0) {
+                        a.removeClass("layui-disabled");
+                    }
                     return false;
                 })
             }
