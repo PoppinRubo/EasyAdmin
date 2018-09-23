@@ -3,7 +3,9 @@
     var body = $("body"),
         element = layui.element,
         tabs = "admin-layout-tabs",
+        contextmenu = $("#context-menu"),
         tabBody = $("#tab-body"),
+        pageIndex = 0,
         home = {
             tree: function () {
                 $('#menu-tree').tree({
@@ -52,7 +54,6 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
-            pageIndex: 0,
             tabAdd: function (e) {
                 var t = this;
                 //父模块不开新窗口,
@@ -87,7 +88,7 @@
                 //切换到该tab
                 t.tabChange(e.id);
                 //开启右键菜单
-                home.contextmenu();
+                home.contextMenu();
             },
             tabDelete: function (id) {
                 var t = this;
@@ -121,6 +122,12 @@
             refresh: function () {
                 //刷新菜单树
                 this.tree();
+            },
+            refreshThisTabs: function () {
+                //刷新当前标签页
+                var iframe = tabBody.find(".admin-iframe");
+                iframe[pageIndex].src = iframe[pageIndex].src;
+                contextmenu.removeClass("layui-show");
             },
             logout: function () {
                 //退出登录
@@ -160,24 +167,23 @@
                     eval("t." + i + "(e)");
                 })
             },
-            contextmenu: function () {
+            contextMenu: function () {
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
                 $('.layui-tab-title li').on('contextmenu', function () {
                     var x = $(this).position().left;
-                    var menu = $("#context-menu");
-                    menu.css({
+                    contextmenu.css({
                         "margin-left": x + "px"
                     }).addClass("layui-show");
                     //隐藏显示控制
                     $(".layui-this").hover(function () {
 
                     }, function () {
-                        menu.removeClass("layui-show");
+                        contextmenu.removeClass("layui-show");
                     });
                     $("#context-menu").hover(function () {
-                        menu.addClass("layui-show");
+                        contextmenu.addClass("layui-show");
                     }, function () {
-                        menu.removeClass("layui-show");
+                        contextmenu.removeClass("layui-show");
                     });
                     return false;
                 })
@@ -196,7 +202,7 @@
     //开启事件
     home.click();
     //开启右键菜单
-    home.contextmenu();
+    home.contextMenu();
     //生成树
     home.tree();
     //输出模块
