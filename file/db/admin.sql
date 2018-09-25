@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-09-20 13:50:27
+Backup Time: 2018-09-25 09:55:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `sys_module` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
 CREATE TABLE `sys_module_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ModuleId` int(11) NOT NULL COMMENT '模块编号',
@@ -113,7 +113,7 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 3, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-25 09:40:47', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
