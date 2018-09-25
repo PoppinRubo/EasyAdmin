@@ -1149,23 +1149,6 @@ html {
     top: 12px
 }
 
-.layui-card-header.layuiadmin-card-header-auto {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    height: auto
-}
-
-.layuiadmin-card-header-auto i.layuiadmin-button-btn {
-    position: relative;
-    right: 0;
-    top: 0;
-    vertical-align: middle
-}
-
-.layuiadmin-card-header-auto .layui-form-item:last-child {
-    margin-bottom: 0
-}
-
 .layadmin-setTheme {
     padding: 15px;
     overflow-x: hidden

@@ -1,0 +1,20 @@
+.admin-body {
+    margin: 10px 0 0 0;
+}
+
+.layui-card-header.admin-card-header-auto {
+    padding-top: 5px;
+    padding-bottom: 0;
+    height: auto
+}
+
+.admin-card-header-auto i.admin-button-btn {
+    position: relative;
+    right: 0;
+    top: 0;
+    vertical-align: middle
+}
+
+.admin-card-header-auto .layui-form-item:last-child {
+    margin-bottom: 0
+}
