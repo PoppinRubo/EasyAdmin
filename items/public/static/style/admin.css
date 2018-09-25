@@ -18,3 +18,18 @@
 .admin-card-header-auto .layui-form-item:last-child {
     margin-bottom: 0
 }
+
+.admin-button-btn {
+    position: relative;
+    right: 0;
+    top: 0;
+    vertical-align: middle;
+}
+
+.admin-btn-comm {
+    margin-top: -3px;
+}
+
+.admin-input-comm {
+    margin-top: 2px;
+}

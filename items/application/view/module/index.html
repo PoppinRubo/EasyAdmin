@@ -40,7 +40,7 @@
             table.render({
                 elem: '#table',
                 height: tableHeight(),
-                url: '/User/getUserList', //数据接口
+                url: '/module/getModuleList', //数据接口
                 page: true, //开启分页
                 cols: [
                     [ //表头
@@ -55,33 +55,21 @@
                             align: 'center'
                         },
                         {
-                            field: 'account',
-                            title: '账号',
+                            field: 'name',
+                            title: '模块名',
                             width: 120,
                             align: 'center'
                         },
                         {
-                            field: 'username',
-                            title: '用户名',
+                            field: 'link',
+                            title: '链接',
                             width: 120,
-                            align: 'center'
+                            align: 'left'
                         },
                         {
-                            field: 'loginTimes',
-                            title: '登录次数',
-                            width: 120,
-                            align: 'center'
-                        },
-                        {
-                            field: 'lastLoginTime',
-                            title: '最后登录时间',
-                            width: 170,
-                            align: 'center'
-                        },
-                        {
-                            field: 'createTime',
-                            title: '创建时间',
-                            width: 170,
+                            field: 'sort',
+                            title: '排序',
+                            width: 80,
                             align: 'center'
                         }
                     ]
