@@ -63,6 +63,7 @@
                 }
                 //判断是否存在tab
                 if ($("li[lay-id='" + e.id + "']").length > 0) {
+                    this.tabChange(e.id);
                     return;
                 }
                 //未配置链接
