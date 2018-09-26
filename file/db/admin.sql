@@ -1,10 +1,11 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-09-25 09:55:59
+Backup Time: 2018-09-26 18:01:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS `admin`.`sys_button`;
 DROP TABLE IF EXISTS `admin`.`sys_module`;
 DROP TABLE IF EXISTS `admin`.`sys_module_button`;
 DROP TABLE IF EXISTS `admin`.`sys_role`;
@@ -12,6 +13,21 @@ DROP TABLE IF EXISTS `admin`.`sys_role_button`;
 DROP TABLE IF EXISTS `admin`.`sys_role_module`;
 DROP TABLE IF EXISTS `admin`.`sys_user`;
 DROP TABLE IF EXISTS `admin`.`sys_user_role`;
+CREATE TABLE `sys_button` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Name` varchar(10) NOT NULL COMMENT '按钮名称',
+  `EnglishName` varchar(30) NOT NULL COMMENT '按钮英文名称',
+  `Icon` varchar(50) NOT NULL COMMENT '图标',
+  `Sort` int(11) NOT NULL COMMENT '排序',
+  `Remark` text NOT NULL COMMENT '备注',
+  `CreateTime` datetime NOT NULL COMMENT '创建时间',
+  `CreateUser` int(11) NOT NULL COMMENT '创建人',
+  `ModifyTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `ModifyUser` int(11) NOT NULL COMMENT '修改人',
+  `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
+  `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='按钮表';
 CREATE TABLE `sys_module` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Pid` int(11) NOT NULL COMMENT '父级模块编号',
@@ -31,11 +47,7 @@ CREATE TABLE `sys_module` (
 CREATE TABLE `sys_module_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ModuleId` int(11) NOT NULL COMMENT '模块编号',
-  `Name` varchar(10) NOT NULL COMMENT '按钮名称',
-  `EnglishName` varchar(30) NOT NULL COMMENT '按钮英文名称',
-  `Icon` varchar(50) NOT NULL COMMENT '图标',
-  `Sort` int(11) NOT NULL COMMENT '排序',
-  `Remark` text NOT NULL COMMENT '备注',
+  `ButtonId` int(11) NOT NULL COMMENT '按钮编号',
   `CreateTime` datetime NOT NULL COMMENT '创建时间',
   `CreateUser` int(11) NOT NULL COMMENT '创建人',
   `ModifyTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -43,7 +55,7 @@ CREATE TABLE `sys_module_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='系统模块、按钮关系表';
 CREATE TABLE `sys_role` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Name` varchar(50) NOT NULL COMMENT '角色名称',
@@ -60,6 +72,7 @@ CREATE TABLE `sys_role` (
 CREATE TABLE `sys_role_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `RoleId` int(11) NOT NULL COMMENT '角色编号',
+  `ModuleId` int(11) NOT NULL COMMENT '模块编号',
   `ButtonId` int(11) NOT NULL COMMENT '按钮编号',
   `CreateTime` datetime NOT NULL COMMENT '创建时间',
   `CreateUser` int(11) NOT NULL COMMENT '创建人',
@@ -68,7 +81,7 @@ CREATE TABLE `sys_role_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色按钮表/按钮权限控制表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色、按钮、模块关系表/按钮权限控制表';
 CREATE TABLE `sys_role_module` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `RoleId` int(11) NOT NULL COMMENT '角色编号',
@@ -80,7 +93,7 @@ CREATE TABLE `sys_role_module` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色模块表/模块权限控制表';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='角色模块关系表/模块权限控制表';
 CREATE TABLE `sys_user` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Account` varchar(50) NOT NULL COMMENT '帐号',
@@ -109,11 +122,16 @@ CREATE TABLE `sys_user_role` (
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`),
   KEY `FK_UserRole_User` (`UserId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户、角色关系表';
+BEGIN;
+LOCK TABLES `admin`.`sys_button` WRITE;
+DELETE FROM `admin`.`sys_button`;
+UNLOCK TABLES;
+COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 3, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-25 09:40:47', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 4, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-25 15:24:36', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
@@ -146,6 +164,6 @@ COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_user_role` WRITE;
 DELETE FROM `admin`.`sys_user_role`;
-INSERT INTO `admin`.`sys_user_role` (`Id`,`UserId`,`RoleId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 1, 1, '2018-07-12 20:00:00', 1, '2018-09-07 15:39:29', 1, 1, 0),(2, 1, 2, '2018-07-12 20:00:00', 1, '2018-09-07 15:39:29', 1, 1, 0),(3, 2, 2, '2018-07-12 20:00:00', 1, '2018-09-07 15:39:29', 1, 1, 0);
+INSERT INTO `admin`.`sys_user_role` (`Id`,`UserId`,`RoleId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 1, 1, '2018-07-12 20:00:00', 1, '2018-09-07 15:39:29', 1, 1, 0),(2, 1, 2, '2018-07-12 20:00:00', 1, '2018-09-07 15:39:29', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
