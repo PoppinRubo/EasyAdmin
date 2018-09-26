@@ -18,21 +18,28 @@
                             <i class="layui-icon icon-search admin-button-btn"></i>搜索
                         </button>
                     </div>
-                    <div class="layui-inline">
-                        <div class="layui-btn-group">
-                            <button class="layui-btn">增加</button>
-                            <button class="layui-btn">编辑</button>
-                            <button class="layui-btn">删除</button>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="layui-card-body">
+            <div class="layui-card-body admin-table-body">
                 <table id="table"></table>
             </div>
         </div>
     </div>
     <script src="/static/layui/layui.js"></script>
+    <!--表格工具条-->
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-group">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+                <i class="layui-icon layui-icon-add-1"></i> 添加
+            </button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+                <i class="layui-icon layui-icon-edit"></i> 编辑
+            </button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+                <i class="layui-icon layui-icon-delete"></i> 删除
+            </button>            
+          </div>
+      </script>
     <script>
         layui.use('table', function () {
             var table = layui.table;
@@ -41,11 +48,12 @@
                 elem: '#table',
                 height: tableHeight(),
                 url: '/User/getUserList', //数据接口
+                toolbar: '#toolbar',
                 page: true, //开启分页
                 cols: [
                     [ //表头
                         {
-                            type: 'checkbox'
+                            type: 'radio'
                         },
                         {
                             field: 'id',
@@ -70,6 +78,7 @@
                             field: 'loginTimes',
                             title: '登录次数',
                             width: 120,
+                            sort: true,
                             align: 'center'
                         },
                         {
@@ -87,7 +96,12 @@
                     ]
                 ]
             });
+            //头工具栏事件
+            table.on('toolbar(test)', function (obj) {
+                switch (obj.event) {
 
+                };
+            });
         });
     </script>
 </body>

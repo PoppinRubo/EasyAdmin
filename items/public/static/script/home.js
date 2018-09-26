@@ -61,16 +61,16 @@
                 if (e.children && e.children.length > 0) {
                     return;
                 }
-                //判断是否存在tab
-                if ($("li[lay-id='" + e.id + "']").length > 0) {
-                    this.tabChange(e.id);
-                    return;
-                }
                 //未配置链接
                 if (!$.trim(e.link)) {
                     layer.tips('未配置链接地址', '#' + e.domId, {
                         tips: [4, $(e.target).css('background-color')]
                     });
+                    return;
+                }
+                //判断是否存在tab
+                if ($("li[lay-id='" + e.id + "']").length > 0) {
+                    this.tabChange(e.id);
                     return;
                 }
                 //新增一个Tab项

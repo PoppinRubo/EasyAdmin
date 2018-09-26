@@ -8,5 +8,5 @@ function ajaxErrMsg(xhr, textStatus) {
 表格高度适配
 */
 function tableHeight(table = "table") {
-    return parseInt($(window).height() - $("#" + table).offset().top - 50);
+    return parseInt($(window).height() - $("#" + table).offset().top - 35);
 }

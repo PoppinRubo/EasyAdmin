@@ -2,6 +2,10 @@
     margin: 10px 0 0 0;
 }
 
+.admin-table-body {
+    padding: 5px 15px;
+}
+
 .layui-card-header.admin-card-header-auto {
     padding-top: 5px;
     padding-bottom: 0;
