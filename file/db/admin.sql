@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-09-26 18:01:37
+Backup Time: 2018-09-26 19:03:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -19,7 +19,7 @@ CREATE TABLE `sys_button` (
   `EnglishName` varchar(30) NOT NULL COMMENT '按钮英文名称',
   `Icon` varchar(50) NOT NULL COMMENT '图标',
   `Sort` int(11) NOT NULL COMMENT '排序',
-  `Remark` text NOT NULL COMMENT '备注',
+  `Remark` varchar(30) NOT NULL DEFAULT '' COMMENT '备注',
   `CreateTime` datetime NOT NULL COMMENT '创建时间',
   `CreateUser` int(11) NOT NULL COMMENT '创建人',
   `ModifyTime` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -27,7 +27,7 @@ CREATE TABLE `sys_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='按钮表';
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='按钮表';
 CREATE TABLE `sys_module` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Pid` int(11) NOT NULL COMMENT '父级模块编号',
@@ -126,6 +126,7 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_button` WRITE;
 DELETE FROM `admin`.`sys_button`;
+INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 1, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:11:03', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 2, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:11:05', 1, 1, 0),(3, '删除', 'delete', 'layui-icon-delete', 3, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:12:13', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
