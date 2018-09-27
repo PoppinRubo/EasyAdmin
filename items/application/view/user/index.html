@@ -21,14 +21,14 @@
                 </div>
             </div>
             <div class="layui-card-body admin-table-body">
-                <table id="table"></table>
+                <table id="data-table" lay-filter="data-table"></table>
             </div>
         </div>
     </div>
     <script src="/static/layui/layui.js"></script>
     <!--表格工具条-->
     <script type="text/html" id="toolbar">
-        <div class="layui-btn-group">
+        <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
                 <i class="layui-icon layui-icon-add-1"></i> 添加
             </button>
@@ -37,57 +37,53 @@
             </button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
                 <i class="layui-icon layui-icon-delete"></i> 删除
-            </button>            
-          </div>
-      </script>
+            </button>
+        </div>
+    </script>
     <script>
-        layui.use('table', function () {
+        var tableId = "data-table";
+        //数据表格
+        layui.use('table', function() {
             var table = layui.table;
-            //第一个实例
+            //表格渲染
             table.render({
-                elem: '#table',
-                height: tableHeight(),
-                url: '/User/getUserList', //数据接口
-                toolbar: '#toolbar',
+                elem: '#' + tableId,
+                height: tableHelper.setHeight(tableId),
+                url: '/user/getUserList', //数据接口
+                toolbar: '#toolbar', //表格工具条
                 page: true, //开启分页
                 cols: [
                     [ //表头
                         {
                             type: 'radio'
-                        },
-                        {
+                        }, {
                             field: 'id',
                             title: '编号',
                             width: 80,
                             sort: true,
                             align: 'center'
-                        },
-                        {
+                        }, {
                             field: 'account',
                             title: '账号',
                             width: 120,
                             align: 'center'
-                        },
-                        {
+                        }, {
                             field: 'username',
                             title: '用户名',
                             width: 120,
                             align: 'center'
-                        },
-                        {
+                        }, {
                             field: 'loginTimes',
                             title: '登录次数',
                             width: 120,
                             sort: true,
                             align: 'center'
-                        },
-                        {
+                        }, {
                             field: 'lastLoginTime',
                             title: '最后登录时间',
                             width: 170,
                             align: 'center'
-                        },
-                        {
+                        }, {
                             field: 'createTime',
                             title: '创建时间',
                             width: 170,
@@ -97,10 +93,20 @@
                 ]
             });
             //头工具栏事件
-            table.on('toolbar(test)', function (obj) {
+            table.on('toolbar(' + tableId + ')', function(obj) {
                 switch (obj.event) {
 
                 };
+            });
+            //监听行单击事件
+            table.on('row(' + tableId + ')', function(obj) {
+                var data = obj.data;
+                //行选设置
+                tableHelper.choose(obj.tr);
+            });
+            //监听行双击事件
+            table.on('rowDouble(' + tableId + ')', function(obj) {
+
             });
         });
     </script>
