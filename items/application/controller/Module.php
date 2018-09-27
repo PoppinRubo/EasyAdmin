@@ -12,7 +12,20 @@ class Module extends Basic
         return View();
     }
 
-    //获取模块列表
+    //编辑模块 View
+    public function edit()
+    {
+        $id = input("id") ?: 0;
+        $data = db('sys_module')->where(array("Id" => $id))->find();
+        $this->assign(
+            array(
+                'model' => convertInitials($data),
+            )
+        );
+        return View();
+    }
+
+    //获取模块列表 Json
     public function getModuleList()
     {
         try {

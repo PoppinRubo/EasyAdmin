@@ -1,4 +1,14 @@
-﻿/*
+﻿$(function() {
+    //文本表单自动填充 placeholder
+    $.each($(".layui-input-block").find("input[type='text'],textarea"), function(i, v) {
+        if ($(this).data('auto')) {
+            //使用同级表单label值
+            $(this).attr('placeholder', "请输入" + $(this).parent().prev().html());
+        }
+    });
+});
+
+/*
 Ajax错误信息
 */
 function ajaxErrMsg(xhr, textStatus) {

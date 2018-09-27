@@ -1,5 +1,6 @@
 <?php
 use think\Session;
+
 /**
  * 封装需要的json格式
  * @param $code int 返回的状态码
@@ -18,32 +19,64 @@ function toJsonData($code, $data = null, $msg = "")
 }
 
 /**
+ * 对象键名转化首字母小写或大写
+ * @param $array 一、二维对象数组
+ * @param bool $isLower 是否小写
+ * @return array
+ */
+function convertInitials($array, $isLower = true)
+{
+    if ($array) {
+
+    }
+    //转化,键名转换为首字母小写的驼峰命名
+    if ($isLower) {
+        $o = [];
+        foreach ($array as $key => $value) {
+            if (!is_array($value)) {
+                $o[lcfirst($key)] = $value;
+            } else {
+                $d = [];
+                foreach ($value as $k => $v) {
+                    $d[lcfirst($k)] = $v;
+                }
+                $o[] = $d;
+            }
+        }
+        return $o;
+    }
+    //还原,键名转换为首字母大写写的驼峰命名
+    $o = [];
+    foreach ($array as $key => $value) {
+        if (!is_array($value)) {
+            $o[ucfirst($key)] = $value;
+        } else {
+            $d = [];
+            foreach ($value as $k => $v) {
+                $d[ucfirst($k)] = $v;
+            }
+            $o[] = $d;
+        }
+    }
+    return $o;
+}
+
+/**
  * 封装layui table格式
  * @param $array 对象数组
  * @param int $code 状态码
- * @param bool $convert 字段首字母转换小写
+ * @param bool $convert 字段首字母是否转换小写
  * @param string $msg 返回消息
  * @return string
  */
 function toTable($array, $convert = true, $code = 0, $msg = "")
 {
-    //字段转换为首字母小写的驼峰命名
-    if ($convert) {
-        $data = [];
-        foreach ($array as $key => $value) {
-            $d = [];
-            foreach ($value as $k => $v) {
-                $d[lcfirst($k)] = $v;
-            }
-            $data[] = $d;
-        }
-        $array = $data;
-    }
+
     $result = array(
         "code" => $code,
         "msg" => $msg,
         "count" => count($array),
-        "data" => $array,
+        "data" => $convert ? convertInitials($array) : $array,
     );
     echo json_encode($result);
 }
