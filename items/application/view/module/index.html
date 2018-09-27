@@ -29,13 +29,13 @@
     <!--表格工具条-->
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+            <button class="layui-btn layui-btn-sm" lay-event="add">
                 <i class="layui-icon layui-icon-add-1"></i> 添加
             </button>
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+            <button class="layui-btn layui-btn-sm" lay-event="edit">
                 <i class="layui-icon layui-icon-edit"></i> 编辑
             </button>
-            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">
+            <button class="layui-btn layui-btn-sm" lay-event="delete">
                 <i class="layui-icon layui-icon-delete"></i> 删除
             </button>
         </div>
@@ -54,38 +54,20 @@
                 page: true, //开启分页
                 cols: [
                     [ //表头
-                        {
-                            type: 'radio'
-                        }, {
-                            field: 'id',
-                            title: '编号',
-                            width: 80,
-                            sort: true,
-                            align: 'center'
-                        }, {
-                            field: 'name',
-                            title: '模块名',
-                            width: 120,
-                            align: 'center'
-                        }, {
-                            field: 'link',
-                            title: '链接',
-                            width: 120,
-                            align: 'left'
-                        }, {
-                            field: 'sort',
-                            title: '排序',
-                            width: 80,
-                            align: 'center'
-                        }
+                        { type: 'radio' },
+                        { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
+                        { field: 'name', title: '模块名', width: 120, align: 'center' },
+                        { field: 'link', title: '链接', width: 120, align: 'left' },
+                        { field: 'sort', title: '排序', width: 80, align: 'center' }
                     ]
                 ]
             });
             //头工具栏事件
             table.on('toolbar(' + tableId + ')', function(obj) {
-                switch (obj.event) {
-
-                };
+                var checkStatus = table.checkStatus(tableId);
+                var data = checkStatus.data;
+                //转化为对应方法调用
+                eval(obj.event + "(data)");
             });
             //监听行单击事件
             table.on('row(' + tableId + ')', function(obj) {
@@ -98,6 +80,25 @@
 
             });
         });
+
+        //操作方法
+
+        //添加
+        function add(data) {
+            if (data.length < 1) {
+                layer.msg("请选中一行编辑", { time: 1500, icon: 5 });
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: '很多时候，我们想最大化看，比如像这个页面。',
+                shadeClose: true,
+                shade: false,
+                maxmin: true, //开启最大化最小化按钮
+                area: ['893px', '600px'],
+                content: '/module/edit'
+            });
+        }
     </script>
 </body>
 
