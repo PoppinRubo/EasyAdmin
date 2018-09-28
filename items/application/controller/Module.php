@@ -30,7 +30,7 @@ class Module extends Basic
     public function edit()
     {
         $id = input("id") ?: 0;
-        $model = SysModule::where('Id', $id)->findOrEmpty();
+        $model = SysModule::get($id)->getData();
         $this->assign(
             array(
                 'model' => convertInitials($model),
