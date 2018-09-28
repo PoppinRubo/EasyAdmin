@@ -1,6 +1,7 @@
 <?php
 namespace app\controller;
 
+use app\model\SysModule;
 use think\Controller;
 use think\Exception;
 
@@ -12,14 +13,27 @@ class Module extends Basic
         return View();
     }
 
-    //编辑模块 View
-    public function edit()
+    //添加模块 View || Json
+    public function add()
     {
         $id = input("id") ?: 0;
         $data = db('sys_module')->where(array("Id" => $id))->find();
         $this->assign(
             array(
                 'model' => convertInitials($data),
+            )
+        );
+        return View();
+    }
+
+    //编辑模块 View || Json
+    public function edit()
+    {
+        $id = input("id") ?: 0;
+        $model = SysModule::where('Id', $id)->findOrEmpty();
+        $this->assign(
+            array(
+                'model' => convertInitials($model),
             )
         );
         return View();

@@ -1,5 +1,5 @@
 <?php
-use think\Session;
+use think\facade\Session;
 
 /**
  * 封装需要的json格式

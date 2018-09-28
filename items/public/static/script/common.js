@@ -24,7 +24,7 @@ var tableHelper = {
         return parseInt($(window).height() - $("#" + table).offset().top - 35);
     },
     //行选设置
-    choose: function(tr) {
+    choose: function(tableId, tr) {
         var selection = tr.find("input[type='checkbox'],input[type='radio']");
         $.each(selection, function(i, v) {
             //点击一下渲染好的选框
@@ -33,6 +33,22 @@ var tableHelper = {
                 e.stopPropagation();
             }).click();
         });
+        //单选 选中状态设置
+        if (selection.length > 0 && selection[0].type == "radio") {
+            var cache = layui.table.cache[tableId];
+            var index = tr.data("index");
+            cache.forEach(function(v, i, a) {
+                index === i ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
+            });
+        }
+        //复选 选中状态设置
+        if (selection.length > 0 && selection[0].type == "checkbox") {
+            var cache = layui.table.cache[tableId];
+            var checkbox = tr.offsetParent().find('input[name="layTableCheckbox"]');
+            cache.forEach(function(v, i, a) {
+                checkbox[i].checked ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
+            });
+        }
         //标注选中样式
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
     }
