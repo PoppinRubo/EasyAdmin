@@ -9,12 +9,72 @@
 });
 
 /*
-Ajax错误信息
-*/
-function ajaxErrMsg(xhr, textStatus) {
-    layer.msg("请求出现错误,错误状态码：" + textStatus);
+ * 请求助手
+ */
+var askHelper = {
+    //Ajax错误信息
+    ajaxErrMsg: function(xhr, textStatus) {
+        layer.msg("请求出现错误,错误状态码：" + textStatus);
+    },
+    //Post请求
+    ajaxPost: function(url, data, success, fail, type = "POST") {
+        success = success || function(result) {
+            //表格刷新
+            window.parent.tableHelper.refresh('data-table');
+            //窗口关闭
+            window.parent.layer.closeAll('iframe');
+        };
+        fail = fail || function(result) {};
+        $.ajax({
+            url: url,
+            type: type, //GET、POST
+            async: true, //或false,是否异步
+            timeout: 6000, //超时时间
+            data: data, //请求对象
+            dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            success: function(result) {
+                if (result.code === 1) {
+                    layer.msg(result.msg, {
+                            time: 500,
+                            icon: 1
+                        },
+                        function() {
+                            success(result);
+                        }
+                    );
+                } else {
+                    layer.msg(result.msg, {
+                            time: 2000,
+                            icon: 5
+                        },
+                        function() {
+                            fail(result);
+                        }
+                    );
+                }
+            },
+            error: function(xhr, textStatus) {
+                askHelper.ajaxErrMsg(xhr, textStatus);
+            }
+        });
+    },
+    // Get请求
+    ajaxGet: function(url, data, success, fail) {
+        askHelper.ajaxPost(url, data, success, fail, "GET");
+    },
+    //询问数据请求
+    ajaxConfirm: function(url, data, msg, success, fail, type = "POST") {
+        //询问
+        var index = layer.confirm(msg + '？', {
+                btn: ['确定', '取消'] //按钮
+            },
+            function() {
+                //点击后立即关闭
+                layer.close(index);
+                askHelper.ajaxPost(url, data, success, fail, type);
+            });
+    }
 }
-
 /*
 表格助手
 */

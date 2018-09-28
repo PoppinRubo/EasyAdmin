@@ -64,6 +64,24 @@ class Module extends Basic
         return View();
     }
 
+    //模删除块 Json
+    public function remove()
+    {
+        try {
+            $id = input("id") ?: 0;
+            $data = array(
+                "IsDel" => 1,
+                "ModifyTime" => date("Y-m-d H:i:s"),
+                "ModifyUser" => $this->user["Id"],
+            );
+            $model = new SysModule();
+            $model->save($data, ['Id' => $id]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
     //获取模块列表 Json
     public function getModuleList()
     {
