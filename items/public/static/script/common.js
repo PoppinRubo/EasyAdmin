@@ -51,6 +51,10 @@ var tableHelper = {
         }
         //标注选中样式
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+    },
+    refresh: function(tableId) {
+        //点击当前页码来刷新表格数据
+        $("#" + tableId).next().find(".layui-laypage-btn").click();
     }
 };
 

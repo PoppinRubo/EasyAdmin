@@ -31,7 +31,16 @@ class Module extends Basic
     {
         //数据请求
         if (request()->isPost()) {
-            return toJsonData(0, null, "啦啦");
+            try {
+                //首字母还原为大写
+                $data = convertInitials(input(), false);
+                $model = new SysModule();
+                // 过滤表单数组中的非数据表字段数据
+                $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
+                return toJsonData(1, null, "操作成功");
+            } catch (Exception $e) {
+                return toJsonData(0, null, $e->getMessage());
+            }
         }
         //输出页面
         $id = input("id") ?: 0;

@@ -6,6 +6,7 @@
 </head>
 
 <body class="form-body">
+    <input type="hidden" name="id" value="{$model.id}" class="layui-input">
     <form class="layui-form" lay-filter="form">
         <div class="layui-form-item">
             <label class="layui-form-label">模块名</label>
@@ -63,12 +64,15 @@
                                     icon: 1
                                 },
                                 function() {
-
+                                    //表格刷新
+                                    window.parent.tableHelper.refresh('data-table');
+                                    //窗口关闭
+                                    window.parent.layer.closeAll('iframe');
                                 }
                             );
                         } else {
                             layer.msg(result.msg, {
-                                    time: 1000,
+                                    time: 2000,
                                     icon: 5
                                 },
                                 function() {

@@ -88,9 +88,9 @@
             layer.open({
                 type: 2,
                 title: '添加模块',
-                shadeClose: false,
-                shade: 0.5,
-                maxmin: true, //开启最大化最小化按钮
+                shadeClose: false, //是否点击遮罩关闭
+                shade: 0.5, //遮罩透明度
+                maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
                 content: '/module/add'
             });
@@ -105,9 +105,9 @@
             layer.open({
                 type: 2,
                 title: '模块修改',
-                shadeClose: false,
-                shade: 0.5,
-                maxmin: true, //开启最大化最小化按钮
+                shadeClose: false, //是否点击遮罩关闭
+                shade: 0.5, //遮罩透明度
+                maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
                 content: '/module/edit?id=' + data[0].id
             });
