@@ -4,7 +4,7 @@ namespace app\controller;
 use think\captcha\Captcha;
 use think\Controller;
 use think\Exception;
-use think\Session;
+use think\facade\Session;
 
 class Index extends Controller
 {

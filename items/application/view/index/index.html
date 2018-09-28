@@ -53,11 +53,11 @@
         </div>
     </div>
     <script>
-        layui.use('form', function () {
+        layui.use('form', function() {
             var form = layui.form;
             form.render();
             //提交
-            form.on('submit(login-submit)', function (obj) {
+            form.on('submit(login-submit)', function(obj) {
                 $.ajax({
                     url: '/index/signIn',
                     type: 'POST', //GET
@@ -65,31 +65,32 @@
                     timeout: 6000, //超时时间
                     data: obj.field, //请求对象
                     dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-                    success: function (result) {
+                    success: function(result) {
                         if (result.code === 1) {
                             layer.msg(result.msg, {
                                     time: 500,
                                     icon: 1
                                 },
-                                function () {
+                                function() {
                                     window.location.href = result.data;
                                 }
                             );
                         } else {
                             layer.msg(result.msg, {
-                                    time: 1000,
+                                    time: 2000,
                                     icon: 5
                                 },
-                                function () {
+                                function() {
                                     $("#captcha").get(0).src = $("#captcha").get(0).src;
                                 }
                             );
                         }
                     },
-                    error: function (xhr, textStatus) {
+                    error: function(xhr, textStatus) {
                         ajaxErrMsg(xhr, textStatus);
                     }
                 });
+                return false;
             });
         });
     </script>
