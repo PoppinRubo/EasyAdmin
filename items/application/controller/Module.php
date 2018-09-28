@@ -16,26 +16,27 @@ class Module extends Basic
     //添加模块 View || Json
     public function add()
     {
-        $id = input("id") ?: 0;
-        $data = db('sys_module')->where(array("Id" => $id))->find();
-        $this->assign(
-            array(
-                'model' => convertInitials($data),
-            )
-        );
+        //数据请求
+        if (request()->isPost()) {
+            return toJsonData(0, null, "啦啦");
+        }
+        //输出页面
+        $model = getEmptyModel('SysModule');
+        $this->assign('model', convertInitials($model));
         return View();
     }
 
     //编辑模块 View || Json
     public function edit()
     {
+        //数据请求
+        if (request()->isPost()) {
+            return toJsonData(0, null, "啦啦");
+        }
+        //输出页面
         $id = input("id") ?: 0;
         $model = SysModule::get($id)->getData();
-        $this->assign(
-            array(
-                'model' => convertInitials($model),
-            )
-        );
+        $this->assign('model', convertInitials($model));
         return View();
     }
 

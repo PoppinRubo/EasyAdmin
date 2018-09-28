@@ -26,9 +26,6 @@ function toJsonData($code, $data = null, $msg = "")
  */
 function convertInitials($array, $isLower = true)
 {
-    if ($array) {
-
-    }
     //转化,键名转换为首字母小写的驼峰命名
     if ($isLower) {
         $o = [];
@@ -88,4 +85,19 @@ function toTable($array, $convert = true, $code = 0, $msg = "")
 function getUserAuthentication()
 {
     return Session::get('Authentication');
+}
+
+/**
+ * 获取空值模型
+ * @return array
+ */
+function getEmptyModel($modelName)
+{
+    $fields = model($modelName)->getFieldsType();
+    $o = [];
+    foreach ($fields as $key => $value) {
+        //设置值为空
+        $o[$key] = null;
+    }
+    return $o;
 }
