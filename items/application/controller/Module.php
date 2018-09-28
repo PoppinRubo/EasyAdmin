@@ -21,6 +21,10 @@ class Module extends Basic
             try {
                 //首字母还原为大写
                 $data = convertInitials(input(), false);
+                $data["CreateTime"] = date("Y-m-d H:i:s");
+                $data["CreateUser"] = $this->user["Id"];
+                $data["ModifyTime"] = $data["CreateTime"];
+                $data["ModifyUser"] = $data["CreateUser"];
                 $model = new SysModule();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
@@ -43,6 +47,8 @@ class Module extends Basic
             try {
                 //首字母还原为大写
                 $data = convertInitials(input(), false);
+                $data["ModifyTime"] = date("Y-m-d H:i:s");
+                $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysModule();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
