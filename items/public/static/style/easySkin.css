@@ -13,6 +13,7 @@
 }
 
 .datagrid-row-over {
+    background: #f2f2f2;
     color: #666;
 }
 
@@ -20,7 +21,16 @@
     margin: 10px 0 0 0;
 }
 
+.datagrid-header {
+    background: #f2f2f2;
+}
+
 .datagrid-row-selected {
     background: #f2f2f2;
     color: #666;
+}
+
+.datagrid-body td {
+    border-color: #e6e6e6;
+    border-style: solid;
 }
