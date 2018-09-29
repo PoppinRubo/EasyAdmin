@@ -119,7 +119,11 @@
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
-            askHelper.ajaxConfirm('/module/remove', { id: data[0].id }, "确认删除吗");
+            askHelper.ajaxConfirm({
+                url: '/module/remove',
+                data: { id: data[0].id },
+                msg: "确认删除吗"
+            });
         }
     </script>
 </body>
