@@ -75,7 +75,7 @@
                 }
                 //新增一个Tab项
                 element.tabAdd(tabs, {
-                    title: '<i class="layui-icon tabs-icon ' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
+                    title: '<i class="layui-icon tab-icon ' + e.iconCls + '"></i>' + e.text + '<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>',
                     id: e.id
                 });
                 var iframe = '<iframe data-id="' + e.id + '" src="' + e.link + '" frameborder="0" class="admin-iframe"></iframe>';
