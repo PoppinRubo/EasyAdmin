@@ -35,6 +35,7 @@ class Module extends Basic
         }
         //输出页面
         $model = getEmptyModel('SysModule');
+        $model["Pid"] = input("pid") ?: 0;
         $this->assign('model', convertInitials($model));
         return View();
     }

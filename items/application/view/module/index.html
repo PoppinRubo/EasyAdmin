@@ -32,6 +32,9 @@
             <button class="layui-btn layui-btn-sm" lay-event="add">
                 <i class="layui-icon layui-icon-add-1"></i> 添加
             </button>
+            <button class="layui-btn layui-btn-sm" lay-event="addSon">
+                <i class="layui-icon layui-icon-add-1"></i> 添加子级
+            </button>
             <button class="layui-btn layui-btn-sm" lay-event="edit">
                 <i class="layui-icon layui-icon-edit"></i> 编辑
             </button>
@@ -65,7 +68,7 @@
             //头工具栏事件
             table.on('toolbar(' + tableId + ')', function(obj) {
                 var checkStatus = table.checkStatus(tableId);
-                var data = checkStatus.data;
+                var data = checkStatus.data[0];
                 //转化为对应方法调用
                 eval(obj.event + "(data)");
             });
@@ -84,16 +87,25 @@
         //操作方法
 
         //添加
-        function add(data) {
+        function add(pid = 0, title = "添加模块") {
             layer.open({
                 type: 2,
-                title: '添加模块',
+                title: title,
                 shadeClose: false, //是否点击遮罩关闭
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
-                content: '/module/add'
+                content: '/module/add?pid=' + pid
             });
+        }
+
+        //添加子级
+        function addSon(data) {
+            if (data.length < 1) {
+                layer.msg("请选中一行", { time: 1500, icon: 5 });
+                return;
+            }
+            add(data.id, "[" + data.name + "]添加子级模块");
         }
 
         //编辑
@@ -109,7 +121,7 @@
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
-                content: '/module/edit?id=' + data[0].id
+                content: '/module/edit?id=' + data.id
             });
         }
 
@@ -121,7 +133,7 @@
             }
             askHelper.ajaxConfirm({
                 url: '/module/remove',
-                data: { id: data[0].id },
+                data: { id: data.id },
                 msg: "确认删除吗"
             });
         }
