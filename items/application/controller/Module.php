@@ -65,7 +65,7 @@ class Module extends Basic
         return View();
     }
 
-    //模删除块 Json
+    //删除模块 Json
     public function remove()
     {
         try {
