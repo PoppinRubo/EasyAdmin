@@ -59,14 +59,14 @@ function convertInitials($array, $isLower = true)
 }
 
 /**
- * 封装layui table格式
+ * 封装layui 表格数据
  * @param $array 对象数组
  * @param int $code 状态码
  * @param bool $convert 字段首字母是否转换小写
  * @param string $msg 返回消息
  * @return string
  */
-function toTable($array, $convert = true, $code = 0, $msg = "")
+function toLayTable($array, $convert = true, $code = 0, $msg = "")
 {
 
     $result = array(
@@ -74,6 +74,22 @@ function toTable($array, $convert = true, $code = 0, $msg = "")
         "msg" => $msg,
         "count" => count($array),
         "data" => $convert ? convertInitials($array) : $array,
+    );
+    echo json_encode($result);
+}
+
+/**
+ * 封装easyui 表格数据
+ * @param $array 对象数组
+ * @param bool $convert 字段首字母是否转换小写
+ * @return string
+ */
+function toEasyTable($array, $convert = true)
+{
+
+    $result = array(
+        "total" => count($array),
+        "rows" => $convert ? convertInitials($array) : $array,
     );
     echo json_encode($result);
 }

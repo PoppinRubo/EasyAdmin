@@ -88,9 +88,9 @@ class User extends Basic
         try {
             $limit = input("limit") ?: 10;
             $data = db('sys_user')->where(array("IsDel" => 0))->paginate($limit);
-            return toTable($data);
+            return toLayTable($data);
         } catch (Exception $e) {
-            return toTable([], false, -1, $e->getMessage());
+            return toLayTable([], false, -1, $e->getMessage());
         }
     }
 }
