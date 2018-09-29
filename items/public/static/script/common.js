@@ -7,6 +7,11 @@
         }
     });
 
+    //处理开关未点击状态下的值设置为0或1
+    $.each($('input[lay-skin="switch"]'), function(i, v) {
+        $(v).val(this.checked ? 1 : 0);
+    });
+    //处理开关点击状态下的值设置为0或1
     layui.use(['form'], function() {
         var form = layui.form;
         //表单开关值处理

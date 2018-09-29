@@ -108,7 +108,7 @@
 
         //编辑
         function edit(data) {
-            if (data.length < 1) {
+            if (!data || data.length < 1) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
@@ -125,7 +125,7 @@
 
         //删除
         function remove(data) {
-            if (data.length < 1) {
+            if (!data || data.length < 1) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
