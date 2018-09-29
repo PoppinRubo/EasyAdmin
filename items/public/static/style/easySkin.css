@@ -1,0 +1,26 @@
+/*easyui皮肤、样式重写*/
+.easyui-table-tool {
+    padding: 10px 0 0 15px;
+}
+
+.panel-body {
+    border-color: #e6e6e6;
+}
+
+.datagrid-header-row,
+.datagrid-row {
+    height: 40px;
+}
+
+.datagrid-row-over {
+    color: #666;
+}
+
+.panel-htop {
+    margin: 10px 0 0 0;
+}
+
+.datagrid-row-selected {
+    background: #f2f2f2;
+    color: #666;
+}

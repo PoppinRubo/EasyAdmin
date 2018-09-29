@@ -26,22 +26,22 @@
         </div>
     </div>
     <!--表格工具条-->
-    <script type="text/html" id="toolbar">
+    <div class="easyui-table-tool" id="toolbar">
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" lay-event="add">
+            <button class="layui-btn layui-btn-sm" onclick="add();">
                 <i class="layui-icon layui-icon-add-1"></i> 添加
             </button>
-            <button class="layui-btn layui-btn-sm" lay-event="addSon">
+            <button class="layui-btn layui-btn-sm" onclick="addSon();">
                 <i class="layui-icon layui-icon-add-1"></i> 添加子级
             </button>
-            <button class="layui-btn layui-btn-sm" lay-event="edit">
+            <button class="layui-btn layui-btn-sm" onclick="edit();">
                 <i class="layui-icon layui-icon-edit"></i> 编辑
             </button>
-            <button class="layui-btn layui-btn-sm" lay-event="remove">
+            <button class="layui-btn layui-btn-sm" onclick="remove();">
                 <i class="layui-icon layui-icon-delete"></i> 删除
             </button>
         </div>
-    </script>
+    </div>
     <script>
         // var tableId = "data-table";
         // //数据表格
@@ -84,10 +84,12 @@
         // });
 
         $('#data-table').treegrid({
-            url: '/module/getModuleList',
-            idField: 'id',
-            treeField: 'name',
-            height:"500px",
+            url: '/module/getModuleList', //数据接口
+            singleSelect: true, //行单选
+            idField: 'id', //定义标识树节点的键字段
+            treeField: 'name', //定义树节点字段
+            height: tableHelper.setHeight("data-table") + "px",
+            toolbar: '#toolbar', //表格工具条
             columns: [
                 [
                     { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
@@ -114,17 +116,19 @@
         }
 
         //添加子级
-        function addSon(data) {
-            if (data.length < 1) {
+        function addSon() {
+            var rows = $('#data-table').treegrid('getSelected');
+            if (!rows) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
-            add(data.id, "[" + data.name + "]添加子级模块");
+            add(rows.id, "[" + rows.name + "]添加子级模块");
         }
 
         //编辑
-        function edit(data) {
-            if (data.length < 1) {
+        function edit() {
+            var rows = $('#data-table').treegrid('getSelected');
+            if (!rows) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
@@ -135,20 +139,25 @@
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
-                content: '/module/edit?id=' + data.id
+                content: '/module/edit?id=' + rows.id
             });
         }
 
         //删除
         function remove(data) {
-            if (data.length < 1) {
+            var rows = $('#data-table').treegrid('getSelected');
+            if (!rows) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
             askHelper.ajaxConfirm({
                 url: '/module/remove',
-                data: { id: data.id },
-                msg: "确认删除吗"
+                data: { id: rows.id },
+                msg: "确认删除吗",
+                success: function() {
+                    //表格刷新
+                    $('#data-table').treegrid('reload');
+                }
             });
         }
     </script>

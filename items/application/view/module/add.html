@@ -53,7 +53,13 @@
             form.on('submit(submit)', function(data) {
                 askHelper.ajaxPost({
                     url: '/module/add',
-                    data: data.field
+                    data: data.field,
+                    success: function() {
+                        //表格刷新
+                        window.parent.$('#data-table').treegrid('reload');
+                        //窗口关闭
+                        window.parent.layer.closeAll('iframe');
+                    }
                 });
 
                 //阻止表单提交
