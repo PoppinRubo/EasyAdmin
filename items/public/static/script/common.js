@@ -6,6 +6,15 @@
             $(this).attr('placeholder', "请输入" + $(this).parent().prev().html());
         }
     });
+
+    layui.use(['form'], function() {
+        var form = layui.form;
+        //表单开关值处理
+        form.on('switch', function(data) {
+            $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
+        });
+    });
+
 });
 
 /*
@@ -26,9 +35,7 @@ var askHelper = {
             //窗口关闭
             window.parent.layer.closeAll('iframe');
         };
-        o.fail = o.fail || function(result) {
-            layer.msg(result.msg, { time: 2000, icon: 5 });
-        };
+        o.fail = o.fail || function(result) {};
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";

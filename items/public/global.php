@@ -11,5 +11,5 @@
     <link id="layuicss-layer" rel="stylesheet" href="/static/layui/css/modules/layer/default/layer.css" media="all">
     <script type="text/javascript" src="/static/script/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
-    <script type="text/javascript" src="/static/script/common.js"></script>
     <script type="text/javascript" src="/static/layui/layui.js"></script>
+    <script type="text/javascript" src="/static/script/common.js"></script>

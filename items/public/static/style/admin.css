@@ -41,3 +41,27 @@
 .admin-input-comm {
     margin-top: 2px;
 }
+
+/*表格图标*/
+table .icon {
+    font-size: 26px;
+}
+
+.icon-true {
+    color: #1E9FFF;
+}
+
+.icon-true:before {
+    content: '\e9a7';
+}
+
+.icon-false {
+    color: #FF5722;
+    font-weight: bold;
+}
+
+.icon-false:before {
+    content: '\e9b7';
+}
+
+/*表格图标*/

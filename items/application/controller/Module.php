@@ -88,7 +88,7 @@ class Module extends Basic
     {
         try {
             $limit = input("limit") ?: 10;
-            $data = db('sys_module')->where(array("IsDel" => 0, "IsValid" => 1))->paginate($limit);
+            $data = db('sys_module')->where(array("IsDel" => 0))->paginate($limit);
             return toTable($data);
         } catch (Exception $e) {
             return toTable([], false, -1, $e->getMessage());

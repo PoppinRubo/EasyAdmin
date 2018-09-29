@@ -25,7 +25,6 @@
             </div>
         </div>
     </div>
-    <script src="/static/layui/layui.js"></script>
     <!--表格工具条-->
     <script type="text/html" id="toolbar">
         <div class="layui-btn-container">
@@ -49,7 +48,7 @@
             table.render({
                 elem: '#' + tableId,
                 height: tableHelper.setHeight(tableId),
-                url: '/module/getUserList', //数据接口
+                url: '/user/getUserList', //数据接口
                 toolbar: '#toolbar', //表格工具条
                 page: true, //开启分页
                 cols: [
@@ -58,6 +57,15 @@
                         { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
                         { field: 'account', title: '账号', width: 120, align: 'center' },
                         { field: 'username', title: '用户名', width: 120, align: 'center' },
+                        {
+                            field: 'isValid',
+                            title: '是否有效',
+                            width: 100,
+                            align: 'center',
+                            templet: function(d) {
+                                return d[this.field] ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
+                            }
+                        },
                         { field: 'loginTimes', title: '登录次数', width: 120, sort: true, align: 'center' },
                         { field: 'lastLoginTime', title: '最后登录时间', width: 170, align: 'center' },
                         { field: 'createTime', title: '创建时间', width: 170, align: 'center' }
@@ -89,7 +97,7 @@
         function add() {
             layer.open({
                 type: 2,
-                title: "添加账号",
+                title: "添加用户",
                 shadeClose: false, //是否点击遮罩关闭
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
@@ -106,7 +114,7 @@
             }
             layer.open({
                 type: 2,
-                title: '修改账号',
+                title: '修改用户',
                 shadeClose: false, //是否点击遮罩关闭
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
