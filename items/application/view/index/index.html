@@ -58,7 +58,16 @@
             form.render();
             //提交
             form.on('submit(login-submit)', function(data) {
-                askHelper.ajaxPost('/index/signIn', data.field, function(result) { window.location.href = result.data }, function(result) { $("#captcha").get(0).src = $("#captcha").get(0).src });
+                askHelper.ajaxPost({
+                    url: '/index/signIn',
+                    data: data.field,
+                    success: function(result) {
+                        window.location.href = result.data
+                    },
+                    fail: function(result) {
+                        $("#captcha").get(0).src = $("#captcha").get(0).src
+                    }
+                });
                 return false;
             });
         });

@@ -50,7 +50,12 @@
             var form = layui.form;
             //监听提交
             form.on('submit(submit)', function(data) {
-                askHelper.ajaxPost('/module/add', data.field);
+                askHelper.ajaxPost({
+                    url: '/module/add',
+                    data: data.field
+                });
+
+                //阻止表单提交
                 return false;
             });
         });

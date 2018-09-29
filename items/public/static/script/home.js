@@ -1,4 +1,4 @@
-﻿layui.define(['layer', 'element'], function (exports) {
+﻿layui.define(['layer', 'element'], function(exports) {
     //菜单树
     var body = $("body"),
         element = layui.element,
@@ -8,29 +8,29 @@
         pageId = "first",
         selectPageIndex = 0,
         home = {
-            tree: function () {
+            tree: function() {
                 $('#menu-tree').tree({
                     url: "/home/getMenuTree",
                     method: "post",
                     animate: true,
-                    onBeforeLoad: function () {
+                    onBeforeLoad: function() {
                         //当加载数据的请求发出前触发
                     },
-                    onLoadSuccess: function (node, data) {
+                    onLoadSuccess: function(node, data) {
                         //当数据加载成功时触发
                         if (data.code === 0) {
                             layer.msg(data.msg, {
                                 time: 1000,
                                 icon: 5
-                            }, function () {
+                            }, function() {
                                 window.location.href = data.url;
                             });
                         }
                     },
-                    onLoadError: function (arguments) {
+                    onLoadError: function(arguments) {
                         //当数据加载失败时触发
                     },
-                    onSelect: function (node) {
+                    onSelect: function(node) {
                         //节点被选中前触发，返回 false 则取消选择动作
                         //单击节点展开||关闭
                         if (node.state == "closed") {
@@ -42,7 +42,7 @@
                     }
                 });
             },
-            fullscreen: function (e) {
+            fullscreen: function(e) {
                 //全屏切换
                 var a = "layui-icon-screen-full",
                     i = "layui-icon-screen-restore",
@@ -55,7 +55,7 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
-            tabAdd: function (e) {
+            tabAdd: function(e) {
                 var t = this;
                 //父模块不开新窗口,
                 if (e.children && e.children.length > 0) {
@@ -83,7 +83,7 @@
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件
                 var r = $(".layui-tab-title").find("li");
                 //加点击关闭事件  
-                r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
+                r.eq(r.length - 1).children(".layui-tab-close").on("click", function() {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
                 });
                 element.init();
@@ -92,13 +92,13 @@
                 //开启右键菜单
                 home.contextMenu();
             },
-            tabDelete: function (id) {
+            tabDelete: function(id) {
                 var t = this;
                 //删除指定Tab项
                 element.tabDelete(tabs, id);
                 //移除iframe
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function (index) {
+                iframe.each(function(index) {
                     if ($(this).data("id") == id) {
                         $(this).parent().remove();
                         //显示前一个iframe
@@ -106,12 +106,12 @@
                     }
                 });
             },
-            tabChange: function (id) {
+            tabChange: function(id) {
                 //切换到指定Tab项
                 var item = tabBody.find(".body-item");
                 //隐藏其他iframe
                 item.removeClass("layui-show");
-                item.each(function (index) {
+                item.each(function(index) {
                     if ($(this).children().data("id") == id) {
                         //显示指定页面
                         $(this).addClass("layui-show");
@@ -121,21 +121,21 @@
                 });
                 element.tabChange(tabs, id);
             },
-            refresh: function () {
+            refresh: function() {
                 //刷新菜单树
                 this.tree();
             },
-            refreshThisTabs: function () {
+            refreshThisTabs: function() {
                 //刷新当前标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function () {
+                iframe.each(function() {
                     if ($(this).data("id") == pageId) {
                         this.src = this.src;
                     }
                 });
                 contextmenu.removeClass("layui-show");
             },
-            closeTabs: function (id) {
+            closeTabs: function(id) {
                 //关闭标签页
                 if (id == "first") {
                     return;
@@ -143,82 +143,62 @@
                 this.tabDelete(id);
                 contextmenu.removeClass("layui-show");
             },
-            closeThisTabs: function () {
+            closeThisTabs: function() {
                 this.closeTabs(pageId);
             },
-            closeOtherTabs: function () {
+            closeOtherTabs: function() {
                 var t = this;
                 //关闭其他标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function () {
+                iframe.each(function() {
                     if ($(this).data("id") != pageId) {
                         t.closeTabs($(this).data("id"));
                     }
                 });
             },
-            closeAllTabs: function () {
+            closeAllTabs: function() {
                 var t = this;
                 //关闭全部标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function () {
+                iframe.each(function() {
                     t.closeTabs($(this).data("id"));
                 });
             },
-            logout: function () {
+            logout: function() {
                 //退出登录
-                $.ajax({
+                askHelper.ajaxPost({
                     url: '/index/signOut',
-                    type: 'POST', //GET
-                    async: true, //或false,是否异步
-                    timeout: 6000, //超时时间
-                    data: {}, //请求对象
-                    dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
-                    success: function (result) {
-                        if (result.code === 1) {
-                            layer.msg(result.msg, {
-                                time: 500,
-                                icon: 1
-                            }, function () {
-                                window.location.href = result.data;
-                            });
-                        } else {
-                            layer.msg(result.msg, {
-                                time: 1000,
-                                icon: 5
-                            });
-                        }
-                    },
-                    error: function (xhr, textStatus) {
-                        ajaxErrMsg(xhr, textStatus);
+                    success: function(result) {
+                        window.location.href = result.data;
                     }
                 });
             },
-            click: function () {
+            click: function() {
                 var t = this;
-                body.on("click", "*[admin-event]", function () {
+                body.on("click", "*[admin-event]", function() {
                     var e = $(this);
                     var i = e.attr("admin-event");
                     //方法调用
                     eval("t." + i + "(e)");
                 })
             },
-            contextMenu: function () {
+            contextMenu: function() {
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
-                $('.layui-tab-title li').on('contextmenu', function () {
+                $('.layui-tab-title li').on('contextmenu', function() {
                     pageId = $(this).data("id") || $(this).attr('lay-id');;
                     var x = $(this).position().left;
                     contextmenu.css({
                         "margin-left": x + "px"
                     }).addClass("layui-show");
                     //隐藏显示控制
-                    $(".layui-this").hover(function () {
+                    $(".layui-this").hover(function() {
 
-                    }, function () {
+                    }, function() {
                         contextmenu.removeClass("layui-show");
                     });
-                    $("#context-menu").hover(function () {
+                    $("#context-menu").hover(function() {
                         contextmenu.addClass("layui-show");
-                    }, function () {
+                    }, function() {
                         contextmenu.removeClass("layui-show");
                     });
                     //生成屏蔽首页关闭标签页样式
@@ -232,7 +212,7 @@
             }
         }
     //监听Tab切换
-    element.on('tab(' + tabs + ')', function (obj) {
+    element.on('tab(' + tabs + ')', function(obj) {
         if (selectPageIndex == obj.index) {
             //点击当前显示不处理
             return;

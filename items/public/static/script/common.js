@@ -12,66 +12,60 @@
  * 请求助手
  */
 var askHelper = {
-    //Ajax错误信息
-    ajaxErrMsg: function(xhr, textStatus) {
-        layer.msg("请求出现错误,错误状态码：" + textStatus);
+    //ajax 误处理
+    ajaxError: function(xhr, textStatus, error) {
+        error = error || function() {};
+        var msg = "请求出现错误,状态码:" + xhr.status + ",描述:" + textStatus;
+        layer.msg(msg, { time: 3000, icon: 5 }, function() { error(); });
     },
     //Post请求
-    ajaxPost: function(url, data, success, fail, type = "POST") {
-        success = success || function(result) {
+    ajaxPost: function(o) {
+        o.success = o.success || function(result) {
             //表格刷新
             window.parent.tableHelper.refresh('data-table');
             //窗口关闭
             window.parent.layer.closeAll('iframe');
         };
-        fail = fail || function(result) {};
+        o.fail = o.fail || function(result) {
+            layer.msg(result.msg, { time: 2000, icon: 5 });
+        };
+        o.type = o.type || "POST";
+        o.data = o.data || {};
+        o.dataType = o.dataType || "json";
         $.ajax({
-            url: url,
-            type: type, //GET、POST
+            url: o.url, //请求接口
+            type: o.type, //GET、POST
             async: true, //或false,是否异步
             timeout: 6000, //超时时间
-            data: data, //请求对象
-            dataType: 'json', //返回的数据格式：json/xml/html/script/jsonp/text
+            data: o.data, //请求对象
+            dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
             success: function(result) {
                 if (result.code === 1) {
-                    layer.msg(result.msg, {
-                            time: 500,
-                            icon: 1
-                        },
-                        function() {
-                            success(result);
-                        }
-                    );
+                    layer.msg(result.msg, { time: 500, icon: 1 }, function() { o.success(result); });
                 } else {
-                    layer.msg(result.msg, {
-                            time: 2000,
-                            icon: 5
-                        },
-                        function() {
-                            fail(result);
-                        }
-                    );
+                    layer.msg(result.msg, { time: 2000, icon: 5 }, function() { o.fail(result); });
                 }
             },
             error: function(xhr, textStatus) {
-                askHelper.ajaxErrMsg(xhr, textStatus);
+                askHelper.ajaxError(xhr, textStatus, o.error);
             }
         });
     },
     // Get请求
-    ajaxGet: function(url, data, success, fail) {
-        askHelper.ajaxPost(url, data, success, fail, "GET");
+    ajaxGet: function(o) {
+        o.type = "GET";
+        askHelper.ajaxPost(o);
     },
     //询问数据请求
-    ajaxConfirm: function(url, data, msg, success, fail, type = "POST") {
+    ajaxConfirm: function(o) {
         //询问
-        var index = layer.confirm(msg + '？', {
+        var index = layer.confirm(o.msg + '？', {
                 btn: ['确定', '取消'] //按钮
             },
             function() {
                 //点击后立即关闭
                 layer.close(index);
-                askHelper.ajaxPost(url, data, success, fail, type);
+                askHelper.ajaxPost(o);
             });
     }
 }
@@ -84,31 +78,35 @@ var tableHelper = {
         return parseInt($(window).height() - $("#" + table).offset().top - 35);
     },
     //行选设置
-    choose: function(tableId, tr) {
-        var selection = tr.find("input[type='checkbox'],input[type='radio']");
-        $.each(selection, function(i, v) {
-            //点击一下渲染好的选框
-            $(v).next().on("click", function(e) {
-                //阻止事件冒泡
-                e.stopPropagation();
-            }).click();
-        });
-        //单选 选中状态设置
-        if (selection.length > 0 && selection[0].type == "radio") {
-            var cache = layui.table.cache[tableId];
-            var index = tr.data("index");
-            cache.forEach(function(v, i, a) {
-                index === i ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
+    choose: function(tableId, tr, isSelection = true) {
+        //是否开启行选选中复选框、单选框
+        if (isSelection) {
+            var selection = tr.find("input[type='checkbox'],input[type='radio']");
+            $.each(selection, function(i, v) {
+                //点击一下渲染好的选框
+                $(v).next().on("click", function(e) {
+                    //阻止事件冒泡
+                    e.stopPropagation();
+                }).click();
             });
+            //单选 选中状态设置
+            if (selection.length > 0 && selection[0].type == "radio") {
+                var cache = layui.table.cache[tableId];
+                var index = tr.data("index");
+                cache.forEach(function(v, i, a) {
+                    index === i ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
+                });
+            }
+            //复选 选中状态设置
+            if (selection.length > 0 && selection[0].type == "checkbox") {
+                var cache = layui.table.cache[tableId];
+                var checkbox = tr.offsetParent().find('input[name="layTableCheckbox"]');
+                cache.forEach(function(v, i, a) {
+                    checkbox[i].checked ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
+                });
+            }
         }
-        //复选 选中状态设置
-        if (selection.length > 0 && selection[0].type == "checkbox") {
-            var cache = layui.table.cache[tableId];
-            var checkbox = tr.offsetParent().find('input[name="layTableCheckbox"]');
-            cache.forEach(function(v, i, a) {
-                checkbox[i].checked ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
-            });
-        }
+
         //标注选中样式
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
     },
