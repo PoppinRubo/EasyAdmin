@@ -32,6 +32,7 @@ var askHelper = {
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
+        o.before = o.before || function() { layer.msg('处理中', { icon: 16, shade: 0.5 }); }
         $.ajax({
             url: o.url, //请求接口
             type: o.type, //GET、POST
@@ -39,6 +40,7 @@ var askHelper = {
             timeout: 6000, //超时时间
             data: o.data, //请求对象
             dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
+            beforeSend: function() { o.before(); }, //请求前方法
             success: function(result) {
                 if (result.code === 1) {
                     layer.msg(result.msg, { time: 500, icon: 1 }, function() { o.success(result); });
