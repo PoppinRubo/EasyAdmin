@@ -4,8 +4,8 @@
 <head>
     {include file="global.php" title="系统主页"/}
     <link rel="stylesheet" href="/static/style/home.css" media="all">
-    <script type="text/javascript" src="/static/tree/jquery.parser.js"></script>
-    <script type="text/javascript" src="/static/tree/jquery.tree.js"></script>
+    <!-- <script type="text/javascript" src="/static/tree/jquery.parser.js"></script>
+    <script type="text/javascript" src="/static/tree/jquery.tree.js"></script> -->
 </head>
 
 <body class="layui-layout-body">
@@ -103,7 +103,6 @@
         </div>
     </div>
 
-    <script src="/static/layui/layui.js"></script>
     <script type="text/javascript">
         //设置模块
         layui.config({
@@ -112,7 +111,7 @@
         }).extend({
             //设定模块别名
             home: 'home'
-        }).use(['home'], function () {
+        }).use(['home'], function() {
             var home = layui.home;
         });
     </script>
