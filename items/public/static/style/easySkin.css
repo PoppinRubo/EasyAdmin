@@ -71,3 +71,8 @@ table .tree-collapsed:before {
 table .tree-expanded:before {
     content: "\e97a";
 }
+
+.datagrid-view .layui-form-checkbox {
+    display: table;
+    margin: 0 15%;
+}
