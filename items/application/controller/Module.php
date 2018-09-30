@@ -84,12 +84,24 @@ class Module extends Basic
     }
 
     //获取模块列表 Json
-    public function getModuleList()
+    public function getModuleList($id = 0)
     {
         try {
-            $limit = input("limit") ?: 10;
-            $data = db('sys_module')->where(array("IsDel" => 0))->paginate($limit);
-            return toEasyTable($data);
+            $pid = empty(input("pid")) ? $id : input("pid");
+            $module = db('sys_module')->query("
+            SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
+            FROM sys_module AS t1 WHERE t1.IsDel=0 AND t1.Pid={$pid} ORDER BY t1.Sort ASC
+            ");
+            $tree = array();
+            foreach ($module as $m) {
+                $m["state"] = $m["Son"] > 0 ? "closed" : "";
+                $m["children"] = $m["Son"] > 0 ? $this->getModuleList($m["Id"]) : [];
+                $tree[] = convertInitials($m);
+            }
+            if ($id > 0) {
+                return $tree;
+            }
+            return toEasyTable($tree, false);
         } catch (Exception $e) {
             return toEasyTable([], false);
         }

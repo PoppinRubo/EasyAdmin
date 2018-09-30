@@ -58,7 +58,7 @@
             tabAdd: function(e) {
                 var t = this;
                 //父模块不开新窗口,
-                if (e.children && e.children.length > 0) {
+                if (e.son > 0) {
                     return;
                 }
                 //未配置链接

@@ -16,10 +16,10 @@ class Home extends Basic
     }
 
     //获取菜单树
-    public function getMenuTree($id = 0)
+    public function getMenuTree()
     {
         try {
-            $pid = empty(input("pid")) ? $id : input("pid");
+            $pid = input("id") ?: 0;
             $module = db('sys_module')->query("
             SELECT t1.Id,t1.Pid,t1.Name,t1.Icon,t1.Link,t1.Sort,
             (SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0 AND t2.IsValid=1) AS Son
@@ -34,11 +34,8 @@ class Home extends Basic
                     "text" => $m["Name"],
                     "iconCls" => $m["Icon"],
                     "link" => $m["Link"],
-                    "children" => $m["Son"] > 0 ? $this->getMenuTree($m["Id"]) : []
+                    "son" => $m["Son"],
                 );
-            }
-            if ($id > 0) {
-                return $tree;
             }
             echo json_encode($tree);
         } catch (Exception $e) {

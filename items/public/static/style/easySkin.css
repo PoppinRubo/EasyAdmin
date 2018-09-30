@@ -49,10 +49,25 @@ table .tree-icon {
     -moz-osx-font-smoothing: grayscale
 }
 
+table .tree-expanded,
+table .tree-collapsed {
+    background: none;
+    font-size: 18px;
+}
+
+table .tree-folder,
 table .tree-file {
     background: none;
 }
 
-table .tree-file::before {
-    content: "\edd9";
+table .tree-folder::before {
+    content: "\ede2";
+}
+
+table .tree-collapsed:before {
+    content: "\e97c";
+}
+
+table .tree-expanded:before {
+    content: "\e97a";
 }
