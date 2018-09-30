@@ -134,7 +134,14 @@ var tableHelper = {
     //easyui 表格样式美化
     beautify: function() {
         $.each($(".datagrid-view").find("input[type=checkbox]"), function(i, v) {
-            $(v).parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").html('<i class="layui-icon layui-icon-ok"></i>');
+            //添加样式
+            $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
+            $(v).parent().parent().parent(".datagrid-row").click(function() {
+                //事件延迟等待复选框状态
+                setTimeout(function() {
+                    $(v).get(0).checked ? $(v).parent().addClass("layui-form-checked") : $(v).parent().removeClass("layui-form-checked");
+                }, 100)
+            });
         });
     }
 };
