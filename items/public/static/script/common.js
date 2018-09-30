@@ -21,6 +21,8 @@
     });
     //处理easyui表格右边框超出隐藏问题
     $(".datagrid-wrap").css({ width: parseInt($(".datagrid-wrap").width() - 2) + "px" });
+    //easyui 表格美化
+    tableHelper.beautify();
 });
 
 /*
