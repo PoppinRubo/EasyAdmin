@@ -136,6 +136,13 @@ var tableHelper = {
     //easyui 表格样式美化
     beautify: function() {
         $.each($(".datagrid-view").find("input[type=checkbox]"), function(i, v) {
+            //表头
+            if ($(v).parent()[0].className == "datagrid-header-check") {
+                $(v).parent().click(function(e) {
+
+                    $(v).click();
+                });
+            }
             //添加样式
             $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
             $(v).parent().parent().parent(".datagrid-row").click(function() {
