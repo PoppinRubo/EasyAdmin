@@ -19,7 +19,8 @@
             $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
         });
     });
-
+    //处理easyui表格右边框超出隐藏问题
+    $(".datagrid-wrap").css({ width: parseInt($(".datagrid-wrap").width() - 2) + "px" });
 });
 
 /*
@@ -88,10 +89,11 @@ var askHelper = {
 */
 var tableHelper = {
     //高度适配
-    setHeight: function(table = "data-table") {
-        return parseInt($(window).height() - $("#" + table).offset().top - 35);
+    setHeight: function(table = "data-table", unit = true) {
+        var height = parseInt($(window).height() - $("#" + table).offset().top - 35);
+        return unit ? height + "px" : height;
     },
-    //行选设置
+    //layui 表格行选设置
     choose: function(tableId, tr, isSelection = true) {
         //是否开启行选选中复选框、单选框
         if (isSelection) {

@@ -88,8 +88,12 @@
             singleSelect: true, //行单选
             idField: 'id', //定义标识树节点的键字段
             treeField: 'name', //定义树节点字段
-            height: tableHelper.setHeight("data-table") + "px",
+            height: tableHelper.setHeight("data-table"),
             toolbar: '#toolbar', //表格工具条
+            rownumbers: true, //行号显示
+            pageSize: 15, //页码容量
+            fit: false, //关闭自适应
+            pageList: [5, 10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
             columns: [
                 [
                     { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
@@ -144,7 +148,7 @@
         }
 
         //删除
-        function remove(data) {
+        function remove() {
             var rows = $('#data-table').treegrid('getSelected');
             if (!rows) {
                 layer.msg("请选中一行", { time: 1500, icon: 5 });

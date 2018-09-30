@@ -1,4 +1,5 @@
 /*easyui皮肤、样式重写*/
+
 .easyui-table-tool {
     padding: 10px 0 0 15px;
 }
@@ -13,12 +14,12 @@
 }
 
 .datagrid-row-over {
-    background: #f2f2f2;
+    background: #f9f9f9;
     color: #666;
 }
 
 .panel-htop {
-    margin: 10px 0 0 0;
+    margin: 10px 0;
 }
 
 .datagrid-header {
@@ -33,4 +34,25 @@
 .datagrid-body td {
     border-color: #e6e6e6;
     border-style: solid;
+}
+
+.datagrid-td-rownumber {
+    background: #F2F2F2;
+}
+
+table .tree-hit,
+table .tree-icon {
+    font-family: icomoon !important;
+    font-size: 14px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
+table .tree-file {
+    background: none;
+}
+
+table .tree-file::before {
+    content: "\edd9";
 }
