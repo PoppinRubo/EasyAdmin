@@ -135,7 +135,8 @@ var tableHelper = {
     },
     //easyui 表格样式美化
     beautify: function() {
-        $.each($(".datagrid-view").find("input[type=checkbox]"), function(i, v) {
+        var checkbox = $(".datagrid-view").find("input[type=checkbox]");
+        $.each(checkbox, function(i, v) {
             //表头
             if ($(v).parent()[0].className == "datagrid-header-check") {
                 $(v).parent().click(function(e) {
@@ -148,7 +149,9 @@ var tableHelper = {
             $(v).parent().parent().parent(".datagrid-row").click(function() {
                 //事件延迟等待复选框状态
                 setTimeout(function() {
-                    $(v).get(0).checked ? $(v).parent().addClass("layui-form-checked") : $(v).parent().removeClass("layui-form-checked");
+                    $.each(checkbox, function(i, v) {
+                        this.checked ? $(this).parent().addClass("layui-form-checked") : $(this).parent().removeClass("layui-form-checked");
+                    });
                 }, 100)
             });
         });
