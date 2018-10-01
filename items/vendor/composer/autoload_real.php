@@ -47,24 +47,6 @@ class ComposerAutoloaderInitfadedeba0260df0488321989bc0c20e7
 
         $loader->register(true);
 
-        if ($useStaticLoader) {
-            $includeFiles = Composer\Autoload\ComposerStaticInitfadedeba0260df0488321989bc0c20e7::$files;
-        } else {
-            $includeFiles = require __DIR__ . '/autoload_files.php';
-        }
-        foreach ($includeFiles as $fileIdentifier => $file) {
-            composerRequirefadedeba0260df0488321989bc0c20e7($fileIdentifier, $file);
-        }
-
         return $loader;
-    }
-}
-
-function composerRequirefadedeba0260df0488321989bc0c20e7($fileIdentifier, $file)
-{
-    if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
-        require $file;
-
-        $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
     }
 }
