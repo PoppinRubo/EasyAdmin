@@ -136,12 +136,13 @@ var tableHelper = {
     //easyui 表格样式美化
     beautify: function(o) {
         o = o || {};
-        o.singleSelect = o.singleSelect || true;
+        o.singleSelect = o.singleSelect || false;
         var checkbox = $(".datagrid-view").find("input[type=checkbox]");
         //选中处理图标
         function select() {
             //事件延迟等待复选框状态
             setTimeout(function() {
+                checkbox = $(".datagrid-view").find("input[type=checkbox]");
                 $.each(checkbox, function(i, v) {
                     this.checked ? $(this).parent().addClass("layui-form-checked") : $(this).parent().removeClass("layui-form-checked");
                 });
@@ -154,9 +155,8 @@ var tableHelper = {
                     //单选模式表头不显示
                     $(v).parent().html("");
                 }
-                $(v).parent().click(function(e) {
-                    $(v).click();
-                    checkbox = $(".datagrid-view").find("input[type=checkbox]");
+                $(".datagrid-header-check").click(function() {
+                    $(this).find("input[type=checkbox]").click();
                     select();
                 });
             }
