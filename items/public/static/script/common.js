@@ -134,7 +134,9 @@ var tableHelper = {
         $("#" + tableId).next().find(".layui-laypage-btn").click();
     },
     //easyui 表格样式美化
-    beautify: function() {
+    beautify: function(o) {
+        o = o || {};
+        o.singleSelect = o.singleSelect || true;
         var checkbox = $(".datagrid-view").find("input[type=checkbox]");
         //选中处理图标
         function select() {
@@ -148,6 +150,10 @@ var tableHelper = {
         $.each(checkbox, function(i, v) {
             //表头
             if ($(v).parent()[0].className == "datagrid-header-check") {
+                if (o.singleSelect) {
+                    //单选模式表头不显示
+                    $(v).parent().html("");
+                }
                 $(v).parent().click(function(e) {
                     $(v).click();
                     checkbox = $(".datagrid-view").find("input[type=checkbox]");
