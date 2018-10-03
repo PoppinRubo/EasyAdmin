@@ -150,7 +150,7 @@ var tableHelper = {
         }
         $.each(checkbox, function(i, v) {
             //表头
-            if ($(v).parent()[0].className == "datagrid-header-check") {
+            if ($(v).parent()[0].className == "datagrid-header-check layui-form-checkbox") {
                 if (o.singleSelect) {
                     //单选模式表头不显示
                     $(v).parent().html("");
