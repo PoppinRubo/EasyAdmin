@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-09-28 18:11:13
+Backup Time: 2018-10-12 17:51:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -43,7 +43,7 @@ CREATE TABLE `sys_module` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
 CREATE TABLE `sys_module_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ModuleId` int(11) NOT NULL COMMENT '模块编号',
@@ -126,13 +126,13 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_button` WRITE;
 DELETE FROM `admin`.`sys_button`;
-INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 1, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:11:03', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 2, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:11:05', 1, 1, 0),(3, '删除', 'delete', 'layui-icon-delete', 3, ' ', '2018-07-12 20:00:00', 1, '2018-09-26 18:12:13', 1, 1, 0);
+INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 1, ' 添加按钮', '2018-07-12 20:00:00', 1, '2018-10-12 17:49:47', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 2, ' 编辑按钮', '2018-07-12 20:00:00', 1, '2018-10-12 17:50:07', 1, 1, 0),(3, '删除', 'remove', 'layui-icon-delete', 3, '删除按钮', '2018-07-12 20:00:00', 1, '2018-10-12 17:50:19', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 4, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 4, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0),(5, 1, '按钮管理', '/button/index', 'icon-bigcartel', 5, '按钮管理', '2018-10-12 17:16:14', 1, '2018-10-12 17:19:29', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

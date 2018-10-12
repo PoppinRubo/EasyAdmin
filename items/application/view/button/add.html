@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="global.php" title="按钮添加"/}
+</head>
+
+<body class="form-body">
+    <form class="layui-form" lay-filter="form">
+        <input type="hidden" name="id" value="{$model.id}" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">按钮名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" value="{$model.name}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">英文名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="englishName" value="{$model.englishName}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="icon" value="{$model.icon}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">序号</label>
+            <div class="layui-input-block">
+                <input type="number" name="sort" value="{$model.sort}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" data-auto="true" class="layui-textarea">{$model.remark}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否有效</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="isValid" lay-skin="switch" lay-text="是|否" {$model.isValid?"checked":""}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['form'], function() {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(submit)', function(data) {
+                askHelper.ajaxPost({
+                    url: '/button/add',
+                    data: data.field
+                });
+
+                //阻止表单提交
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>
