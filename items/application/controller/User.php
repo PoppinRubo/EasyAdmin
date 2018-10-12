@@ -87,7 +87,8 @@ class User extends Basic
     {
         try {
             $limit = input("limit") ?: 10;
-            $data = db('sys_user')->where(array("IsDel" => 0))->paginate($limit);
+            $key = input("key") ?: "";
+            $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->paginate($limit);
             return toLayTable($data);
         } catch (Exception $e) {
             return toLayTable([], false, -1, $e->getMessage());
