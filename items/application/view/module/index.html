@@ -12,9 +12,9 @@
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <div class="layui-input-inline admin-input-comm">
-                            <input type="text" name="content" placeholder="请输入编号、模块名" autocomplete="off" class="layui-input">
+                            <input type="text" id="key" placeholder="请输入编号、模块名" autocomplete="off" class="layui-input">
                         </div>
-                        <button class="layui-btn admin-btn-comm" data-type="reload" lay-submit>
+                        <button class="layui-btn admin-btn-comm" lay-submit onclick="search();">
                             <i class="layui-icon icon-search admin-button-btn"></i>搜索
                         </button>
                     </div>
@@ -129,6 +129,19 @@
                 success: function() {
                     //表格刷新
                     $('#data-table').treegrid('reload');
+                }
+            });
+        }
+
+        //搜索
+        function search() {
+            //执行重载
+            layui.table.reload(tableId, {
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                },
+                where: {
+                    key: $.trim($('#key').val())
                 }
             });
         }
