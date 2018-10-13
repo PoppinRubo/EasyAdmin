@@ -88,9 +88,17 @@ class Module extends Basic
     {
         try {
             $pid = empty(input("pid")) ? $id : input("pid");
+            $key = input("key") ?: "";
+            $pid = "AND t1.Pid={$pid}";
+            $search = "";
+            if ($key != "") {
+                $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '{$key}'";
+                $pid = "";
+            }
+
             $module = db('sys_module')->query("
             SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
-            FROM sys_module AS t1 WHERE t1.IsDel=0 AND t1.Pid={$pid} ORDER BY t1.Sort ASC
+            FROM sys_module AS t1 WHERE t1.IsDel=0 {$pid} {$search} ORDER BY t1.Sort ASC
             ");
             $tree = array();
             foreach ($module as $m) {

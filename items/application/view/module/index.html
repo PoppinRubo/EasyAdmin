@@ -135,12 +135,8 @@
 
         //搜索
         function search() {
-            //执行重载
-            layui.table.reload(tableId, {
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                },
-                where: {
+            $('#data-table').treegrid({
+                queryParams: {
                     key: $.trim($('#key').val())
                 }
             });
