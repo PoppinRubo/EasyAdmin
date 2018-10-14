@@ -91,6 +91,7 @@ class Module extends Basic
             $key = input("key") ?: "";
             $pid = "AND t1.Pid={$pid}";
             $search = "";
+            //搜索
             if ($key != "") {
                 $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '{$key}'";
                 $pid = "";
