@@ -10,6 +10,7 @@
         status = '',
         home = {
             tree: function() {
+                var t = this;
                 $('#menu-tree').tree({
                     url: "/home/getMenuTree",
                     method: "post",
@@ -40,6 +41,10 @@
                             $(this).tree('collapse', node.target);
                         }
                         home.tabAdd(node);
+                        //展开折叠
+                        if (status === 'spread') {
+                            t.sideFlexible();
+                        }
                     }
                 });
             },
