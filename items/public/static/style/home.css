@@ -1361,3 +1361,13 @@ html {
 .tab-icon {
     margin-right: 5px;
 }
+
+.menu-shrink .tree-title,
+.menu-shrink .tree-hit,
+.menu-shrink li ul li {
+    display: none;
+}
+
+.menu-shrink .tree-node {
+    text-align: center;
+}

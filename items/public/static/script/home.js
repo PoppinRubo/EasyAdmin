@@ -70,11 +70,12 @@
                     iconShrink = 'layui-icon-shrink-right',
                     iconSpread = 'layui-icon-spread-left',
                     spreadSm = 'admin-side-spread-sm',
-                    sideShrink = 'admin-side-shrink';
+                    sideShrink = 'admin-side-shrink',
+                    menuTree = $('#menu-tree');
 
                 //设置状态，PC：默认展开、移动：默认收缩
                 if (status === 'spread') {
-                    //切换到展开状态的 icon，箭头：←
+                    //展开
                     iconElem.removeClass(iconSpread).addClass(iconShrink);
 
                     //移动：从左到右位移；PC：清除多余选择器恢复默认
@@ -84,8 +85,9 @@
                         app.removeClass(spreadSm);
                     }
                     app.removeClass(sideShrink)
+                    menuTree.removeClass('menu-shrink');
                 } else {
-                    //切换到搜索状态的 icon，箭头：→
+                    //折叠
                     iconElem.removeClass(iconShrink).addClass(iconSpread);
 
                     //移动：清除多余选择器恢复默认；PC：从右往左收缩
@@ -94,8 +96,8 @@
                     } else {
                         app.addClass(sideShrink);
                     }
-
                     app.removeClass(spreadSm)
+                    menuTree.addClass('menu-shrink');
                 }
                 status = status === 'spread' ? '' : 'spread';
             },
