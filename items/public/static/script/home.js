@@ -286,6 +286,20 @@
         home.tabChange(id);
     });
 
+    //窗口resize事件
+    var resizeSystem = layui.data.resizeSystem = function() {
+        layer.closeAll('tips');
+        if (!resizeSystem.lock) {
+            setTimeout(function() {
+                status = home.screen() < 2 ? '' : 'spread';
+                home.sideFlexible();
+                delete resizeSystem.lock;
+            }, 100);
+        }
+        resizeSystem.lock = true;
+    }
+    $(window).on('resize', layui.data.resizeSystem);
+
     //开启事件
     home.click();
     //开启右键菜单
