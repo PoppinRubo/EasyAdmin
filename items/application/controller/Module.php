@@ -93,7 +93,7 @@ class Module extends Basic
             $search = "";
             //搜索
             if ($key != "") {
-                $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '{$key}'";
+                $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
                 $pid = "";
             }
 
