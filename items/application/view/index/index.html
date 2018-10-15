@@ -29,7 +29,7 @@
                         </div>
                         <div class="layui-col-xs5">
                             <div style="margin-left: 10px;">
-                                <img src="/index/captcha" id="captcha" class="user-login-codeimg" onclick="this.src=this.src;">
+                                <img src="/index/captcha" id="captcha" class="user-login-codeimg" onclick="this.src='/index/captcha?t='+new Date().getTime();">
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="login-submit">登 录</button>
+                    <div class="layui-btn layui-btn-fluid" lay-submit lay-filter="login-submit">登 录</div>
                 </div>
             </form>
         </div>
