@@ -49,11 +49,17 @@
                     i = "layui-icon-screen-restore",
                     t = e.children("i");
                 if (t.hasClass(a)) {
-                    var l = document.body;
-                    l.webkitRequestFullScreen ? l.webkitRequestFullScreen() : l.mozRequestFullScreen ? l.mozRequestFullScreen() : l.requestFullScreen && l.requestFullscreen(), t.addClass(i).removeClass(a)
+                    //全屏
+                    t.addClass(i).removeClass(a)
+                    var e = document.documentElement,
+                        a = e.requestFullScreen || e.webkitRequestFullScreen || e.mozRequestFullScreen || e.msRequestFullscreen;
+                    "undefined" != typeof a && a && a.call(e)
                 } else {
-                    var l = document;
-                    l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
+                    //退出全屏
+                    t.addClass(a).removeClass(i);
+                    document.documentElement;
+                    document.exitFullscreen ? document.exitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() :
+                        document.webkitCancelFullScreen ? document.webkitCancelFullScreen() : document.msExitFullscreen && document.msExitFullscreen();
                 }
             },
             sideFlexible: function() {
@@ -64,7 +70,7 @@
                     iconShrink = 'layui-icon-shrink-right',
                     iconSpread = 'layui-icon-spread-left',
                     spreadSm = 'admin-side-spread-sm',
-                    sideShrink = 'layadmin-side-shrink';
+                    sideShrink = 'admin-side-shrink';
 
                 //设置状态，PC：默认展开、移动：默认收缩
                 if (status === 'spread') {
