@@ -288,7 +288,6 @@
 
     //窗口resize事件
     var resizeSystem = layui.data.resizeSystem = function() {
-        layer.closeAll('tips');
         if (!resizeSystem.lock) {
             setTimeout(function() {
                 status = home.screen() < 2 ? '' : 'spread';
