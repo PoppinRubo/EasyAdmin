@@ -55,6 +55,60 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
+            sideFlexible: function(status) {
+                //侧边伸缩
+                var app = $('#admin-app'),
+                    iconElem = $('#app-flexible'),
+                    screen = home.screen(),
+                    iconShrink = 'layui-icon-shrink-right',
+                    iconSpread = 'layui-icon-spread-left',
+                    spreadSm = 'admin-side-spread-sm',
+                    sideShrink = 'layadmin-side-shrink';
+
+                //设置状态，PC：默认展开、移动：默认收缩
+                if (status === 'spread') {
+                    //切换到展开状态的 icon，箭头：←
+                    iconElem.removeClass(iconSpread).addClass(iconShrink);
+
+                    //移动：从左到右位移；PC：清除多余选择器恢复默认
+                    if (screen < 2) {
+                        app.addClass(spreadSm);
+                    } else {
+                        app.removeClass(spreadSm);
+                    }
+
+                    app.removeClass(sideShrink)
+                } else {
+                    //切换到搜索状态的 icon，箭头：→
+                    iconElem.removeClass(iconShrink).addClass(iconSpread);
+
+                    //移动：清除多余选择器恢复默认；PC：从右往左收缩
+                    if (screen < 2) {
+                        app.removeClass(sideShrink);
+                    } else {
+                        app.addClass(sideShrink);
+                    }
+
+                    app.removeClass(spreadSm)
+                }
+
+                layui.event.call(this, 'home', 'side({*})', {
+                    status: status
+                });
+            },
+            screen: function() {
+                //屏幕类型
+                var width = $(window).width()
+                if (width >= 1200) {
+                    return 3; //大屏幕
+                } else if (width >= 992) {
+                    return 2; //中屏幕
+                } else if (width >= 768) {
+                    return 1; //小屏幕
+                } else {
+                    return 0; //超小屏幕
+                }
+            },
             tabAdd: function(e) {
                 var t = this;
                 //父模块不开新窗口,

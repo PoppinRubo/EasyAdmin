@@ -404,26 +404,26 @@ html {
     background: rgba(0, 0, 0, .3)
 }
 
-.layadmin-side-spread-sm .admin-page-tabs,
-.layadmin-side-spread-sm .layui-layout-admin .layui-body,
-.layadmin-side-spread-sm .layui-layout-admin .layui-footer,
-.layadmin-side-spread-sm .layui-layout-admin .layui-layout-left {
+.admin-side-spread-sm .admin-page-tabs,
+.admin-side-spread-sm .layui-layout-admin .layui-body,
+.admin-side-spread-sm .layui-layout-admin .layui-footer,
+.admin-side-spread-sm .layui-layout-admin .layui-layout-left {
     left: 0;
     transform: translate3d(220px, 0, 0);
     -webkit-transform: translate3d(220px, 0, 0)
 }
 
-.layadmin-side-spread-sm .layui-layout-admin .layui-layout-right {
+.admin-side-spread-sm .layui-layout-admin .layui-layout-right {
     transform: translate3d(220px, 0, 0);
     -webkit-transform: translate3d(220px, 0, 0)
 }
 
-.layadmin-side-spread-sm .layui-side {
+.admin-side-spread-sm .layui-side {
     transform: translate3d(0, 0, 0);
     -webkit-transform: translate3d(0, 0, 0)
 }
 
-.layadmin-side-spread-sm .admin-body-shade {
+.admin-side-spread-sm .admin-body-shade {
     display: block
 }
 

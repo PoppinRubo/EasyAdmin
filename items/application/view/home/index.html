@@ -10,14 +10,14 @@
 
 <body class="layui-layout-body">
 
-    <div id="LAY_app">
+    <div id="admin-app">
         <div class="layui-layout layui-layout-admin">
             <div class="layui-header">
                 <!-- 头部区域 -->
                 <ul class="layui-nav layui-layout-left">
                     <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                        <a href="javascript:void(0);" layadmin-event="flexible" title="侧边伸缩">
-                            <i class="layui-icon layui-icon-shrink-right" id="LAY_app_flexible"></i>
+                        <a href="javascript:void(0);" admin-event="sideFlexible" title="侧边伸缩">
+                            <i class="layui-icon layui-icon-shrink-right" id="app-flexible"></i>
                         </a>
                     </li>
                     <li class="layui-nav-item" lay-unselect>
@@ -64,7 +64,9 @@
             <div class="layui-side layui-side-menu">
                 <div class="layui-side-scroll">
                     <div class="layui-logo">
-                        <h4>管理主页</h4>
+                        <span>
+                            <h4>管理主页</h4>
+                        </span>
                     </div>
                     <ul id="menu-tree" class="layui-nav layui-nav-tree"></ul>
                 </div>
