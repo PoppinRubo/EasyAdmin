@@ -7,6 +7,7 @@
         tabBody = $("#tab-body"),
         pageId = "first",
         selectPageIndex = 0,
+        status = '',
         home = {
             tree: function() {
                 $('#menu-tree').tree({
@@ -55,7 +56,7 @@
                     l.webkitCancelFullScreen ? l.webkitCancelFullScreen() : l.mozCancelFullScreen ? l.mozCancelFullScreen() : l.cancelFullScreen ? l.cancelFullScreen() : l.exitFullscreen && l.exitFullscreen(), t.addClass(a).removeClass(i)
                 }
             },
-            sideFlexible: function(status) {
+            sideFlexible: function() {
                 //侧边伸缩
                 var app = $('#admin-app'),
                     iconElem = $('#app-flexible'),
@@ -76,7 +77,6 @@
                     } else {
                         app.removeClass(spreadSm);
                     }
-
                     app.removeClass(sideShrink)
                 } else {
                     //切换到搜索状态的 icon，箭头：→
@@ -91,10 +91,7 @@
 
                     app.removeClass(spreadSm)
                 }
-
-                layui.event.call(this, 'home', 'side({*})', {
-                    status: status
-                });
+                status = status === 'spread' ? '' : 'spread';
             },
             screen: function() {
                 //屏幕类型
@@ -275,6 +272,7 @@
         var id = $(e).data("id") || $(e).attr('lay-id');
         home.tabChange(id);
     });
+
     //开启事件
     home.click();
     //开启右键菜单
