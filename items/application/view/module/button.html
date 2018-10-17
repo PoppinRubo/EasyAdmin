@@ -34,7 +34,7 @@
             table.render({
                 elem: '#' + tableId,
                 height: tableHelper.setHeight(tableId),
-                url: '/module/getModuleButtonList', //数据接口
+                url: '/module/getModuleButtonList?moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
                 page: true, //开启分页
                 cols: [
                     [ //表头
@@ -57,7 +57,10 @@
                             align: 'center',
                             templet: function(d) {
                                 //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                                var button = { relation: ['关联', 1] };
+                                var button = { relation: ['关联按钮', 1] };
+                                if (d.isRelation) {
+                                    button = { delRelation: ['取消关联', 0] };
+                                }
                                 return tableHelper.createButton(button, d);
                             }
                         }
@@ -69,23 +72,24 @@
         //操作方法
 
         //添加关联
-        function relation() {
+        function relation(d) {
             askHelper.ajaxPost({
-                url: '/button/remove',
-                data: { id: data.id }
+                url: '/module/relation',
+                data: { buttonId: d.id, moduleId: d.moduleId },
+                success: function() {
+                    tableHelper.refresh('data-table');
+                }
             });
         }
 
         //删除关联
-        function remove(data) {
-            if (!data || data.length < 1) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
-                return;
-            }
-            askHelper.ajaxConfirm({
-                url: '/button/remove',
-                data: { id: data.id },
-                msg: "确认删除吗"
+        function delRelation(d) {
+            askHelper.ajaxPost({
+                url: '/module/delRelation',
+                data: { buttonId: d.id, moduleId: d.moduleId },
+                success: function() {
+                    tableHelper.refresh('data-table');
+                }
             });
         }
 

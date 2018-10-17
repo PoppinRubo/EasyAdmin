@@ -2,6 +2,7 @@
 namespace app\controller;
 
 use app\model\SysModule;
+use app\model\SysModuleButton;
 use think\Controller;
 use think\Exception;
 
@@ -90,10 +91,10 @@ class Module extends Basic
             $pid = empty(input("pid")) ? $id : input("pid");
             $key = input("key") ?: "";
             //搜索
-            $search = $key == "" ? "AND t1.Pid={$pid}" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $search = $key != "" ? is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'" : "AND t1.Pid={$pid}";
             $module = db('sys_module')->query("
             SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
-            FROM sys_module AS t1 WHERE t1.IsDel=0 {$pid} {$search} ORDER BY t1.Sort ASC");
+            FROM sys_module AS t1 WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC");
             $tree = array();
             foreach ($module as $m) {
                 $m["state"] = $m["Son"] > 0 ? "closed" : "";
@@ -120,15 +121,73 @@ class Module extends Basic
     {
         try {
             $key = input("key") ?: "";
+            $moduleId = input("moduleId") ?: 0;
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = db('sys_button')->query("
-            SELECT t1.Id,t1.Name,t1.EnglishName,CASE t2.Id WHEN t2.Id>0 THEN 1 ELSE 0 END AS IsRelation
-            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ButtonId=t1.Id AND t2.IsDel=0)
-            WHERE t1.IsDel=0 {$search}");
+            SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,t2.Id AS IsRelation FROM sys_button AS t1
+            LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
+            WHERE t1.IsDel=0 {$search} ORDER BY t2.Id DESC");
             return toLayTable($data);
         } catch (Exception $e) {
             return toLayTable([], false, -1, $e->getMessage());
+        }
+    }
+
+    //模块关联按钮 Json
+    public function relation()
+    {
+        try {
+            $moduleId = input("moduleId") ?: 0;
+            $buttonId = input("buttonId") ?: 0;
+            if ($moduleId < 0 || $buttonId < 0) {
+                return toJsonData(0, null, "参数错误");
+            }
+            $model = new SysModuleButton();
+            $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
+            if ($data == null) {
+                //新增关联插入记录
+                $model->save(array(
+                    "ModuleId" => $moduleId,
+                    "ButtonId" => $buttonId,
+                    "CreateTime" => date("Y-m-d H:i:s"),
+                    "CreateUser" => $this->user["Id"],
+                    "ModifyTime" => date("Y-m-d H:i:s"),
+                    "ModifyUser" => $this->user["Id"],
+                ));
+                return toJsonData(1, null, "操作成功");
+            }
+            //更新可用状态
+            $data['IsValid'] = 1;
+            $data['IsDel'] = 0;
+            $model->save($data, ['Id' => $data['Id']]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //模块删除关联按钮 Json
+    public function delRelation()
+    {
+        try {
+            $moduleId = input("moduleId") ?: 0;
+            $buttonId = input("buttonId") ?: 0;
+            if ($moduleId < 0 || $buttonId < 0) {
+                return toJsonData(0, null, "参数错误");
+            }
+            $model = new SysModuleButton();
+            $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
+            if ($data == null) {
+                return toJsonData(0, null, "未找到关联数据,无法删除关联");
+            }
+            //恢复可用状态
+            $data['IsValid'] = 0;
+            $data['IsDel'] = 1;
+            $model->save($data, ['Id' => $data['Id']]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
         }
     }
 }
