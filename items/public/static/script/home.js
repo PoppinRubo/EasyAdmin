@@ -33,6 +33,10 @@
                         //当数据加载失败时触发
                     },
                     onSelect: function(node) {
+                        //菜单展开折叠
+                        if (status === 'spread') {
+                            t.sideFlexible();
+                        }
                         //节点被选中前触发，返回 false 则取消选择动作
                         //单击节点展开||关闭
                         if (node.state == "closed") {
@@ -40,11 +44,8 @@
                         } else {
                             $(this).tree('collapse', node.target);
                         }
+                        //添加标签页
                         home.tabAdd(node);
-                        //展开折叠
-                        if (status === 'spread') {
-                            t.sideFlexible();
-                        }
                     }
                 });
             },
