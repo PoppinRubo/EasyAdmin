@@ -35,7 +35,7 @@
                 elem: '#' + tableId,
                 height: tableHelper.setHeight(tableId),
                 url: '/module/getModuleButtonList?moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
-                page: true, //开启分页
+                page: false, //开启分页
                 cols: [
                     [ //表头
                         { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
@@ -44,7 +44,7 @@
                         {
                             field: 'isRelation',
                             title: '是否关联',
-                            width: 100,
+                            width: 90,
                             align: 'center',
                             templet: function(d) {
                                 return d[this.field] ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
@@ -97,9 +97,6 @@
         function search() {
             //执行重载
             layui.table.reload(tableId, {
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                },
                 where: {
                     key: $.trim($('#key').val())
                 }
