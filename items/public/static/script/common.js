@@ -138,7 +138,12 @@ var tableHelper = {
     //layui 表格刷新
     refresh: function(tableId) {
         //点击当前页码来刷新表格数据
-        $("#" + tableId).next().find(".layui-laypage-btn").click();
+        var laypage = $("#" + tableId).next().find(".layui-laypage-btn");
+        if (laypage.length > 0) {
+            laypage.click();
+            return;
+        }
+        search();
     },
     //easyui 表格样式美化
     beautify: function(o) {
@@ -189,8 +194,8 @@ var tableHelper = {
                 var s = style[btnList[b][1]];
                 //按钮设置值
                 var data = typeof btnList[b][2] == "undefined" ? "" : btnList[b][2];
-                btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"'+
-                'class="' + layuiBtn + " " + s + '">' + btnList[b][0] + "</a>";
+                btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"' +
+                    'class="' + layuiBtn + " " + s + '">' + btnList[b][0] + "</a>";
             }
         }
         return btn;
