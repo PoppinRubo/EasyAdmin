@@ -10,6 +10,8 @@ class Button extends Basic
     //按钮列表 View
     public function index()
     {
+        //获取按钮
+        $this->assign('button', $this->getModuleButton(5));
         return View();
     }
 
@@ -88,7 +90,7 @@ class Button extends Basic
         try {
             $limit = input("limit") ?: 10;
             $key = input("key") ?: "";
-            $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->paginate($limit);
+            $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order("Sort", "ASC")->paginate($limit);
             return toLayTable($data);
         } catch (Exception $e) {
             return toLayTable([], false, -1, $e->getMessage());
