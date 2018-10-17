@@ -65,3 +65,12 @@ table .icon {
 }
 
 /*表格图标*/
+
+/*表格工具栏按钮*/
+.layui-btn-container button i {
+    display: inline-block;
+    height: 100%;
+    line-height: 1.8;
+}
+
+/*表格工具栏按钮*/

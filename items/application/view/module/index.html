@@ -11,7 +11,7 @@
             <div class="layui-form layui-card-header admin-card-header-auto">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <div class="layui-input-inline admin-input-comm">
+                        <div class="layui-input-inline admin-input-comm search">
                             <input type="text" id="key" placeholder="请输入编号、模块名" autocomplete="off" class="layui-input">
                         </div>
                         <button class="layui-btn admin-btn-comm" lay-submit onclick="search();">
@@ -33,6 +33,9 @@
             </button>
             <button class="layui-btn layui-btn-sm" onclick="addSon();">
                 <i class="layui-icon layui-icon-add-1"></i> 添加子级
+            </button>
+            <button class="layui-btn layui-btn-sm" onclick="moduleButton();">
+                <i class="layui-icon icon-link2"></i> 模块按钮
             </button>
             <button class="layui-btn layui-btn-sm" onclick="edit();">
                 <i class="layui-icon layui-icon-edit"></i> 编辑
@@ -112,6 +115,28 @@
                 maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
                 content: '/module/edit?id=' + rows.id
+            });
+        }
+
+        //模块按钮
+        function moduleButton() {
+            var rows = $('#data-table').treegrid('getSelected');
+            if (!rows) {
+                layer.msg("请选中一行", { time: 1500, icon: 5 });
+                return;
+            }
+            if (rows.pid === 0) {
+                layer.msg("请选择子级模块", { time: 1500, icon: 5 });
+                return;
+            }
+            layer.open({
+                type: 2,
+                title: '模块按钮列表',
+                shadeClose: false, //是否点击遮罩关闭
+                shade: 0.5, //遮罩透明度
+                maxmin: false, //开启最大化最小化按钮
+                area: ['700px', '500px'],
+                content: '/module/button?id=' + rows.id
             });
         }
 

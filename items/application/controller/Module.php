@@ -89,18 +89,11 @@ class Module extends Basic
         try {
             $pid = empty(input("pid")) ? $id : input("pid");
             $key = input("key") ?: "";
-            $pid = "AND t1.Pid={$pid}";
-            $search = "";
             //搜索
-            if ($key != "") {
-                $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
-                $pid = "";
-            }
-
+            $search = $key == "" ? "AND t1.Pid={$pid}" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = db('sys_module')->query("
             SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
-            FROM sys_module AS t1 WHERE t1.IsDel=0 {$pid} {$search} ORDER BY t1.Sort ASC
-            ");
+            FROM sys_module AS t1 WHERE t1.IsDel=0 {$pid} {$search} ORDER BY t1.Sort ASC");
             $tree = array();
             foreach ($module as $m) {
                 $m["state"] = $m["Son"] > 0 ? "closed" : "";
@@ -113,6 +106,29 @@ class Module extends Basic
             return toEasyTable($tree, false);
         } catch (Exception $e) {
             return toEasyTable([], false);
+        }
+    }
+
+    //模块按钮列表 View
+    public function button()
+    {
+        return View();
+    }
+
+    //获取模块按钮列表
+    public function getModuleButtonList()
+    {
+        try {
+            $key = input("key") ?: "";
+            //搜索
+            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $data = db('sys_button')->query("
+            SELECT t1.Id,t1.Name,t1.EnglishName,CASE t2.Id WHEN t2.Id>0 THEN 1 ELSE 0 END AS IsRelation
+            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ButtonId=t1.Id AND t2.IsDel=0)
+            WHERE t1.IsDel=0 {$search}");
+            return toLayTable($data);
+        } catch (Exception $e) {
+            return toLayTable([], false, -1, $e->getMessage());
         }
     }
 }

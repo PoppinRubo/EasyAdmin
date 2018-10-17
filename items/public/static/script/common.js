@@ -23,6 +23,13 @@
     $(".datagrid-wrap").css({ width: parseInt($(".datagrid-wrap").width() - 2) + "px" });
     //easyui 表格美化
     tableHelper.beautify();
+
+    //搜索框回车搜索
+    $(".search input").keydown(function(e) {
+        if (e.keyCode == 13) {
+            $(this).parent().next('button').click();
+        }
+    });
 });
 
 /*
@@ -166,6 +173,27 @@ var tableHelper = {
                 select();
             });
         });
+    },
+    createButton: function(object, value) {
+        //表格按钮创建助手
+        var btn = "",
+            btnList = object,
+            layuiBtn = "layui-btn layui-btn-xs",
+            style = ["layui-btn-primary", "", "layui-btn-normal", "layui-btn-warm", "layui-btn-danger", "layui-btn-disabled"];
+        //参数是否为对象,为对象转json string装入dom
+        if (typeof value == "object") {
+            value = JSON.stringify(value).replace(/\"/g, "'");
+        }
+        for (var b in btnList) {
+            if (btnList.hasOwnProperty(b)) {
+                var s = style[btnList[b][1]];
+                //按钮设置值
+                var data = typeof btnList[b][2] == "undefined" ? "" : btnList[b][2];
+                btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"'+
+                'class="' + layuiBtn + " " + s + '">' + btnList[b][0] + "</a>";
+            }
+        }
+        return btn;
     }
 };
 
