@@ -2,7 +2,6 @@
 namespace app\controller;
 
 use app\model\SysUser;
-use think\Controller;
 use think\Exception;
 
 class User extends Basic

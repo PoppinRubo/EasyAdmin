@@ -3,7 +3,6 @@ namespace app\controller;
 
 use app\model\SysModule;
 use app\model\SysModuleButton;
-use think\Controller;
 use think\Exception;
 
 class Module extends Basic

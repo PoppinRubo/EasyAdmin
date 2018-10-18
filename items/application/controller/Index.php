@@ -2,7 +2,6 @@
 namespace app\controller;
 
 use think\captcha\Captcha;
-use think\Controller;
 use think\Exception;
 use think\facade\Session;
 

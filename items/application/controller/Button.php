@@ -2,7 +2,6 @@
 namespace app\controller;
 
 use app\model\SysButton;
-use think\Controller;
 use think\Exception;
 
 class Button extends Basic
