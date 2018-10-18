@@ -126,9 +126,11 @@ class Module extends Basic
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = db()->query("
-            SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,t2.Id AS IsRelation FROM sys_button AS t1
-            LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
-            WHERE t1.IsDel=0 {$search} ORDER BY t2.Id DESC");
+            SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,
+            CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2
+            ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
+            WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC;");
             return toLayTable($data);
         } catch (Exception $e) {
             return toLayTable([], false, -1, $e->getMessage());
