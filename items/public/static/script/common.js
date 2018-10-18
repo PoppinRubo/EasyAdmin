@@ -136,14 +136,14 @@ var tableHelper = {
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
     },
     //layui 表格刷新
-    refresh: function(tableId) {
+    refresh: function (tableId) {
         //点击当前页码来刷新表格数据
         var laypage = $("#" + tableId).next().find(".layui-laypage-btn");
         if (laypage.length > 0) {
             laypage.click();
             return;
         }
-        search();
+        layui.table.reload(tableId);
     },
     //easyui 表格样式美化
     beautify: function(o) {
