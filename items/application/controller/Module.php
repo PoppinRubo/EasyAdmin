@@ -161,6 +161,8 @@ class Module extends Basic
             //更新可用状态
             $data['IsValid'] = 1;
             $data['IsDel'] = 0;
+            $data["ModifyTime"] = date("Y-m-d H:i:s");
+            $data["ModifyUser"] = $this->user["Id"];
             $model->save($data, ['Id' => $data['Id']]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -185,6 +187,8 @@ class Module extends Basic
             //恢复可用状态
             $data['IsValid'] = 0;
             $data['IsDel'] = 1;
+            $data["ModifyTime"] = date("Y-m-d H:i:s");
+            $data["ModifyUser"] = $this->user["Id"];
             $model->save($data, ['Id' => $data['Id']]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
