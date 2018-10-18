@@ -2,6 +2,7 @@
 namespace app\controller;
 
 use think\Controller;
+use think\facade\Request;
 
 class Basic extends Controller
 {
@@ -27,17 +28,20 @@ class Basic extends Controller
     }
 
     /**
-     * 获取模块按钮
+     * 获取模块页配置按钮
      * @access protected
-     * @param  int $moduleId 模块编号
-     * @return button
+     * @return array
      */
-    protected function getModuleButton($moduleId)
+    protected function getModuleButton()
     {
-        $button = db('sys_module_button')->query("
-        SELECT t2.Name,t2.EnglishName FROM sys_module_button AS t1
+        //获取模块页面按钮是根据该模块请求路径查询数据库配置路径获取,请务必将数据库路径与其模块路径对应
+        $url = Request::url();
+        $button = db()->query("
+        SELECT t2.Name,t2.EnglishName,t2.Icon FROM sys_module_button AS t1
         JOIN sys_button AS t2 ON(t2.Id=t1.ButtonId)
-        WHERE t1.IsValid=1 AND t1.IsDel=0 AND t1.ModuleId=1
+        JOIN sys_module AS t3 ON(t3.Link='{$url}')
+        WHERE t1.IsValid=1 AND t1.IsDel=0 AND t1.ModuleId=t3.Id
         ORDER BY t2.Sort ASC");
+        return $button;
     }
 }

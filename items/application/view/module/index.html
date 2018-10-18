@@ -27,22 +27,13 @@
     </div>
     <!--表格工具条-->
     <div class="easyui-table-tool" id="toolbar">
+        <!--注意:easyUI表格方法绑定使用onclick-->
         <div class="layui-btn-container">
-            <button class="layui-btn layui-btn-sm" onclick="add();">
-                <i class="layui-icon layui-icon-add-1"></i> 添加
+            {foreach $button as $b }
+            <button class="layui-btn layui-btn-sm" onclick="{$b.EnglishName}();">
+                <i class="layui-icon {$b.Icon}"></i> {$b.Name}
             </button>
-            <button class="layui-btn layui-btn-sm" onclick="addSon();">
-                <i class="layui-icon layui-icon-add-1"></i> 添加子级
-            </button>
-            <button class="layui-btn layui-btn-sm" onclick="moduleButton();">
-                <i class="layui-icon icon-link2"></i> 模块按钮
-            </button>
-            <button class="layui-btn layui-btn-sm" onclick="edit();">
-                <i class="layui-icon layui-icon-edit"></i> 编辑
-            </button>
-            <button class="layui-btn layui-btn-sm" onclick="remove();">
-                <i class="layui-icon layui-icon-delete"></i> 删除
-            </button>
+            {/foreach}
         </div>
     </div>
     <script>

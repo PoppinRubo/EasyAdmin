@@ -10,6 +10,8 @@ class User extends Basic
     //用户列表 View
     public function index()
     {
+        //获取按钮
+        $this->assign('button', $this->getModuleButton());
         return View();
     }
 

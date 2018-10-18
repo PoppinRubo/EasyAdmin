@@ -11,7 +11,7 @@ class Button extends Basic
     public function index()
     {
         //获取按钮
-        $this->assign('button', $this->getModuleButton(5));
+        $this->assign('button', $this->getModuleButton());
         return View();
     }
 

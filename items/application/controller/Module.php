@@ -11,6 +11,8 @@ class Module extends Basic
     //模块列表 View
     public function index()
     {
+        //获取按钮
+        $this->assign('button', $this->getModuleButton());
         return View();
     }
 
@@ -92,7 +94,7 @@ class Module extends Basic
             $key = input("key") ?: "";
             //搜索
             $search = $key != "" ? is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'" : "AND t1.Pid={$pid}";
-            $module = db('sys_module')->query("
+            $module = db()->query("
             SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
             FROM sys_module AS t1 WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC");
             $tree = array();
@@ -124,7 +126,7 @@ class Module extends Basic
             $moduleId = input("moduleId") ?: 0;
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
-            $data = db('sys_button')->query("
+            $data = db()->query("
             SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,t2.Id AS IsRelation FROM sys_button AS t1
             LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY t2.Id DESC");
