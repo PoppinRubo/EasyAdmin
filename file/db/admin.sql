@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-10-19 10:52:55
+Backup Time: 2018-10-19 11:28:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,6 +31,7 @@ CREATE TABLE `sys_button` (
 CREATE TABLE `sys_module` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级模块编号',
+  `Level` int(2) NOT NULL COMMENT '层级',
   `Name` varchar(50) NOT NULL COMMENT '模块名称',
   `Link` varchar(100) NOT NULL DEFAULT '' COMMENT '模块链接',
   `Icon` varchar(50) NOT NULL COMMENT '图标',
@@ -132,7 +133,7 @@ COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, '模块列表', '/module/index', 'icon-books', 4, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0),(5, 1, '按钮管理', '/button/index', 'icon-bigcartel', 5, '按钮管理', '2018-10-18 10:13:21', 1, '2018-10-18 10:13:21', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Level`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, 1, '系统管理', '', 'icon-briefcase', 1, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, 2, '字体图标', '/icon/index', 'icon-open-book', 2, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, 2, '用户列表', '/user/index', 'icon-user', 3, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, 2, '模块列表', '/module/index', 'icon-books', 4, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0),(5, 1, 2, '按钮管理', '/button/index', 'icon-bigcartel', 5, '按钮管理', '2018-10-18 10:13:21', 1, '2018-10-18 10:13:21', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

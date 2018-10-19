@@ -59,8 +59,9 @@
                 [
                     { field: 'checkbox', checkbox: true, align: 'center' },
                     { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
-                    { field: 'name', title: '模块名', width: 120, align: 'center' },
+                    { field: 'name', title: '模块名', width: 120, align: 'left' },
                     { field: 'link', title: '链接', width: 120, align: 'left' },
+                    { field: 'level', title: '层级', width: 80, align: 'center' },
                     { field: 'sort', title: '排序', width: 80, align: 'center' },
                     { field: 'remark', title: '备注', width: 170, align: 'center' }
                 ]
@@ -70,7 +71,7 @@
         //操作方法
 
         //添加
-        function add(pid = 0, title = "添加模块") {
+        function add(pid = 0, level = 0, title = "添加模块") {
             layer.open({
                 type: 2,
                 title: title,
@@ -78,7 +79,7 @@
                 shade: 0.5, //遮罩透明度
                 maxmin: false, //开启最大化最小化按钮
                 area: ['700px', '500px'],
-                content: '/module/add?pid=' + pid
+                content: '/module/add?pid=' + pid + '&level=' + level
             });
         }
 
@@ -89,7 +90,7 @@
                 layer.msg("请选中一行", { time: 1500, icon: 5 });
                 return;
             }
-            add(rows.id, "[" + rows.name + "]添加子级模块");
+            add(rows.id, rows.level, "[" + rows.name + "]添加子级模块");
         }
 
         //编辑

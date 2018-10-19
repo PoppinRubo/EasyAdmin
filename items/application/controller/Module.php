@@ -38,6 +38,7 @@ class Module extends Basic
         //输出页面
         $model = getEmptyModel('SysModule');
         $model["Pid"] = input("pid") ?: 0;
+        $model["Level"] = (input("level") ?: 0) + 1;
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -190,6 +191,32 @@ class Module extends Basic
             $data["ModifyTime"] = date("Y-m-d H:i:s");
             $data["ModifyUser"] = $this->user["Id"];
             $model->save($data, ['Id' => $data['Id']]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //自动排序 Json
+    public function sorting()
+    {
+        //为方便调整顺序将模块按顺序大小父级自动排序为间隔为1000、子级为10的顺序
+        try {
+            $list = db('sys_module')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
+            if ($list == null) {
+                return toJsonData(0, null, "操作失败,没有按模块");
+            }
+            $sort = 10;
+            $data = array();
+            foreach ($list as $l) {
+                $l['Sort'] = $sort;
+                $data[] = $l;
+                //以间隔为10递增
+                $sort += 10;
+            }
+            //批量更新数据
+            $model = new SysButton;
+            $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
