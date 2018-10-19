@@ -143,11 +143,15 @@
             askHelper.ajaxConfirm({
                 url: '/module/remove',
                 data: { id: rows.id },
-                msg: "确认删除吗",
-                success: function() {
-                    //表格刷新
-                    $('#data-table').treegrid('reload');
-                }
+                msg: "确认删除吗"
+            });
+        }
+
+        //自动排序
+        function sorting() {
+            askHelper.ajaxConfirm({
+                url: '/module/sorting',
+                msg: "将当前排序依次设置为间隔为10的排序,确定继续"
             });
         }
 

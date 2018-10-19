@@ -200,7 +200,7 @@ class Module extends Basic
     //自动排序 Json
     public function sorting()
     {
-        //为方便调整顺序将模块按顺序大小父级自动排序为间隔为1000、子级为10的顺序
+        //为方便调整顺序将模块按顺序大小和层级自动排序为间隔为10的顺序
         try {
             $list = db('sys_module')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
             if ($list == null) {
@@ -209,13 +209,15 @@ class Module extends Basic
             $sort = 10;
             $data = array();
             foreach ($list as $l) {
-                $l['Sort'] = $sort;
-                $data[] = $l;
-                //以间隔为10递增
-                $sort += 10;
+                if ($l['Pid'] == 0) {
+                    $l['Sort'] = $sort;
+                    $data[] = $l;
+                    //以间隔为10递增
+                    $sort += 10;
+                }
             }
             //批量更新数据
-            $model = new SysButton;
+            $model = new SysModule;
             $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {

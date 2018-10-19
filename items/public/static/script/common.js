@@ -51,7 +51,7 @@ var askHelper = {
                 tableHelper.refresh('data-table');
                 return;
             }
-            //表格刷新
+            //父级表格刷新
             window.parent.tableHelper.refresh('data-table');
             //窗口关闭
             window.parent.layer.closeAll('iframe');
@@ -141,14 +141,20 @@ var tableHelper = {
         //标注选中样式
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
     },
-    //layui 表格刷新
+    //表格刷新
     refresh: function(tableId) {
-        //点击当前页码来刷新表格数据
+        //EasyUI表格
+        if ($("#" + tableId).parent()[0].className == "datagrid-view") {
+            $("#" + tableId).treegrid('reload');
+            return;
+        }
+        //LayUI表格,点击当前页码来刷新表格数据
         var laypage = $("#" + tableId).next().find(".layui-laypage-btn");
         if (laypage.length > 0) {
             laypage.click();
             return;
         }
+        //重载方式
         layui.table.reload(tableId);
     },
     //easyui 表格样式美化
