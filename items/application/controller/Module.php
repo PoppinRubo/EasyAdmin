@@ -99,8 +99,8 @@ class Module extends Basic
             FROM sys_module AS t1 WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC");
             $tree = array();
             foreach ($module as $m) {
-                $m["state"] = $m["Son"] > 0 ? "closed" : "";
-                $m["children"] = $m["Son"] > 0 ? $this->getModuleList($m["Id"]) : [];
+                $m["state"] = ($m["Son"] > 0) ? "open" : "";
+                $m["children"] = ($m["Son"] > 0) ? $this->getModuleList($m["Id"]) : [];
                 $tree[] = convertInitials($m);
             }
             if ($id > 0) {
@@ -198,7 +198,7 @@ class Module extends Basic
     }
 
     //自动排序 Json
-    public function sorting()
+    public function sorting($children = null)
     {
         //为方便调整顺序将模块按顺序大小和层级自动排序为间隔为10的顺序
         try {
@@ -206,15 +206,15 @@ class Module extends Basic
             if ($list == null) {
                 return toJsonData(0, null, "操作失败,没有按模块");
             }
-            $sort = 10;
             $data = array();
+            $sort = array();
             foreach ($list as $l) {
-                if ($l['Pid'] == 0) {
-                    $l['Sort'] = $sort;
-                    $data[] = $l;
-                    //以间隔为10递增
-                    $sort += 10;
-                }
+                $level = $l['Level'];
+                $pid = $l['Pid'];
+                $key = $level . '-' . $pid;
+                $sort[$key] = (isset($sort[$key]) ? $sort[$key] : 0) + 10;
+                $l['Sort'] = $sort[$key];
+                $data[] = $l;
             }
             //批量更新数据
             $model = new SysModule;

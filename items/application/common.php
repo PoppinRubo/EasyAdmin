@@ -37,7 +37,7 @@ function convertInitials($array, $isLower = true)
                 foreach ($value as $k => $v) {
                     $d[lcfirst($k)] = $v;
                 }
-                $o[] = $d;
+                $o[lcfirst($key)] = $d;
             }
         }
         return $o;
@@ -52,7 +52,7 @@ function convertInitials($array, $isLower = true)
             foreach ($value as $k => $v) {
                 $d[ucfirst($k)] = $v;
             }
-            $o[] = $d;
+            $o[lcfirst($key)] = $d;
         }
     }
     return $o;
