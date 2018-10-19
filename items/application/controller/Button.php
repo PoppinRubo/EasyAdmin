@@ -83,7 +83,7 @@ class Button extends Basic
         }
     }
 
-    //获取按钮列表
+    //获取按钮列表 Json
     public function getButtonList()
     {
         try {
@@ -93,6 +93,32 @@ class Button extends Basic
             return toLayTable($data);
         } catch (Exception $e) {
             return toLayTable([], false, -1, $e->getMessage());
+        }
+    }
+
+    //自动排序 Json
+    public function sorting()
+    {
+        //为方便调整顺序将按钮按顺序大小自动排序为间隔为10的顺序
+        try {
+            $list = db('sys_button')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
+            if ($list == null) {
+                return toJsonData(0, null, "操作失败,没有按钮");
+            }
+            $sort = 10;
+            $data = array();
+            foreach ($list as $l) {
+                $l['Sort'] = $sort;
+                $data[] = $l;
+                //以间隔为10递增
+                $sort += 10;
+            }
+            //批量更新数据
+            $model = new SysButton;
+            $model->saveAll($data);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
         }
     }
 }

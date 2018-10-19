@@ -45,6 +45,12 @@ var askHelper = {
     //Post请求
     ajaxPost: function(o) {
         o.success = o.success || function(result) {
+            //非开窗口刷新的处理
+            if (window.parent.isHome) {
+                //表格刷新
+                tableHelper.refresh('data-table');
+                return;
+            }
             //表格刷新
             window.parent.tableHelper.refresh('data-table');
             //窗口关闭
@@ -136,7 +142,7 @@ var tableHelper = {
         tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
     },
     //layui 表格刷新
-    refresh: function (tableId) {
+    refresh: function(tableId) {
         //点击当前页码来刷新表格数据
         var laypage = $("#" + tableId).next().find(".layui-laypage-btn");
         if (laypage.length > 0) {

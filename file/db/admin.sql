@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-10-18 10:32:14
+Backup Time: 2018-10-19 10:52:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -27,7 +27,7 @@ CREATE TABLE `sys_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='按钮表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='按钮表';
 CREATE TABLE `sys_module` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级模块编号',
@@ -55,7 +55,7 @@ CREATE TABLE `sys_module_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块、按钮关系表';
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块、按钮关系表';
 CREATE TABLE `sys_role` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Name` varchar(50) NOT NULL COMMENT '角色名称',
@@ -126,7 +126,7 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_button` WRITE;
 DELETE FROM `admin`.`sys_button`;
-INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 10, '添加按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:19', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 30, '编辑按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:41', 1, 1, 0),(3, '删除', 'delete', 'layui-icon-delete', 40, '删除按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:49', 1, 1, 0),(4, '添加子级', 'addSon', 'layui-icon-add-1', 20, '添加子级按钮', '2018-10-18 10:21:00', 1, '2018-10-18 10:30:28', 1, 1, 0),(5, '按钮关联', 'moduleButton', 'icon-link2', 100, '模块配置按钮关联', '2018-10-18 10:25:34', 1, '2018-10-18 10:31:06', 1, 1, 0);
+INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 10, '添加按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:19', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 30, '编辑按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:41', 1, 1, 0),(3, '删除', 'remove', 'layui-icon-delete', 40, '删除按钮', '2018-07-12 20:00:00', 1, '2018-10-19 10:25:05', 1, 1, 0),(4, '添加子级', 'addSon', 'layui-icon-add-1', 20, '添加子级按钮', '2018-10-18 10:21:00', 1, '2018-10-18 10:30:28', 1, 1, 0),(5, '按钮关联', 'moduleButton', 'icon-link2', 50, '模块配置按钮关联', '2018-10-18 10:25:34', 1, '2018-10-19 10:32:32', 1, 1, 0),(6, '自动排序', 'sorting', 'icon-sort-amount-asc', 60, '自动排序按钮', '2018-10-19 10:05:47', 1, '2018-10-19 10:51:04', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
@@ -138,7 +138,7 @@ COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module_button` WRITE;
 DELETE FROM `admin`.`sys_module_button`;
-INSERT INTO `admin`.`sys_module_button` (`Id`,`ModuleId`,`ButtonId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 5, 1, '2018-10-18 10:15:12', 1, '2018-10-18 10:15:12', 1, 1, 0),(2, 5, 2, '2018-10-18 10:15:15', 1, '2018-10-18 10:15:15', 1, 1, 0),(3, 5, 3, '2018-10-18 10:15:19', 1, '2018-10-18 10:15:19', 1, 1, 0),(4, 4, 1, '2018-10-18 10:22:05', 1, '2018-10-18 10:22:05', 1, 1, 0),(5, 4, 4, '2018-10-18 10:22:10', 1, '2018-10-18 10:22:10', 1, 1, 0),(6, 4, 3, '2018-10-18 10:22:16', 1, '2018-10-18 10:22:16', 1, 1, 0),(7, 4, 2, '2018-10-18 10:22:20', 1, '2018-10-18 10:22:20', 1, 1, 0),(8, 4, 5, '2018-10-18 10:25:44', 1, '2018-10-18 10:25:44', 1, 1, 0),(9, 3, 1, '2018-10-18 10:27:52', 1, '2018-10-18 10:27:52', 1, 1, 0),(10, 3, 2, '2018-10-18 10:27:56', 1, '2018-10-18 10:27:56', 1, 1, 0),(11, 3, 3, '2018-10-18 10:28:00', 1, '2018-10-18 10:28:00', 1, 1, 0);
+INSERT INTO `admin`.`sys_module_button` (`Id`,`ModuleId`,`ButtonId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 5, 1, '2018-10-18 10:15:12', 1, '2018-10-18 10:15:12', 1, 1, 0),(2, 5, 2, '2018-10-18 10:15:15', 1, '2018-10-18 10:15:15', 1, 1, 0),(3, 5, 3, '2018-10-18 10:15:19', 1, '2018-10-18 10:15:19', 1, 1, 0),(4, 4, 1, '2018-10-18 10:22:05', 1, '2018-10-18 10:22:05', 1, 1, 0),(5, 4, 4, '2018-10-18 10:22:10', 1, '2018-10-18 10:22:10', 1, 1, 0),(6, 4, 3, '2018-10-18 10:22:16', 1, '2018-10-18 10:22:16', 1, 1, 0),(7, 4, 2, '2018-10-18 10:22:20', 1, '2018-10-18 10:22:20', 1, 1, 0),(8, 4, 5, '2018-10-18 10:25:44', 1, '2018-10-18 10:25:44', 1, 1, 0),(9, 3, 1, '2018-10-18 10:27:52', 1, '2018-10-18 10:27:52', 1, 1, 0),(10, 3, 2, '2018-10-18 10:27:56', 1, '2018-10-18 10:27:56', 1, 1, 0),(11, 3, 3, '2018-10-18 10:28:00', 1, '2018-10-18 10:28:00', 1, 1, 0),(12, 5, 6, '2018-10-19 10:06:26', 1, '2018-10-19 10:06:26', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
