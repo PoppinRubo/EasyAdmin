@@ -87,28 +87,46 @@ class Module extends Basic
     }
 
     //获取模块列表 Json
-    public function getModuleList($id = 0)
+    public function getModuleList()
     {
         try {
-            $pid = empty(input("pid")) ? $id : input("pid");
             $key = input("key") ?: "";
             //搜索
-            $search = $key != "" ? is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'" : "AND t1.Pid={$pid}";
+            $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = db()->query("
             SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
             FROM sys_module AS t1 WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC");
             $tree = array();
             foreach ($module as $m) {
-                $m["state"] = ($m["Son"] > 0) ? "open" : "";
-                $m["children"] = ($m["Son"] > 0) ? $this->getModuleList($m["Id"]) : [];
-                $tree[] = convertInitials($m);
-            }
-            if ($id > 0) {
-                return $tree;
+                //获取一级
+                if ($m["Pid"] == 0) {
+                    $m["state"] = ($m["Son"] > 0) ? "open" : "";
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["Id"]) : [];
+                    $tree[] = convertInitials($m);
+                }
             }
             return toEasyTable($tree, false);
         } catch (Exception $e) {
             return toEasyTable([], false);
+        }
+    }
+
+    //获取子级模块 array
+    protected function getSonModule($array, $pid)
+    {
+        try {
+            $data = array();
+            foreach ($array as $m) {
+                //递归子级
+                if ($m["Pid"] == $pid) {
+                    $m["state"] = ($m["Son"] > 0) ? "open" : "";
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["Id"]) : [];
+                    $data[] = convertInitials($m);
+                }
+            }
+            return $data;
+        } catch (Exception $e) {
+            return [];
         }
     }
 
