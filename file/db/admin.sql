@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-10-19 18:00:02
+Backup Time: 2018-10-22 13:48:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS `admin`.`sys_role`;
 DROP TABLE IF EXISTS `admin`.`sys_role_button`;
 DROP TABLE IF EXISTS `admin`.`sys_role_module`;
 DROP TABLE IF EXISTS `admin`.`sys_user`;
+DROP TABLE IF EXISTS `admin`.`sys_user_login_log`;
 DROP TABLE IF EXISTS `admin`.`sys_user_role`;
 CREATE TABLE `sys_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -111,6 +112,15 @@ CREATE TABLE `sys_user` (
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+CREATE TABLE `sys_user_login_log` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `Ip` varchar(255) NOT NULL DEFAULT '' COMMENT '登录IP地址',
+  `UserId` varchar(50) NOT NULL COMMENT '用户编号',
+  `Remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注信息',
+  `CreateTime` datetime NOT NULL COMMENT '创建时间',
+  `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COMMENT='用户登录日志表';
 CREATE TABLE `sys_user_role` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `UserId` int(11) NOT NULL COMMENT '用户编号',
@@ -161,7 +171,12 @@ COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_user` WRITE;
 DELETE FROM `admin`.`sys_user`;
-INSERT INTO `admin`.`sys_user` (`Id`,`Account`,`Password`,`Username`,`Gender`,`LoginTimes`,`LastLoginTime`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 'admin', '666666', '超级管理员', 1, 0, '2018-08-07 00:00:00', '2018-07-12 20:00:00', 1, '2018-09-10 11:50:18', 1, 1, 0);
+INSERT INTO `admin`.`sys_user` (`Id`,`Account`,`Password`,`Username`,`Gender`,`LoginTimes`,`LastLoginTime`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 'admin', '666666', '超级管理员', 1, 0, '2018-07-12 20:00:00', '2018-07-12 20:00:00', 1, '2018-09-10 11:50:18', 1, 1, 0);
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `admin`.`sys_user_login_log` WRITE;
+DELETE FROM `admin`.`sys_user_login_log`;
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

@@ -39,9 +39,36 @@ class Index extends Controller
             if (getUserAuthentication() == null) {
                 return toJsonData(0, null, "登录失败,请联系管理员");
             }
+            //登录记录
+            $this->insertLoginLog($user["Id"], "账号密码登录");
             return toJsonData(1, "/home", "登录成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //创建登录记录
+    private function insertLoginLog($userId, $remark)
+    {
+        // 启动事务
+        db()->startTrans();
+        try {
+            $now = date("Y-m-d H:i:s");
+            //创建登录记录
+            db('sys_user_login_log')->insert(array(
+                "UserId" => $userId,
+                "CreateTime" => $now,
+                "Remark" => $remark,
+                "Ip" => Request()->ip(),
+                "IsDel" => 0,
+            ));
+            //更新用户表
+            db()->execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.Id) FROM `sys_user_login_log` AS t2 WHERE t2.UserId IN ({$userId}) AND t2.IsDel=0),LastLoginTime='{$now}' WHERE Id={$userId}");
+            // 提交事务
+            db()->commit();
+        } catch (Exception $e) {
+            // 回滚事务
+            db()->rollback();
         }
     }
 
