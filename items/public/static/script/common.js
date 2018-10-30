@@ -203,9 +203,9 @@ var tableHelper = {
         }
         for (var b in btnList) {
             if (btnList.hasOwnProperty(b)) {
-                var s = style[btnList[b][1]];
+                var s = style[btnList[b][1]]||"";
                 //按钮设置值
-                var data = typeof btnList[b][2] == "undefined" ? "" : btnList[b][2];
+                var data = btnList[b][2]||"";
                 btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"' +
                     'class="' + layuiBtn + " " + s + '">' + btnList[b][0] + "</a>";
             }
