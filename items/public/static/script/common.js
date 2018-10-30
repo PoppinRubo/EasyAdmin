@@ -203,11 +203,11 @@ var tableHelper = {
         }
         for (var b in btnList) {
             if (btnList.hasOwnProperty(b)) {
-                var s = style[btnList[b][1]]||"";
+                var genre = layuiBtn + " " + (style[btnList[b][1]] || "");
                 //按钮设置值
                 var data = btnList[b][2]||"";
                 btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"' +
-                    'class="' + layuiBtn + " " + s + '">' + btnList[b][0] + "</a>";
+                    'class="' + genre + '">' + btnList[b][0] + "</a>";
             }
         }
         return btn;
