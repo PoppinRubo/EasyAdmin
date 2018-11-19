@@ -104,8 +104,8 @@ var askHelper = {
 */
 var tableHelper = {
     //高度适配
-    setHeight: function(table = "data-table", unit = true) {
-        var height = parseInt($(window).height() - $("#" + table).offset().top - 35);
+    setHeight: function(unit = true) {
+        var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 55);
         return unit ? height + "px" : height;
     },
     //layui 表格行选设置
@@ -205,7 +205,7 @@ var tableHelper = {
             if (btnList.hasOwnProperty(b)) {
                 var genre = layuiBtn + " " + (style[btnList[b][1]] || "");
                 //按钮设置值
-                var data = btnList[b][2]||"";
+                var data = btnList[b][2] || "";
                 btn += '<a href="javascript:void(0);" data=\'' + data + '\' ondblclick="console.log("禁止双击");return false;" onclick="' + b + "(" + value + ',this);"' +
                     'class="' + genre + '">' + btnList[b][0] + "</a>";
             }
