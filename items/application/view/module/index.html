@@ -85,18 +85,18 @@
 
     //添加子级
     function addSon() {
-        var rows = $('#data-table').treegrid('getSelected');
-        if (!rows) {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
             layer.msg("请选中一行", { time: 1500, icon: 5 });
             return;
         }
-        add(rows.id, rows.level, "[" + rows.name + "]添加子级模块");
+        add(row.id, row.level, "[" + row.name + "]添加子级模块");
     }
 
     //编辑
     function edit() {
-        var rows = $('#data-table').treegrid('getSelected');
-        if (!rows) {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
             layer.msg("请选中一行", { time: 1500, icon: 5 });
             return;
         }
@@ -107,18 +107,18 @@
             shade: 0.5, //遮罩透明度
             maxmin: false, //开启最大化最小化按钮
             area: ['700px', '500px'],
-            content: '/module/edit?id=' + rows.id
+            content: '/module/edit?id=' + row.id
         });
     }
 
     //模块按钮
     function moduleButton() {
-        var rows = $('#data-table').treegrid('getSelected');
-        if (!rows) {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
             layer.msg("请选中一行", { time: 1500, icon: 5 });
             return;
         }
-        if (rows.pid === 0) {
+        if (row.pid === 0) {
             layer.msg("请选择子级模块", { time: 1500, icon: 5 });
             return;
         }
@@ -129,20 +129,20 @@
             shade: 0.5, //遮罩透明度
             maxmin: false, //开启最大化最小化按钮
             area: ['600px', '600px'],
-            content: '/module/button?moduleId=' + rows.id
+            content: '/module/button?moduleId=' + row.id
         });
     }
 
     //删除
     function remove() {
-        var rows = $('#data-table').treegrid('getSelected');
-        if (!rows) {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
             layer.msg("请选中一行", { time: 1500, icon: 5 });
             return;
         }
         askHelper.ajaxConfirm({
             url: '/module/remove',
-            data: { id: rows.id },
+            data: { id: row.id },
             msg: "确认删除吗"
         });
     }

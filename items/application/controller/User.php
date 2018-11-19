@@ -90,9 +90,9 @@ class User extends Basic
             $limit = input("limit") ?: 10;
             $key = input("key") ?: "";
             $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
-            return toLayTable($data);
+            return toEasyTable($data);
         } catch (Exception $e) {
-            return toLayTable([], false, -1, $e->getMessage());
+            return toEasyTable([], false);
         }
     }
 }
