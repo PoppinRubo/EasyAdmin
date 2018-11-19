@@ -35,134 +35,134 @@
             {/foreach}
         </div>
     </div>
-    <script>
-        //easyUi 表格树
-        $('#data-table').treegrid({
-            url: '/module/getModuleList', //数据接口
-            singleSelect: true, //行单选
-            idField: 'id', //定义标识树节点的键字段
-            treeField: 'name', //定义树节点字段
-            height: tableHelper.setHeight(),
-            toolbar: '#toolbar', //表格工具条
-            rownumbers: true, //行号显示
-            pageSize: 15, //页码容量
-            fit: false, //关闭自适应
-            pagination: false, // 分页工具栏
-            animate: true, //节点展开或折叠时显示动画效果
-            pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
-            onLoadSuccess: function() {
-                //表格美化
-                tableHelper.beautify({ singleSelect: true });
-            },
-            columns: [
-                [
-                    { field: 'checkbox', checkbox: true, align: 'center' },
-                    { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
-                    { field: 'name', title: '模块名', width: 120, align: 'left' },
-                    { field: 'link', title: '链接', width: 120, align: 'left' },
-                    { field: 'level', title: '层级', width: 80, align: 'center' },
-                    { field: 'sort', title: '排序', width: 80, align: 'center' },
-                    { field: 'remark', title: '备注', width: 170, align: 'center' }
-                ]
-            ]
-        });
-
-        //操作方法
-
-        //添加
-        function add(pid = 0, level = 0, title = "添加模块") {
-            layer.open({
-                type: 2,
-                title: title,
-                shadeClose: false, //是否点击遮罩关闭
-                shade: 0.5, //遮罩透明度
-                maxmin: false, //开启最大化最小化按钮
-                area: ['700px', '500px'],
-                content: '/module/add?pid=' + pid + '&level=' + level
-            });
-        }
-
-        //添加子级
-        function addSon() {
-            var rows = $('#data-table').treegrid('getSelected');
-            if (!rows) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
-                return;
-            }
-            add(rows.id, rows.level, "[" + rows.name + "]添加子级模块");
-        }
-
-        //编辑
-        function edit() {
-            var rows = $('#data-table').treegrid('getSelected');
-            if (!rows) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
-                return;
-            }
-            layer.open({
-                type: 2,
-                title: '模块修改',
-                shadeClose: false, //是否点击遮罩关闭
-                shade: 0.5, //遮罩透明度
-                maxmin: false, //开启最大化最小化按钮
-                area: ['700px', '500px'],
-                content: '/module/edit?id=' + rows.id
-            });
-        }
-
-        //模块按钮
-        function moduleButton() {
-            var rows = $('#data-table').treegrid('getSelected');
-            if (!rows) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
-                return;
-            }
-            if (rows.pid === 0) {
-                layer.msg("请选择子级模块", { time: 1500, icon: 5 });
-                return;
-            }
-            layer.open({
-                type: 2,
-                title: '模块按钮列表',
-                shadeClose: false, //是否点击遮罩关闭
-                shade: 0.5, //遮罩透明度
-                maxmin: false, //开启最大化最小化按钮
-                area: ['600px', '600px'],
-                content: '/module/button?moduleId=' + rows.id
-            });
-        }
-
-        //删除
-        function remove() {
-            var rows = $('#data-table').treegrid('getSelected');
-            if (!rows) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
-                return;
-            }
-            askHelper.ajaxConfirm({
-                url: '/module/remove',
-                data: { id: rows.id },
-                msg: "确认删除吗"
-            });
-        }
-
-        //自动排序
-        function sorting() {
-            askHelper.ajaxConfirm({
-                url: '/module/sorting',
-                msg: "将当前排序依次设置为间隔为10的排序,确定继续"
-            });
-        }
-
-        //搜索
-        function search() {
-            $('#data-table').treegrid({
-                queryParams: {
-                    key: $.trim($('#key').val())
-                }
-            });
-        }
-    </script>
 </body>
+<script type="text/javascript">
+    //easyUi 表格树
+    $('#data-table').treegrid({
+        url: '/module/getModuleList', //数据接口
+        singleSelect: true, //行单选
+        idField: 'id', //定义标识树节点的键字段
+        treeField: 'name', //定义树节点字段
+        height: tableHelper.setHeight(),
+        toolbar: '#toolbar', //表格工具条
+        rownumbers: true, //行号显示
+        pageSize: 15, //页码容量
+        fit: false, //关闭自适应
+        pagination: false, // 分页工具栏
+        animate: true, //节点展开或折叠时显示动画效果
+        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        onLoadSuccess: function() {
+            //表格美化
+            tableHelper.beautify({ singleSelect: true });
+        },
+        columns: [
+            [
+                { field: 'checkbox', checkbox: true, align: 'center' },
+                { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
+                { field: 'name', title: '模块名', width: 120, align: 'left' },
+                { field: 'link', title: '链接', width: 120, align: 'left' },
+                { field: 'level', title: '层级', width: 80, align: 'center' },
+                { field: 'sort', title: '排序', width: 80, align: 'center' },
+                { field: 'remark', title: '备注', width: 170, align: 'center' }
+            ]
+        ]
+    });
+
+    //操作方法
+
+    //添加
+    function add(pid = 0, level = 0, title = "添加模块") {
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['700px', '500px'],
+            content: '/module/add?pid=' + pid + '&level=' + level
+        });
+    }
+
+    //添加子级
+    function addSon() {
+        var rows = $('#data-table').treegrid('getSelected');
+        if (!rows) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        add(rows.id, rows.level, "[" + rows.name + "]添加子级模块");
+    }
+
+    //编辑
+    function edit() {
+        var rows = $('#data-table').treegrid('getSelected');
+        if (!rows) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        layer.open({
+            type: 2,
+            title: '模块修改',
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['700px', '500px'],
+            content: '/module/edit?id=' + rows.id
+        });
+    }
+
+    //模块按钮
+    function moduleButton() {
+        var rows = $('#data-table').treegrid('getSelected');
+        if (!rows) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        if (rows.pid === 0) {
+            layer.msg("请选择子级模块", { time: 1500, icon: 5 });
+            return;
+        }
+        layer.open({
+            type: 2,
+            title: '模块按钮列表',
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['600px', '600px'],
+            content: '/module/button?moduleId=' + rows.id
+        });
+    }
+
+    //删除
+    function remove() {
+        var rows = $('#data-table').treegrid('getSelected');
+        if (!rows) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        askHelper.ajaxConfirm({
+            url: '/module/remove',
+            data: { id: rows.id },
+            msg: "确认删除吗"
+        });
+    }
+
+    //自动排序
+    function sorting() {
+        askHelper.ajaxConfirm({
+            url: '/module/sorting',
+            msg: "将当前排序依次设置为间隔为10的排序,确定继续"
+        });
+    }
+
+    //搜索
+    function search() {
+        $('#data-table').treegrid({
+            queryParams: {
+                key: $.trim($('#key').val())
+            }
+        });
+    }
+</script>
 
 </html>
