@@ -46,7 +46,7 @@
         rownumbers: true, //行号显示
         pageSize: 15, //页码容量
         fit: false, //关闭自适应
-        pagination: false, // 分页工具栏
+        pagination: true, // 分页工具栏
         pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
         onLoadSuccess: function() {
             //表格美化
@@ -63,8 +63,8 @@
                     title: '是否有效',
                     width: 100,
                     align: 'center',
-                    templet: function(d) {
-                        return d[this.field] ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
+                    formatter: function(value, row) {
+                        return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
                 },
                 { field: 'loginTimes', title: '登录次数', width: 120, sort: true, align: 'center' },
