@@ -31,9 +31,16 @@
     color: #666;
 }
 
-.datagrid-body td {
+.datagrid-body td,
+.datagrid-header td {
     border-color: #e6e6e6;
     border-style: solid;
+}
+
+
+.datagrid-header td.datagrid-header-over {
+    color: #333333;
+
 }
 
 .datagrid-td-rownumber {
