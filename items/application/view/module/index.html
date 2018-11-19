@@ -21,16 +21,15 @@
                 </div>
             </div>
             <div class="layui-card-body admin-table-body">
-                <table id="data-table" lay-filter="data-table"></table>
+                <table id="data-table"></table>
             </div>
         </div>
     </div>
     <!--表格工具条-->
     <div class="easyui-table-tool" id="toolbar">
-        <!--注意:easyUI表格方法绑定使用onclick-->
         <div class="layui-btn-container">
             {foreach $button as $b }
-            <button class="layui-btn layui-btn-sm" onclick="{$b.EnglishName}();">
+            <button class="layui-btn layui-btn-sm" onclick="eval('{$b.EnglishName}()')">
                 <i class="layui-icon {$b.Icon}"></i> {$b.Name}
             </button>
             {/foreach}
