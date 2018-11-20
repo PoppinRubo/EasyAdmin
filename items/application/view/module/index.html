@@ -51,10 +51,6 @@
         pagination: false, // 分页工具栏
         animate: true, //节点展开或折叠时显示动画效果
         pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
-        onLoadSuccess: function() {
-            //表格美化
-            tableHelper.beautify({ singleSelect: true });
-        },
         columns: [
             [
                 { field: 'checkbox', checkbox: true, align: 'center' },
