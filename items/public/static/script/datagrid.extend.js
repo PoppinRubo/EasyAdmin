@@ -4,6 +4,19 @@
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
     onAfterRender: function(target) {
+        datagridExtend.beautify(target);
+    }
+});
+$.extend($.fn.treegrid.defaults.view, {
+    //表格树渲染后
+    onAfterRender: function(target) {
+        datagridExtend.beautify(target);
+    }
+});
+//扩展方法
+var datagridExtend = {
+    //美化
+    beautify: function(target) {
         var options = $(target).datagrid('options');
         var singleSelect = options.singleSelect;
         var view = $(target).closest(".datagrid-view");
@@ -64,4 +77,4 @@ $.extend($.fn.datagrid.defaults.view, {
             }
         }
     }
-});
+}
