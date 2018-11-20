@@ -23,7 +23,7 @@ var datagridExtend = {
         var checkbox = view.find("tr input[type=checkbox]");
         if (singleSelect) {
             //表头选框去除
-            view.find(".datagrid-header-check").html("");
+            view.find(".datagrid-header-check").addClass("layui-form-radio").html("");
             //单选模式
             $.each(checkbox, function(i, v) {
                 var parent = $(v).parent();

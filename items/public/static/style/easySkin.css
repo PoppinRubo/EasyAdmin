@@ -83,20 +83,23 @@ table .tree-expanded:before {
     display: none;
 }
 
-.datagrid-view .layui-form-checkbox,
+.datagrid-view .layui-form-checkbox {
+    display: table;
+}
+
 .datagrid-view .layui-form-radio {
     display: table;
-    margin: 0 5px;
+    margin: 0 3px;
+}
+
+.datagrid-view .datagrid-header-radio {
+    padding: 0 5px;
 }
 
 .datagrid-view .layui-anim.layui-icon {
     display: table-cell;
 }
 
-.datagrid-view .datagrid-header-check {
-    padding: 0 5px;
-}
-
 .datagrid-view .layui-form-checkbox[lay-skin=primary] i {
-    margin: 0 5px;
+    margin-left: 5px;
 }
