@@ -14,5 +14,6 @@
     <script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
     <script type="text/javascript" src="/static/easyui/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/static/script/datagrid.extend.js"></script>
     <script type="text/javascript" src="/static/layui/layui.js"></script>
     <script type="text/javascript" src="/static/script/common.js"></script>
