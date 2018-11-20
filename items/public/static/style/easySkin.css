@@ -79,6 +79,10 @@ table .tree-expanded:before {
     content: "\e97a";
 }
 
+.datagrid-header-check input {
+    display: none;
+}
+
 .datagrid-view .layui-form-checkbox {
     display: table;
     margin: 0 15%;
