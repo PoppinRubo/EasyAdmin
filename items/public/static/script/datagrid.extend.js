@@ -15,14 +15,15 @@ $.extend($.fn.datagrid.defaults.view, {
     },
     //表格渲染后
     onAfterRender: function(target) {
-        //表格美化选框
-        var singleSelect = true;
-        var checkbox = $(".datagrid-view").find("input[type=checkbox]");
+        var options = $(target).datagrid('options');
+        var singleSelect = options.singleSelect;
+        var view = $(target).closest(".datagrid-view");
+        var checkbox = view.find("input[type=checkbox]");
         //选中处理图标
         function select() {
             //事件延迟等待复选框状态
             setTimeout(function() {
-                checkbox = $(".datagrid-view").find("input[type=checkbox]");
+                checkbox = view.find("input[type=checkbox]");
                 $.each(checkbox, function(i, v) {
                     this.checked ? $(this).parent().addClass("layui-form-checked") : $(this).parent().removeClass("layui-form-checked");
                 });
@@ -31,7 +32,7 @@ $.extend($.fn.datagrid.defaults.view, {
         $.each(checkbox, function(i, v) {
             //表头
             if ($(v).parent()[0].className == "datagrid-header-check") {
-                $(".datagrid-header-check").click(function() {
+                view.find(".datagrid-header-check").click(function() {
                     $(this).find("input[type=checkbox]").click();
                     select();
                 });
