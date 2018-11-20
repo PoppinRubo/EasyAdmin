@@ -83,7 +83,8 @@ table .tree-expanded:before {
     display: none;
 }
 
-.datagrid-view .layui-form-checkbox {
+.datagrid-view .layui-form-checkbox,
+.datagrid-view .layui-form-radio {
     display: table;
     margin: 0 15%;
 }
