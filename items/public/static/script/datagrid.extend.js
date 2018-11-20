@@ -2,6 +2,17 @@
  * EasyUI Datagrid 扩展
  */
 $.extend($.fn.datagrid.defaults.view, {
+    //表格渲染前
+    onBeforeRender: function(target) {
+        var options = $(target).datagrid('options');
+        var singleSelect = options.singleSelect;
+        var view = $(target).closest(".datagrid-view");
+        var checkbox = view.find(".datagrid-header-check").find("input[type=checkbox]");
+        //单选模式表头移除选框
+        if (singleSelect && checkbox.length > 0) {
+            view.find(".datagrid-header-check").html("");
+        }
+    },
     //表格渲染后
     onAfterRender: function(target) {
         //表格美化选框
@@ -20,10 +31,6 @@ $.extend($.fn.datagrid.defaults.view, {
         $.each(checkbox, function(i, v) {
             //表头
             if ($(v).parent()[0].className == "datagrid-header-check") {
-                if (singleSelect) {
-                    //单选模式表头不显示
-                    $(v).parent().html("");
-                }
                 $(".datagrid-header-check").click(function() {
                     $(this).find("input[type=checkbox]").click();
                     select();
