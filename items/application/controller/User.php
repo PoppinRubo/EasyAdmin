@@ -1,8 +1,7 @@
 <?php
 namespace app\controller;
 
-use app\facade\UserFacade;
-use app\model\SysUserModel;
+use app\model\SysUser;
 use think\Exception;
 
 class User extends Basic
@@ -27,10 +26,7 @@ class User extends Basic
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
-                if (UserFacade::isExist($data["Account"])) {
-                    return toJsonData(0, null, "账号已存在");
-                }
-                $model = new SysUserModel();
+                $model = new SysUser();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -39,7 +35,7 @@ class User extends Basic
             }
         }
         //输出页面
-        $model = getEmptyModel('SysUserModel');
+        $model = getEmptyModel('SysUser');
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -54,7 +50,7 @@ class User extends Basic
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysUserModel();
+                $model = new SysUser();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -64,7 +60,7 @@ class User extends Basic
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysUserModel::get($id)->getData();
+        $model = SysUser::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -79,7 +75,7 @@ class User extends Basic
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysUserModel();
+            $model = new SysUser();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -96,7 +92,7 @@ class User extends Basic
             $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);
         } catch (Exception $e) {
-            return toEasyTable([], false, $e->getMessage());
+            return toEasyTable([], false);
         }
     }
 }

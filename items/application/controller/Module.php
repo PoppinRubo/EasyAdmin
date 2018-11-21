@@ -1,8 +1,8 @@
 <?php
 namespace app\controller;
 
-use app\model\SysModuleModel;
-use app\model\SysModuleModelButtonModel;
+use app\model\SysModule;
+use app\model\SysModuleButton;
 use think\Exception;
 
 class Module extends Basic
@@ -27,7 +27,7 @@ class Module extends Basic
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
-                $model = new SysModuleModel();
+                $model = new SysModule();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -36,7 +36,7 @@ class Module extends Basic
             }
         }
         //输出页面
-        $model = getEmptyModel('SysModuleModel');
+        $model = getEmptyModel('SysModule');
         $model["Pid"] = input("pid") ?: 0;
         $model["Level"] = (input("level") ?: 0) + 1;
         $this->assign('model', convertInitials($model));
@@ -53,7 +53,7 @@ class Module extends Basic
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysModuleModel();
+                $model = new SysModule();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -63,7 +63,7 @@ class Module extends Basic
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysModuleModel::get($id)->getData();
+        $model = SysModule::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -78,7 +78,7 @@ class Module extends Basic
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysModuleModel();
+            $model = new SysModule();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -163,7 +163,7 @@ class Module extends Basic
             if ($moduleId < 0 || $buttonId < 0) {
                 return toJsonData(0, null, "参数错误");
             }
-            $model = new SysModuleModelButtonModel();
+            $model = new SysModuleButton();
             $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
             if ($data == null) {
                 //新增关联插入记录
@@ -198,7 +198,7 @@ class Module extends Basic
             if ($moduleId < 0 || $buttonId < 0) {
                 return toJsonData(0, null, "参数错误");
             }
-            $model = new SysModuleModelButtonModel();
+            $model = new SysModuleButton();
             $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
             if ($data == null) {
                 return toJsonData(0, null, "未找到关联数据,无法删除关联");
@@ -222,7 +222,7 @@ class Module extends Basic
         try {
             $list = db('sys_module')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
             if ($list == null) {
-                return toJsonData(0, null, "操作失败,没有模块");
+                return toJsonData(0, null, "操作失败,没有按模块");
             }
             $data = array();
             $sort = array();
@@ -235,7 +235,7 @@ class Module extends Basic
                 $data[] = $l;
             }
             //批量更新数据
-            $model = new SysModuleModel;
+            $model = new SysModule;
             $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {

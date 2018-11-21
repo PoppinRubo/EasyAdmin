@@ -1,7 +1,7 @@
 <?php
 namespace app\controller;
 
-use app\model\SysButtonModel;
+use app\model\SysButton;
 use think\Exception;
 
 class Button extends Basic
@@ -26,7 +26,7 @@ class Button extends Basic
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
-                $model = new SysButtonModel();
+                $model = new SysButton();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -35,7 +35,7 @@ class Button extends Basic
             }
         }
         //输出页面
-        $model = getEmptyModel('SysButtonModel');
+        $model = getEmptyModel('SysButton');
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -50,7 +50,7 @@ class Button extends Basic
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysButtonModel();
+                $model = new SysButton();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -60,7 +60,7 @@ class Button extends Basic
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysButtonModel::get($id)->getData();
+        $model = SysButton::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -75,7 +75,7 @@ class Button extends Basic
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysButtonModel();
+            $model = new SysButton();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -114,7 +114,7 @@ class Button extends Basic
                 $sort += 10;
             }
             //批量更新数据
-            $model = new SysButtonModel;
+            $model = new SysButton;
             $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
