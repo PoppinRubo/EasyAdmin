@@ -38,9 +38,10 @@
     </div>
 </body>
 <script type="text/javascript">
+    var roleId = '<?php echo $_GET["roleId"]?>';
     //easyUi 表格树
     $('#data-table').treegrid({
-        url: '/role/getRoleModuleList?roleId=<?php echo $_GET["roleId"]?>', //数据接口
+        url: '/role/getRoleModuleList?roleId=' + roleId, //数据接口
         singleSelect: false, //行单选
         idField: 'id', //定义标识树节点的键字段
         treeField: 'name', //定义树节点字段
@@ -82,6 +83,17 @@
             layer.msg("至少选中一行", { time: 1500, icon: 5 });
             return;
         }
+        var ids = [];
+        rows.forEach(function(v, i, a) {
+            ids.push(v.id);
+        })
+        askHelper.ajaxPost({
+            url: '/role/addModel',
+            data: { ids: JSON.stringify(ids), roleId: roleId },
+            success: function() {
+                tableHelper.refresh('data-table');
+            }
+        });
     }
 
     //删除关联
@@ -91,6 +103,17 @@
             layer.msg("至少选中一行", { time: 1500, icon: 5 });
             return;
         }
+        var ids = [];
+        rows.forEach(function(v, i, a) {
+            ids.push(v.id);
+        })
+        askHelper.ajaxPost({
+            url: '/role/delModel',
+            data: { ids: JSON.stringify(ids), roleId: roleId },
+            success: function() {
+                tableHelper.refresh('data-table');
+            }
+        });
     }
 
     //搜索
