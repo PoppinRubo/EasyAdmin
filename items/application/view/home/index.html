@@ -4,8 +4,6 @@
 <head>
     {include file="global.php" title="系统主页"/}
     <link rel="stylesheet" href="/static/style/home.css" media="all">
-    <!-- <script type="text/javascript" src="/static/tree/jquery.parser.js"></script>
-    <script type="text/javascript" src="/static/tree/jquery.tree.js"></script> -->
 </head>
 
 <body class="layui-layout-body">
@@ -49,7 +47,7 @@
                             <cite>{$user["Username"]}</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+                            <dd><a href="javascript:void(0);" admin-event="editPwd">修改密码</a></dd>
                             <hr>
                             <dd admin-event="logout" style="text-align: center;">
                                 <a href="javascript:void(0);">退出</a>

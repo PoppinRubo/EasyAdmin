@@ -241,6 +241,18 @@
                     }
                 });
             },
+            editPwd: function() {
+                //修改密码
+                layer.open({
+                    type: 2,
+                    title: '修改密码',
+                    shadeClose: false, //是否点击遮罩关闭
+                    shade: 0.5, //遮罩透明度
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['600px', '400px'],
+                    content: '/user/password'
+                });
+            },
             click: function() {
                 var t = this;
                 body.on("click", "*[admin-event]", function() {

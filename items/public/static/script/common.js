@@ -58,7 +58,7 @@ var askHelper = {
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
-        o.before = o.before || function() { layer.msg('处理中', { icon: 16, shade: 0.5 }); }
+        o.before = o.before || function() { layer.msg('处理中', { icon: 16, shade: 0.5, time: 86400 * 1000 }); }
         $.ajax({
             url: o.url, //请求接口
             type: o.type, //GET、POST
@@ -86,14 +86,20 @@ var askHelper = {
     },
     //询问数据请求
     ajaxConfirm: function(o) {
+        o.cancel = o.cancel || function() {};
         //询问
         var index = layer.confirm(o.msg + '？', {
                 btn: ['确定', '取消'] //按钮
             },
             function() {
-                //点击后立即关闭
+                //确认
                 layer.close(index);
                 askHelper.ajaxPost(o);
+            },
+            function() {
+                //取消
+                layer.close(index);
+                o.cancel();
             });
     }
 }
