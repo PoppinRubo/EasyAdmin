@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-11-21 17:23:08
+Backup Time: 2018-11-21 17:37:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -137,7 +137,7 @@ CREATE TABLE `sys_user_role` (
 BEGIN;
 LOCK TABLES `admin`.`sys_button` WRITE;
 DELETE FROM `admin`.`sys_button`;
-INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 10, '添加按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:19', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 30, '编辑按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:41', 1, 1, 0),(3, '删除', 'remove', 'layui-icon-delete', 40, '删除按钮', '2018-07-12 20:00:00', 1, '2018-10-19 10:25:05', 1, 1, 0),(4, '添加子级', 'addSon', 'layui-icon-add-1', 20, '添加子级按钮', '2018-10-18 10:21:00', 1, '2018-10-18 10:30:28', 1, 1, 0),(5, '按钮关联', 'moduleButton', 'icon-link2', 50, '模块配置按钮关联', '2018-10-18 10:25:34', 1, '2018-10-19 10:32:32', 1, 1, 0),(6, '自动排序', 'sorting', 'icon-sort-amount-asc', 60, '自动排序按钮', '2018-10-19 10:05:47', 1, '2018-10-19 10:51:04', 1, 1, 0),(7, '角色关联', 'userRole', 'icon-squarespace', 70, '系统用户关联角色', '2018-11-21 17:20:49', 1, '2018-11-21 17:20:49', 1, 1, 0);
+INSERT INTO `admin`.`sys_button` (`Id`,`Name`,`EnglishName`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '添加', 'add', 'layui-icon-add-1', 10, '添加按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:19', 1, 1, 0),(2, '编辑', 'edit', 'layui-icon-edit', 30, '编辑按钮', '2018-07-12 20:00:00', 1, '2018-10-18 10:30:41', 1, 1, 0),(3, '删除', 'remove', 'layui-icon-delete', 40, '删除按钮', '2018-07-12 20:00:00', 1, '2018-10-19 10:25:05', 1, 1, 0),(4, '添加子级', 'addSon', 'layui-icon-add-1', 20, '添加子级按钮', '2018-10-18 10:21:00', 1, '2018-10-18 10:30:28', 1, 1, 0),(5, '按钮关联', 'moduleButton', 'icon-link2', 50, '模块配置按钮关联', '2018-10-18 10:25:34', 1, '2018-10-19 10:32:32', 1, 1, 0),(6, '自动排序', 'sorting', 'icon-sort-amount-asc', 60, '自动排序按钮', '2018-10-19 10:05:47', 1, '2018-10-19 10:51:04', 1, 1, 0),(7, '模块关联', 'roleModule', 'icon-squarespace', 70, '角色关联模块', '2018-11-21 17:20:49', 1, '2018-11-21 17:37:33', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

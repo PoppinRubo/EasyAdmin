@@ -83,7 +83,7 @@ class Role extends Basic
         }
     }
 
-    //获取角色列表
+    //获取角色列表 Json
     public function getRoleList()
     {
         try {
@@ -119,6 +119,30 @@ class Role extends Basic
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //角色模块列表 View
+    public function model()
+    {
+        return View();
+    }
+
+    //获取角色模块列表 Json
+    public function getRoleModuleList()
+    {
+        try {
+            $key = input("key") ?: "";
+            $roleId = input("roleId") ?: 0;
+            //搜索
+            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $data = db()->query("
+            SELECT t1.Id,t1.Name,{$roleId} AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.RoleId={$roleId} AND t2.ModuleId=t1.Id AND t2.IsDel=0)
+            WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            return toEasyTable($data);
+        } catch (Exception $e) {
+            return toEasyTable([], false, $e->getMessage());
         }
     }
 }

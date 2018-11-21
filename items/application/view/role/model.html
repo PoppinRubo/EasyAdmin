@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="global.php" title="模块列表"/}
+</head>
+
+<body class="admin-body">
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-form layui-card-header admin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline admin-input-comm search">
+                            <input type="text" id="key" placeholder="请输入编号、模块名" autocomplete="off" class="layui-input">
+                        </div>
+                        <button class="layui-btn admin-btn-comm" lay-submit onclick="search();">
+                            <i class="layui-icon icon-search admin-button-btn"></i>搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card-body admin-table-body">
+                <table id="data-table"></table>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //easyUi 表格树
+    $('#data-table').treegrid({
+        url: '/role/getRoleModuleList?roleId=<?php echo $_GET["roleId"]?>', //数据接口
+        singleSelect: true, //行单选
+        idField: 'id', //定义标识树节点的键字段
+        treeField: 'name', //定义树节点字段
+        height: tableHelper.setHeight(),
+        toolbar: '#toolbar', //表格工具条
+        rownumbers: true, //行号显示
+        pageSize: 15, //页码容量
+        fit: false, //关闭自适应
+        pagination: false, // 分页工具栏
+        animate: true, //节点展开或折叠时显示动画效果
+        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        columns: [
+            [
+                { field: 'checkbox', checkbox: true, align: 'center' },
+                { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
+                { field: 'name', title: '模块名', width: 120, align: 'left' },
+                { field: 'level', title: '层级', width: 80, align: 'center' },
+                {
+                    field: 'menu',
+                    title: '操作',
+                    width: 80,
+                    align: 'center',
+                    formatter: function(value, row) {
+                        //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
+                        var button = { relation: ['关联按钮', 1] };
+                        if (row.isRelation) {
+                            button = { delRelation: ['取消关联', 0] };
+                        }
+                        return tableHelper.createButton(button, row);
+                    }
+                }
+            ]
+        ]
+    });
+
+    //操作方法
+
+    //搜索
+    function search() {
+        $('#data-table').treegrid({
+            queryParams: {
+                key: $.trim($('#key').val())
+            }
+        });
+    }
+</script>
+
+</html>
