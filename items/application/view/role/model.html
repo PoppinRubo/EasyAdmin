@@ -30,7 +30,7 @@
     //easyUi 表格树
     $('#data-table').treegrid({
         url: '/role/getRoleModuleList?roleId=<?php echo $_GET["roleId"]?>', //数据接口
-        singleSelect: true, //行单选
+        singleSelect: false, //行单选
         idField: 'id', //定义标识树节点的键字段
         treeField: 'name', //定义树节点字段
         height: tableHelper.setHeight(),
@@ -54,10 +54,7 @@
                     align: 'center',
                     formatter: function(value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                        var button = { relation: ['关联按钮', 1] };
-                        if (row.isRelation) {
-                            button = { delRelation: ['取消关联', 0] };
-                        }
+                        var button = { button: ['关联按钮', 1] };
                         return tableHelper.createButton(button, row);
                     }
                 }

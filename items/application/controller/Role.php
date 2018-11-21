@@ -136,13 +136,42 @@ class Role extends Basic
             $roleId = input("roleId") ?: 0;
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
-            $data = db()->query("
-            SELECT t1.Id,t1.Name,{$roleId} AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            $module = db()->query("
+            SELECT t1.Id,t1.Pid,t1.Name,{$roleId} AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
+            (SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son,t1.Level
             FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.RoleId={$roleId} AND t2.ModuleId=t1.Id AND t2.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
-            return toEasyTable($data);
+            $tree = array();
+            foreach ($module as $m) {
+                //获取一级
+                if ($m["Pid"] == 0) {
+                    $m["state"] = ($m["Son"] > 0) ? "open" : "";
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["Id"]) : [];
+                    $tree[] = convertInitials($m);
+                }
+            }
+            return toEasyTable($tree, false);
         } catch (Exception $e) {
             return toEasyTable([], false, $e->getMessage());
+        }
+    }
+
+    //获取子级模块 array
+    protected function getSonModule($array, $pid)
+    {
+        try {
+            $data = array();
+            foreach ($array as $m) {
+                //递归子级
+                if ($m["Pid"] == $pid) {
+                    $m["state"] = ($m["Son"] > 0) ? "open" : "";
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["Id"]) : [];
+                    $data[] = convertInitials($m);
+                }
+            }
+            return $data;
+        } catch (Exception $e) {
+            return [];
         }
     }
 }
