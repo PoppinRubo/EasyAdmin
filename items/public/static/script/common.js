@@ -109,7 +109,7 @@ var askHelper = {
 var tableHelper = {
     //高度适配
     setHeight: function(unit = true) {
-        var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 55);
+        var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 45);
         return unit ? height + "px" : height;
     },
     //easyUI表格刷新
