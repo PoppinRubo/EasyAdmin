@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-10-22 13:48:09
+Backup Time: 2018-11-21 11:46:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,8 +102,8 @@ CREATE TABLE `sys_user` (
   `Password` varchar(50) NOT NULL COMMENT '密码',
   `Username` varchar(50) NOT NULL COMMENT '姓名',
   `Gender` int(1) NOT NULL COMMENT '性别',
-  `LoginTimes` int(11) NOT NULL COMMENT '登录次数',
-  `LastLoginTime` datetime NOT NULL COMMENT '最后登录时间',
+  `LoginTimes` int(11) NOT NULL DEFAULT '0' COMMENT '登录次数',
+  `LastLoginTime` datetime DEFAULT NULL COMMENT '最后登录时间',
   `CreateTime` datetime NOT NULL COMMENT '创建时间',
   `CreateUser` int(11) NOT NULL COMMENT '创建人',
   `ModifyTime` datetime NOT NULL COMMENT '修改时间',

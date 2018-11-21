@@ -64,7 +64,15 @@
                     }
                 },
                 { field: 'loginTimes', title: '登录次数', width: 120, align: 'center' },
-                { field: 'lastLoginTime', title: '最后登录时间', width: 170, align: 'center' },
+                {
+                    field: 'lastLoginTime',
+                    title: '最后登录时间',
+                    width: 170,
+                    align: 'center',
+                    formatter: function(value, row) {
+                        return !value ? "尚未登录" : value;
+                    }
+                },
                 { field: 'createTime', title: '创建时间', width: 170, align: 'center' }
             ]
         ]
