@@ -110,6 +110,16 @@ class User extends Basic
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
+                $user = db('sys_user')->where(array("Id" => $this->user["Id"]))->find();
+                if ($user == null) {
+                    return toJsonData(0, null, "获取当前登录用户失败");
+                }
+                if ($data["OldPassword"] != $user["Password"]) {
+                    return toJsonData(0, null, "旧密码不正确");
+                }
+                if ($data["NewPassword"] != $data["Password"]) {
+                    return toJsonData(0, null, "新密码与确认密码不一致");
+                }
                 $model = new SysUser();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $this->user["Id"]]);
