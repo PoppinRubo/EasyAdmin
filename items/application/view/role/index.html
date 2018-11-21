@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="global.php" title="角色列表"/}
+</head>
+
+<body class="admin-body">
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-form layui-card-header admin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline admin-input-comm search">
+                            <input type="text" id="key" placeholder="请输入编号、角色名" autocomplete="off" class="layui-input">
+                        </div>
+                        <button class="layui-btn admin-btn-comm" lay-submit onclick="search();">
+                            <i class="layui-icon icon-search admin-button-btn"></i>搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card-body admin-table-body">
+                <table id="data-table" lay-filter="data-table"></table>
+            </div>
+        </div>
+    </div>
+    <!--表格工具条-->
+    <div class="easyui-table-tool" id="toolbar">
+        <div class="layui-btn-container">
+            {foreach $button as $b }
+            <button class="layui-btn layui-btn-sm" onclick="eval('{$b.EnglishName}()')">
+                <i class="layui-icon {$b.Icon}"></i> {$b.Name}
+            </button>
+            {/foreach}
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //easyUi 表格树
+    $('#data-table').datagrid({
+        url: '/role/getRoleList', //数据接口
+        singleSelect: true, //行单选
+        height: tableHelper.setHeight(),
+        toolbar: '#toolbar', //表格工具条
+        rownumbers: true, //行号显示
+        pageSize: 15, //页码容量
+        fit: false, //关闭自适应
+        pagination: true, // 分页工具栏
+        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        columns: [
+            [
+                { field: 'checkbox', checkbox: true, align: 'center' },
+                { field: 'id', title: '编号', width: 80, align: 'center' },
+                { field: 'name', title: '角色名', width: 120, align: 'center' },
+                { field: 'sort', title: '排序', width: 80, align: 'center' },
+                {
+                    field: 'isValid',
+                    title: '是否有效',
+                    width: 100,
+                    align: 'center',
+                    formatter: function(value, row) {
+                        return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
+                    }
+                },
+                { field: 'createTime', title: '创建时间', width: 170, align: 'center' }
+            ]
+        ]
+    });
+
+    //操作方法
+
+    //添加
+    function add() {
+        layer.open({
+            type: 2,
+            title: "添加角色",
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['700px', '500px'],
+            content: '/role/add'
+        });
+    }
+
+    //编辑
+    function edit() {
+        var row = $('#data-table').datagrid('getSelected');
+        if (!row) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        layer.open({
+            type: 2,
+            title: '修改角色',
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['700px', '500px'],
+            content: '/role/edit?id=' + row.id
+        });
+    }
+
+    //删除
+    function remove() {
+        var row = $('#data-table').datagrid('getSelected');
+        if (!row) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        askHelper.ajaxConfirm({
+            url: '/role/remove',
+            data: { id: row.id },
+            msg: "确认删除吗"
+        });
+    }
+
+    //搜索
+    function search() {
+        $('#data-table').datagrid({
+            queryParams: {
+                key: $.trim($('#key').val())
+            }
+        });
+    }
+</script>
+
+</html>

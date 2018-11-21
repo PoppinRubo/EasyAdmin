@@ -68,7 +68,7 @@ function toEasyTable($array, $convert = true, $msg = "")
 {
 
     $result = array(
-        "total" => $array->total(),
+        "total" => is_object($array) ? $array->total() : count($array),
         "rows" => $convert ? convertInitials($array) : $array,
         "errorMessage" => $msg,
     );
