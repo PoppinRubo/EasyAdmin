@@ -234,7 +234,8 @@
             },
             logout: function() {
                 //退出登录
-                askHelper.ajaxPost({
+                askHelper.ajaxConfirm({
+                    msg: "确定退出系统吗",
                     url: '/index/signOut',
                     success: function(result) {
                         window.location.href = result.data;
