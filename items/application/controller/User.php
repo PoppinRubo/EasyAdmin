@@ -96,7 +96,7 @@ class User extends Basic
             $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);
         } catch (Exception $e) {
-            return toEasyTable([], false);
+            return toEasyTable([], false, $e->getMessage());
         }
     }
 }

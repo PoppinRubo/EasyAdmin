@@ -90,9 +90,9 @@ class Button extends Basic
             $limit = input("limit") ?: 10;
             $key = input("key") ?: "";
             $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order("Sort", "ASC")->paginate($limit);
-            return toLayTable($data);
+            return toEasyTable($data);
         } catch (Exception $e) {
-            return toLayTable([], false, -1, $e->getMessage());
+            return toEasyTable([], false, $e->getMessage());
         }
     }
 
