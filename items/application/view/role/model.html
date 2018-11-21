@@ -100,6 +100,8 @@
             url: '/role/addModel',
             data: { ids: JSON.stringify(ids), roleId: roleId },
             success: function() {
+                //清除选中项
+                $('#data-table').treegrid('clearSelections');
                 tableHelper.refresh('data-table');
             }
         });
@@ -120,6 +122,8 @@
             url: '/role/delModel',
             data: { ids: JSON.stringify(ids), roleId: roleId },
             success: function() {
+                //清除选中项
+                $('#data-table').treegrid('clearSelections');
                 tableHelper.refresh('data-table');
             }
         });

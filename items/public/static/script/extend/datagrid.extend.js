@@ -53,7 +53,9 @@ var datagridExtend = {
             //复选模式
             $.each(checkbox, function(i, v) {
                 //表头
-                if ($(v).parent()[0].className == "datagrid-header-check") {
+                if ($(v).parent()[0].className.indexOf("datagrid-header-check") != -1) {
+                    //默认去掉选中
+                    //view.find(".datagrid-header-check input[type=checkbox]")[0].checked = false;
                     view.find(".datagrid-header-check").click(function() {
                         $(this).find("input[type=checkbox]").click();
                         checkboxSelect();
@@ -61,6 +63,8 @@ var datagridExtend = {
                 }
                 //添加样式
                 $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
+                //根据选中绑定样式
+                v.checked ? $(v).parent().addClass("layui-form-checked") : $(v).parent().removeClass("layui-form-checked");
                 $(v).closest("tr").click(function() {
                     checkboxSelect();
                 });
