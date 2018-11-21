@@ -75,6 +75,24 @@
 
     //操作方法
 
+    //添加关联
+    function addRelation() {
+        var rows = $('#data-table').treegrid('getSelections');
+        if (rows.length < 1) {
+            layer.msg("至少选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+    }
+
+    //删除关联
+    function delRelation() {
+        var rows = $('#data-table').treegrid('getSelections');
+        if (rows.length < 1) {
+            layer.msg("至少选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+    }
+
     //搜索
     function search() {
         $('#data-table').treegrid({
