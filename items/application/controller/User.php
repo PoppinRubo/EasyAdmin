@@ -1,6 +1,7 @@
 <?php
 namespace app\controller;
 
+use app\facade\UserFacade;
 use app\model\SysUser;
 use think\Exception;
 
@@ -26,6 +27,9 @@ class User extends Basic
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
+                if (UserFacade::isExist($data["Account"])) {
+                    return toJsonData(0, null, "账号已存在");
+                }
                 $model = new SysUser();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
