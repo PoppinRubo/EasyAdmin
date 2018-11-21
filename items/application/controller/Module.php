@@ -148,9 +148,9 @@ class Module extends Basic
             SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
             FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
-            return toLayTable($data);
+            return toEasyTable($data);
         } catch (Exception $e) {
-            return toLayTable([], false, -1, $e->getMessage());
+            return toEasyTable([], false, $e->getMessage());
         }
     }
 

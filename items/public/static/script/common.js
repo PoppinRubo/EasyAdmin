@@ -106,54 +106,15 @@ var tableHelper = {
         var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 55);
         return unit ? height + "px" : height;
     },
-    //layui 表格行选设置
-    choose: function(tableId, tr, isSelection = true) {
-        //是否开启行选选中复选框、单选框
-        if (isSelection) {
-            var selection = tr.find("input[type='checkbox'],input[type='radio']");
-            $.each(selection, function(i, v) {
-                //点击一下渲染好的选框
-                $(v).next().on("click", function(e) {
-                    //阻止事件冒泡
-                    e.stopPropagation();
-                }).click();
-            });
-            //单选 选中状态设置
-            if (selection.length > 0 && selection[0].type == "radio") {
-                var cache = layui.table.cache[tableId];
-                var index = tr.data("index");
-                cache.forEach(function(v, i, a) {
-                    index === i ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
-                });
-            }
-            //复选 选中状态设置
-            if (selection.length > 0 && selection[0].type == "checkbox") {
-                var cache = layui.table.cache[tableId];
-                var checkbox = tr.offsetParent().find('input[name="layTableCheckbox"]');
-                cache.forEach(function(v, i, a) {
-                    checkbox[i].checked ? v.LAY_CHECKED = true : delete v.LAY_CHECKED;
-                });
-            }
-        }
-
-        //标注选中样式
-        tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-    },
-    //表格刷新
+    //easyUI表格刷新
     refresh: function(tableId) {
-        //EasyUI表格
-        if ($("#" + tableId).parent()[0].className == "datagrid-view") {
-            $("#" + tableId).treegrid('reload');
+        var table = $("#" + tableId);
+        //树形表格
+        if (table.closest(".datagrid-view").find(".treegrid-tr-tree").length > 0) {
+            table.treegrid('reload');
             return;
         }
-        //LayUI表格,点击当前页码来刷新表格数据
-        var laypage = $("#" + tableId).next().find(".layui-laypage-btn");
-        if (laypage.length > 0) {
-            laypage.click();
-            return;
-        }
-        //重载方式
-        layui.table.reload(tableId);
+        table.datagrid('reload');
     },
     createButton: function(object, value) {
         //表格按钮创建助手

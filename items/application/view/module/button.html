@@ -25,57 +25,57 @@
             </div>
         </div>
     </div>
-    <script>
-        var tableId = "data-table";
-        //数据表格
-        layui.use('table', function() {
-            var table = layui.table;
-            //表格渲染
-            table.render({
-                elem: '#' + tableId,
-                height: tableHelper.setHeight(tableId),
-                url: '/module/getModuleButtonList?moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
-                page: false, //开启分页
-                cols: [
-                    [ //表头
-                        { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
-                        { field: 'name', title: '按钮名', width: 120, align: 'center' },
-                        { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
-                        {
-                            field: 'isRelation',
-                            title: '是否关联',
-                            width: 90,
-                            align: 'center',
-                            templet: function(d) {
-                                return d[this.field] ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
-                            }
-                        },
-                        {
-                            field: 'menu',
-                            title: '操作',
-                            width: 100,
-                            align: 'center',
-                            templet: function(d) {
-                                //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                                var button = { relation: ['关联按钮', 1] };
-                                if (d.isRelation) {
-                                    button = { delRelation: ['取消关联', 0] };
-                                }
-                                return tableHelper.createButton(button, d);
-                            }
+    <script type="text/javascript">
+        //easyUi 表格
+        $('#data-table').datagrid({
+            url: '/module/getModuleButtonList?moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
+            singleSelect: true, //行单选
+            height: tableHelper.setHeight(),
+            toolbar: '#toolbar', //表格工具条
+            rownumbers: true, //行号显示
+            pageSize: 15, //页码容量
+            fit: false, //关闭自适应
+            pagination: true, // 分页工具栏
+            pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+            columns: [
+                [
+                    { field: 'id', title: '编号', width: 60, sort: true, align: 'center' },
+                    { field: 'name', title: '按钮名', width: 120, align: 'center' },
+                    { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
+                    {
+                        field: 'isRelation',
+                        title: '是否关联',
+                        width: 80,
+                        align: 'center',
+                        formatter: function(value, row) {
+                            return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                         }
-                    ]
+                    },
+                    {
+                        field: 'menu',
+                        title: '操作',
+                        width: 80,
+                        align: 'center',
+                        formatter: function(value, row) {
+                            //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
+                            var button = { relation: ['关联按钮', 1] };
+                            if (row.isRelation) {
+                                button = { delRelation: ['取消关联', 0] };
+                            }
+                            return tableHelper.createButton(button, row);
+                        }
+                    }
                 ]
-            });
+            ]
         });
 
         //操作方法
 
         //添加关联
-        function relation(d) {
+        function relation(row) {
             askHelper.ajaxPost({
                 url: '/module/relation',
-                data: { buttonId: d.id, moduleId: d.moduleId },
+                data: { buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
                 }
@@ -83,10 +83,10 @@
         }
 
         //删除关联
-        function delRelation(d) {
+        function delRelation(row) {
             askHelper.ajaxPost({
                 url: '/module/delRelation',
-                data: { buttonId: d.id, moduleId: d.moduleId },
+                data: { buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
                 }
@@ -95,9 +95,8 @@
 
         //搜索
         function search() {
-            //执行重载
-            layui.table.reload(tableId, {
-                where: {
+            $('#data-table').datagrid({
+                queryParams: {
                     key: $.trim($('#key').val())
                 }
             });

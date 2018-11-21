@@ -84,12 +84,13 @@ function toLayTable($array, $convert = true, $code = 0, $msg = "")
  * @param bool $convert 字段首字母是否转换小写
  * @return string
  */
-function toEasyTable($array, $convert = true)
+function toEasyTable($array, $convert = true, $msg = "")
 {
 
     $result = array(
         "total" => count($array),
         "rows" => $convert ? convertInitials($array) : $array,
+        "errorMessage" => $msg,
     );
     echo json_encode($result);
 }
