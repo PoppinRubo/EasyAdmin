@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2018-11-21 11:46:46
+Backup Time: 2018-11-21 17:16:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `sys_module` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块表';
 CREATE TABLE `sys_module_button` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `ModuleId` int(11) NOT NULL COMMENT '模块编号',
@@ -57,7 +57,7 @@ CREATE TABLE `sys_module_button` (
   `IsValid` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否有效',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块、按钮关系表';
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COMMENT='系统模块、按钮关系表';
 CREATE TABLE `sys_role` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Name` varchar(50) NOT NULL COMMENT '角色名称',
@@ -143,19 +143,19 @@ COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module` WRITE;
 DELETE FROM `admin`.`sys_module`;
-INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Level`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, 1, '系统管理', '', 'icon-briefcase', 10, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, 2, '字体图标', '/icon/index', 'icon-open-book', 10, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, 2, '用户列表', '/user/index', 'icon-user', 20, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, 2, '模块列表', '/module/index', 'icon-books', 30, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0),(5, 1, 2, '按钮管理', '/button/index', 'icon-bigcartel', 40, '按钮管理', '2018-10-18 10:13:21', 1, '2018-10-18 10:13:21', 1, 1, 0);
+INSERT INTO `admin`.`sys_module` (`Id`,`Pid`,`Level`,`Name`,`Link`,`Icon`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 0, 1, '系统管理', '', 'icon-briefcase', 10, '系统管理', '2018-07-12 20:00:00', 1, '2018-09-20 12:31:28', 1, 1, 0),(2, 1, 2, '字体图标', '/icon/index', 'icon-open-book', 10, '字体图标', '2018-07-12 20:00:00', 1, '2018-09-20 12:51:20', 1, 1, 0),(3, 1, 2, '用户列表', '/user/index', 'icon-user', 20, '系统用户', '2018-07-12 20:00:00', 1, '2018-09-25 09:12:43', 1, 1, 0),(4, 1, 2, '模块列表', '/module/index', 'icon-books', 40, '系统模块', '2018-07-12 20:00:00', 1, '2018-09-28 18:03:54', 1, 1, 0),(5, 1, 2, '按钮管理', '/button/index', 'icon-bigcartel', 50, '按钮管理', '2018-10-18 10:13:21', 1, '2018-10-18 10:13:21', 1, 1, 0),(6, 1, 2, '角色列表', '/role/index', 'icon-jira', 30, '系统角色', '2018-11-21 16:53:56', 1, '2018-11-21 16:54:52', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_module_button` WRITE;
 DELETE FROM `admin`.`sys_module_button`;
-INSERT INTO `admin`.`sys_module_button` (`Id`,`ModuleId`,`ButtonId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 5, 1, '2018-10-18 10:15:12', 1, '2018-10-18 10:15:12', 1, 1, 0),(2, 5, 2, '2018-10-18 10:15:15', 1, '2018-10-18 10:15:15', 1, 1, 0),(3, 5, 3, '2018-10-18 10:15:19', 1, '2018-10-18 10:15:19', 1, 1, 0),(4, 4, 1, '2018-10-18 10:22:05', 1, '2018-10-18 10:22:05', 1, 1, 0),(5, 4, 4, '2018-10-18 10:22:10', 1, '2018-10-18 10:22:10', 1, 1, 0),(6, 4, 3, '2018-10-18 10:22:16', 1, '2018-10-18 10:22:16', 1, 1, 0),(7, 4, 2, '2018-10-18 10:22:20', 1, '2018-10-18 10:22:20', 1, 1, 0),(8, 4, 5, '2018-10-18 10:25:44', 1, '2018-10-18 10:25:44', 1, 1, 0),(9, 3, 1, '2018-10-18 10:27:52', 1, '2018-10-18 10:27:52', 1, 1, 0),(10, 3, 2, '2018-10-18 10:27:56', 1, '2018-10-18 10:27:56', 1, 1, 0),(11, 3, 3, '2018-10-18 10:28:00', 1, '2018-10-18 10:28:00', 1, 1, 0),(12, 5, 6, '2018-10-19 10:06:26', 1, '2018-10-19 10:06:26', 1, 1, 0),(13, 4, 6, '2018-10-19 17:58:09', 1, '2018-10-19 17:58:09', 1, 1, 0);
+INSERT INTO `admin`.`sys_module_button` (`Id`,`ModuleId`,`ButtonId`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, 5, 1, '2018-10-18 10:15:12', 1, '2018-10-18 10:15:12', 1, 1, 0),(2, 5, 2, '2018-10-18 10:15:15', 1, '2018-10-18 10:15:15', 1, 1, 0),(3, 5, 3, '2018-10-18 10:15:19', 1, '2018-10-18 10:15:19', 1, 1, 0),(4, 4, 1, '2018-10-18 10:22:05', 1, '2018-10-18 10:22:05', 1, 1, 0),(5, 4, 4, '2018-10-18 10:22:10', 1, '2018-10-18 10:22:10', 1, 1, 0),(6, 4, 3, '2018-10-18 10:22:16', 1, '2018-10-18 10:22:16', 1, 1, 0),(7, 4, 2, '2018-10-18 10:22:20', 1, '2018-10-18 10:22:20', 1, 1, 0),(8, 4, 5, '2018-10-18 10:25:44', 1, '2018-10-18 10:25:44', 1, 1, 0),(9, 3, 1, '2018-10-18 10:27:52', 1, '2018-10-18 10:27:52', 1, 1, 0),(10, 3, 2, '2018-10-18 10:27:56', 1, '2018-10-18 10:27:56', 1, 1, 0),(11, 3, 3, '2018-10-18 10:28:00', 1, '2018-10-18 10:28:00', 1, 1, 0),(12, 5, 6, '2018-10-19 10:06:26', 1, '2018-10-19 10:06:26', 1, 1, 0),(13, 4, 6, '2018-10-19 17:58:09', 1, '2018-10-19 17:58:09', 1, 1, 0),(14, 6, 1, '2018-11-21 17:00:28', 1, '2018-11-21 17:00:28', 1, 1, 0),(15, 6, 2, '2018-11-21 17:00:36', 1, '2018-11-21 17:00:36', 1, 1, 0),(16, 6, 3, '2018-11-21 17:00:41', 1, '2018-11-21 17:00:41', 1, 1, 0),(17, 6, 6, '2018-11-21 17:06:57', 1, '2018-11-21 17:06:57', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `admin`.`sys_role` WRITE;
 DELETE FROM `admin`.`sys_role`;
-INSERT INTO `admin`.`sys_role` (`Id`,`Name`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '超级管理员', 1, '超级管理员', '2018-07-12 20:00:00', 1, '2018-07-12 20:00:00', 1, 1, 0),(2, '系统管理员', 2, '系统管理员', '2018-07-12 20:00:00', 1, '2018-07-12 20:00:00', 1, 1, 0);
+INSERT INTO `admin`.`sys_role` (`Id`,`Name`,`Sort`,`Remark`,`CreateTime`,`CreateUser`,`ModifyTime`,`ModifyUser`,`IsValid`,`IsDel`) VALUES (1, '超级管理员', 10, '超级管理员', '2018-07-12 20:00:00', 1, '2018-07-12 20:00:00', 1, 1, 0),(2, '系统管理员', 20, '系统管理员', '2018-07-12 20:00:00', 1, '2018-07-12 20:00:00', 1, 1, 0);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;

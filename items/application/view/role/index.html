@@ -115,6 +115,14 @@
         });
     }
 
+    //自动排序
+    function sorting() {
+        askHelper.ajaxConfirm({
+            url: '/role/sorting',
+            msg: "将当前排序依次设置为间隔为10的排序,确定继续"
+        });
+    }
+
     //搜索
     function search() {
         $('#data-table').datagrid({
