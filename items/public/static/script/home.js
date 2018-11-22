@@ -54,11 +54,14 @@
                 });
             },
             treeLoading: function(node, open) {
+                var anim = "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop";
+                //节点动画
                 if (node) {
                     var icon = $(node.target).find("span")[1] || null;
-                    open && icon ? $(icon).attr("data-class", icon.className).attr("class", "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop") :
-                        $(icon).attr("class", $(icon).data("class"));
+                    open && icon ? $(icon).attr("data-class", icon.className).attr("class", anim) : $(icon).attr("class", $(icon).data("class"));
+                    return;
                 }
+                $("#menu-tree .layui-nav-bar").html("<i class='" + anim + "'></i>");
             },
             fullscreen: function(e) {
                 //全屏切换
