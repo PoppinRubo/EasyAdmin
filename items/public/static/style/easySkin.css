@@ -114,3 +114,13 @@ table .tree-expanded:before {
 .datagrid-view .layui-form-radio>i {
     font-size: 15px;
 }
+
+.pagination .pagination-num {
+    padding: 5px;
+    border-radius: 2px;
+}
+
+.pagination-page-list {
+    padding: 4px 2px;
+    border-radius: 2px;
+}
