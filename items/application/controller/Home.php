@@ -19,7 +19,6 @@ class Home extends Basic
     public function getMenuTree()
     {
         try {
-            sleep(5);
             $pid = input("id") ?: 0;
             $module = db('sys_module')->query("
             SELECT t1.Id,t1.Pid,t1.Name,t1.Icon,t1.Link,t1.Sort,

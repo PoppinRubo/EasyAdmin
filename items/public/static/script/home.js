@@ -61,7 +61,7 @@
                     open && icon ? $(icon).attr("data-class", icon.className).attr("class", anim) : $(icon).attr("class", $(icon).data("class"));
                     return;
                 }
-                $("#menu-tree").html("<i class='" + anim + " loading-anim'></i><span class='loading-text'>加载中...</span>");
+                $("#menu-tree").html("<i class='" + anim + " loading-anim'></i><span class='loading-text'>加载中</span>");
             },
             fullscreen: function(e) {
                 //全屏切换
