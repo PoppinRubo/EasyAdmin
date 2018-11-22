@@ -15,8 +15,9 @@
                     url: "/home/getMenuTree",
                     method: "post",
                     animate: true,
-                    onBeforeLoad: function() {
+                    onBeforeLoad: function(node) {
                         //当加载数据的请求发出前触发
+                        home.treeLoading(node, true);
                     },
                     onLoadSuccess: function(node, data) {
                         //当数据加载成功时触发
@@ -28,6 +29,7 @@
                                 window.location.href = data.url;
                             });
                         }
+                        home.treeLoading(node, false);
                     },
                     onLoadError: function(arguments) {
                         //当数据加载失败时触发
@@ -51,6 +53,19 @@
                         home.tabAdd(node);
                     }
                 });
+            },
+            treeLoading: function(node, open) {
+                if (node) {
+                    if (open) {
+                        //加载动画
+                        var icon = node ? $(node.target).find("span")[1] : null;
+                        node ? $(icon).attr("data-class", icon.className).attr("class", "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop") : "";
+                        return;
+                    }
+                    //加载动画移除
+                    var icon = node ? $(node.target).find("span")[1] : null;
+                    node ? $(icon).attr("class", $(icon).data("class")) : "";
+                }
             },
             fullscreen: function(e) {
                 //全屏切换
