@@ -1,18 +1,26 @@
 /**
  * EasyUI Datagrid 扩展
  */
+//视图扩展
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
     onAfterRender: function(target) {
         datagridExtend.beautify(target);
     }
 });
+//视图扩展
 $.extend($.fn.treegrid.defaults.view, {
     //表格树渲染后
     onAfterRender: function(target) {
         datagridExtend.beautify(target);
     }
 });
+
+//窗口大小变化
+window.onresize = function() {
+    datagridExtend.autoWidth();
+}
+
 //扩展方法
 var datagridExtend = {
     //美化
@@ -79,6 +87,24 @@ var datagridExtend = {
                     });
                 }, 100)
             }
+        }
+    },
+    autoWidth: function() {
+        //表格宽度适应设置
+        var table = $(document).find(".datagrid-f");
+        if (table.length > 0) {
+            $.each(table, function(i, v) {
+                var table = $(v);
+                //表格类型
+                var type = table.closest(".datagrid-view").find(".treegrid-tr-tree").length > 0 ? "treegrid" : "datagrid";
+                //获取配置
+                var options = table[type]('options');
+                if (options.fitWidth != false) {
+                    table[type]('resize', {
+                        width: $(window).width() - 60
+                    })
+                }
+            });
         }
     }
 }
