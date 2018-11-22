@@ -1,14 +1,14 @@
 /**
  * EasyUI Datagrid 扩展
  */
-//视图扩展
+//表格视图扩展
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
     onAfterRender: function(target) {
         datagridExtend.beautify(target, "datagrid");
     }
 });
-//视图扩展
+//表格树视图扩展
 $.extend($.fn.treegrid.defaults.view, {
     //表格树渲染后
     onAfterRender: function(target) {
