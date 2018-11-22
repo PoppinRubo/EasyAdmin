@@ -124,3 +124,15 @@ table .tree-expanded:before {
     padding: 4px 2px;
     border-radius: 2px;
 }
+
+.datagrid-mask {
+    background-color: rgb(0, 0, 0);
+    opacity: 0.5;
+}
+
+.datagrid-mask-msg {
+    border: none;
+    border-radius: 2px;
+    background-image: url('/static/layui/css/modules/layer/default/loading-2.gif');
+    background-size: 20px;
+}
