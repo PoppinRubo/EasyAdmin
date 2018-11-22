@@ -8,10 +8,14 @@
     border-color: #e6e6e6;
 }
 
-.datagrid-header-row,
-.datagrid-row {
-    height: 40px;
+.datagrid-header-row {
+    height: 30px !important;
 }
+
+.datagrid-row {
+    height: 40px !important;
+}
+
 
 .datagrid-row-over {
     background: #f9f9f9;

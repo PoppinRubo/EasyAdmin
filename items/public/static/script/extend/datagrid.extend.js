@@ -5,14 +5,14 @@
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
     onAfterRender: function(target) {
-        datagridExtend.beautify(target);
+        datagridExtend.beautify(target, "datagrid");
     }
 });
 //视图扩展
 $.extend($.fn.treegrid.defaults.view, {
     //表格树渲染后
     onAfterRender: function(target) {
-        datagridExtend.beautify(target);
+        datagridExtend.beautify(target, "treegrid");
     }
 });
 
@@ -24,11 +24,11 @@ window.onresize = function() {
 //扩展方法
 var datagridExtend = {
     //美化
-    beautify: function(target) {
+    beautify: function(target, type) {
         var options = $(target).datagrid('options');
         var singleSelect = options.singleSelect;
         var view = $(target).closest(".datagrid-view");
-        var checkbox = view.find("tr input[type=checkbox]");
+        var checkbox = view.find("td input[type=checkbox]");
         if (singleSelect) {
             //表头选框去除
             view.find(".datagrid-header-check").addClass("layui-form-radio").html("");
@@ -49,23 +49,35 @@ var datagridExtend = {
                 radio[0].checked = !radio[0].checked;
                 //事件延迟等待复选框状态
                 setTimeout(function() {
-                    checkbox = view.find("tr input[type=radio]");
+                    checkbox = view.find("td input[type=radio]");
                     $.each(checkbox, function(i, v) {
                         var icon = $(this).parent().find("i");
                         this.checked ? icon.html("&#xe643;") : icon.html("&#xe63f;");
                         this.checked ? $(this).parent().addClass("layui-form-radioed") : $(this).parent().removeClass("layui-form-radioed");
                     });
-                }, 100)
+                }, 100);
             }
         } else {
             //复选模式
             $.each(checkbox, function(i, v) {
                 //表头
                 if ($(v).parent()[0].className.indexOf("datagrid-header-check") != -1) {
-                    //默认去掉选中
-                    //view.find(".datagrid-header-check input[type=checkbox]")[0].checked = false;
                     view.find(".datagrid-header-check").click(function() {
-                        $(this).find("input[type=checkbox]").click();
+                        //时间戳处重复选中
+                        if (!Window.checkboxTimestamp) {
+                            Window.checkboxTimestamp = new Date().getTime();
+                        } else {
+                            var difference = (new Date().getTime() - Window.checkboxTimestamp) * 0.001;
+                            Window.checkboxTimestamp = new Date().getTime();
+                            if (difference < 0.5) {
+                                console.log("嘻嘻,点得太快你的表格复选被我拦截了");
+                                return;
+                            }
+                        };
+                        //全选反选控制
+                        var all = $(this).find("input[type=checkbox]")[0];
+                        all.checked = !all.checked;
+                        all.checked ? $(target)[type]("selectAll") : $(target)[type]("clearSelections");
                         checkboxSelect();
                     });
                 }
@@ -81,7 +93,7 @@ var datagridExtend = {
             function checkboxSelect() {
                 //事件延迟等待复选框状态
                 setTimeout(function() {
-                    checkbox = view.find("tr input[type=checkbox]");
+                    checkbox = view.find("td input[type=checkbox]");
                     $.each(checkbox, function(i, v) {
                         this.checked ? $(this).parent().addClass("layui-form-checked") : $(this).parent().removeClass("layui-form-checked");
                     });
