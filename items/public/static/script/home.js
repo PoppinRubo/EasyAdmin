@@ -55,15 +55,9 @@
             },
             treeLoading: function(node, open) {
                 if (node) {
-                    if (open) {
-                        //加载动画
-                        var icon = node ? $(node.target).find("span")[1] : null;
-                        node ? $(icon).attr("data-class", icon.className).attr("class", "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop") : "";
-                        return;
-                    }
-                    //加载动画移除
-                    var icon = node ? $(node.target).find("span")[1] : null;
-                    node ? $(icon).attr("class", $(icon).data("class")) : "";
+                    var icon = $(node.target).find("span")[1] || null;
+                    open && icon ? $(icon).attr("data-class", icon.className).attr("class", "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop") :
+                        $(icon).attr("class", $(icon).data("class"));
                 }
             },
             fullscreen: function(e) {
