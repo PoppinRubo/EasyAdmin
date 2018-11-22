@@ -1,101 +1,113 @@
 /*菜单树*/
 #menu-tree .tree-title {
-  font-size: 12px;
-  height: 18px;
-  line-height: 20px;
+    font-size: 12px;
+    height: 18px;
+    line-height: 20px;
 }
 
 #menu-tree .tree-hit,
 #menu-tree .tree-icon {
-  font-family: icomoon !important;
-  font-size: 18px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale
+    font-family: icomoon !important;
+    font-size: 18px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
 }
 
 #menu-tree .tree-folder-open {
-  background: none;
+    background: none;
 }
 
 #menu-tree .tree-folder,
 #menu-tree .tree-file {
-  display: inline-block;
-  height: 20px;
-  width: 20px;
-  line-height: 20px;
-  margin: 4px;
-  vertical-align: middle;
-  overflow: hidden;
-  background: none;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    margin: 4px;
+    vertical-align: middle;
+    overflow: hidden;
+    background: none;
 }
 
 .tree-folder::before,
 .tree-file::before {
-  content: "\edd9";
+    content: "\edd9";
 }
 
 #menu-tree .tree-node {
-  height: 35px;
-  line-height: 35px;
-  padding: 0 5px;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 5px;
+}
+
+#menu-tree .loading-anim {
+    float: left;
+    margin: 5px;
+}
+
+#menu-tree .loading-text {
+    margin: 5px;
+    float: left;
+    min-width: 100px;
+    font-size: 12px;
 }
 
 #menu-tree .tree-title {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 70%;
 }
 
 #menu-tree>li>.tree-node>.tree-indent {
-  display: none;
+    display: none;
 }
 
 #menu-tree>li>ul {
-  background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 #menu-tree>li>.tree-node>.tree-expanded,
 #menu-tree>li>.tree-node>.tree-collapsed {
-  background: none;
-  float: right;
-  height: 35px;
-  width: 18px;
-  margin: 0 10px 0 0;
+    background: none;
+    float: right;
+    height: 35px;
+    width: 18px;
+    margin: 0 10px 0 0;
 }
 
 #menu-tree>li>.tree-node>.tree-collapsed:before {
-  content: "\e952";
+    content: "\e952";
 }
 
 #menu-tree>li>.tree-node>.tree-expanded:before {
-  content: "\e955";
+    content: "\e955";
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-expanded,
 #menu-tree>li>ul>li .tree-node>.tree-collapsed {
-  margin: 0;
-  background: none;
-  height: 35px;
+    margin: 0;
+    background: none;
+    height: 35px;
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-collapsed:before {
-  content: "\e97c";
+    content: "\e97c";
 }
 
 #menu-tree>li>ul>li .tree-node>.tree-expanded:before {
-  content: "\e97a";
+    content: "\e97a";
 }
 
 #menu-tree .tree-node-hover {
-  background: #4E5465;
-  color: #ffffff;
+    background: #4E5465;
+    color: #ffffff;
 }
 
 #menu-tree .tree-node-selected {
-  background-color: #009688 !important;
-  color: #ffffff;
+    background-color: #009688 !important;
+    color: #ffffff;
 }
 
 /*菜单树*/
