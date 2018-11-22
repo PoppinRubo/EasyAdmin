@@ -89,7 +89,7 @@ table .tree-expanded:before {
 
 .datagrid-view .layui-form-radio {
     display: table;
-    margin: 0 3px;
+    margin: 0;
 }
 
 .datagrid-view .datagrid-header-radio {
@@ -102,4 +102,8 @@ table .tree-expanded:before {
 
 .datagrid-view .layui-form-checkbox[lay-skin=primary] i {
     margin-left: 5px;
+}
+
+.datagrid-view .layui-form-radio>i {
+    font-size: 15px;
 }
