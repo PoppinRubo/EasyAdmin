@@ -10,7 +10,6 @@
         status = '',
         home = {
             tree: function() {
-                var t = this;
                 $('#menu-tree').tree({
                     url: "/home/getMenuTree",
                     method: "post",
@@ -47,7 +46,7 @@
                         }
                         //菜单展开折叠
                         if (status === 'spread') {
-                            t.sideFlexible();
+                            home.sideFlexible();
                         }
                         //添加标签页
                         home.tabAdd(node);
