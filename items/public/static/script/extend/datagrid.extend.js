@@ -71,7 +71,6 @@ var datagridExtend = {
                             var difference = (new Date().getTime() - Window.checkboxTimestamp) * 0.001;
                             Window.checkboxTimestamp = new Date().getTime();
                             if (difference < 0.5) {
-                                console.log("嘻嘻,选得太快表格复选被我拦截了");
                                 return;
                             }
                         };
@@ -82,15 +81,18 @@ var datagridExtend = {
                         checkboxSelect();
                     });
                 }
-                //移除产生的多余图标
-                $(v).siblings("i").remove();
-                //添加样式
-                $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
-                //根据选中绑定样式
-                v.checked ? $(v).parent().addClass("layui-form-checked") : $(v).parent().removeClass("layui-form-checked");
-                $(v).closest("tr").click(function() {
-                    checkboxSelect();
-                });
+                //延迟等待选框选中状态再渲染，防止全选选框渲染样式不对应情况
+                setTimeout(function() {
+                    //移除产生的多余图标
+                    $(v).siblings("i").remove();
+                    //添加样式
+                    $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
+                    //根据选中绑定样式
+                    v.checked ? $(v).parent().addClass("layui-form-checked") : $(v).parent().removeClass("layui-form-checked");
+                    $(v).closest("tr").click(function() {
+                        checkboxSelect();
+                    });
+                }, 100)
             });
             //选中处理图标
             function checkboxSelect() {
