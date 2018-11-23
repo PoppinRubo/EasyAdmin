@@ -15,7 +15,6 @@ class RoleFacade
             if ($a["roleId"] < 0 || !is_Array(json_decode($a["ids"]))) {
                 return toJsonData(0, null, "参数错误");
             }
-
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
             $data = db('sys_role_module')->whereIn('ModuleId', $id)->where(array("RoleId" => $a["roleId"]))->select();
