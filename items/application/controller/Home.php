@@ -24,8 +24,8 @@ class Home extends Basic
             SELECT t2.Id,t2.Pid,t2.Name,t2.Icon,t2.Link,t2.Sort,
             (SELECT COUNT(t3.Id) FROM sys_module AS t3 WHERE t3.Pid=t2.Id AND t3.IsDel=0 AND t3.IsValid=1) AS Son
             FROM sys_role_module AS t1 JOIN sys_module as t2 on(t2.Id=t1.ModuleId AND t2.IsValid=1 AND t2.IsDel=0)
-            WHERE t1.IsDel=0 AND t1.IsValid=1 and t1.RoleId AND t2.Pid={$pid} in(
-            SELECT t4.RoleId FROM sys_user_role as t4 WHERE t4.UserId={$this->user["Id"]}
+            WHERE t1.IsDel=0 AND t1.IsValid=1 AND t1.RoleId AND t2.Pid={$pid} AND t1.RoleId IN(
+            SELECT t4.RoleId FROM sys_user_role as t4 WHERE t4.IsDel=0 AND t4.IsValid=1 AND t4.UserId={$this->user["Id"]}
             )GROUP BY t2.Id ORDER BY t2.Sort ASC;");
             $tree = array();
             foreach ($module as $m) {
