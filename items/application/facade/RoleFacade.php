@@ -39,7 +39,7 @@ class RoleFacade
                         "ModifyTime" => date("Y-m-d H:i:s"),
                         "ModifyUser" => $a["operaterId"],
                     );
-                    $sql .= db('sys_role_module')->fetchSql(true)->update($update)->where(array("ModuleId" => $i, "RoleId" => $a["roleId"]));
+                    $sql .= db('sys_role_module')->fetchSql(true)->where(array("ModuleId" => $i, "RoleId" => $a["roleId"]))->update($update);
                 } else if ($a["isRelation"]) {
                     $insert = array(
                         "ModuleId" => $a["moduleId"],
@@ -52,25 +52,19 @@ class RoleFacade
                     $sql .= db('sys_role_module')->fetchSql(true)->insert($insert);
                 }
             }
-            // if ($data == null && $a["isRelation"]) {
-            //     //新增关联插入记录
-            //     $model->save(array(
-            //         "ModuleId" => $a["moduleId"],
-            //         "RoleId" => $a["roleId"],
-            //         "CreateTime" => date("Y-m-d H:i:s"),
-            //         "CreateUser" => $a["operaterId"],
-            //         "ModifyTime" => date("Y-m-d H:i:s"),
-            //         "ModifyUser" => $a["operaterId"],
-            //     ));
-            // } else {
-            //     //更新可用状态
-            //     $data['IsValid'] = $a["isRelation"] ? 1 : 0;
-            //     $data['IsDel'] = $a["isRelation"] ? 0 : 1;
-            //     $data["ModifyTime"] = date("Y-m-d H:i:s");
-            //     $data["ModifyUser"] = $a["operaterId"];
-            //     $model->save($data, ['Id' => $data['Id']]);
-            // }
             $baseResult->result = true;
+            // 启动事务
+            db()->startTrans();
+            try {
+                db()->execute($sql);
+                // 提交事务
+                db()->commit();
+            } catch (Exception $e) {
+                // 回滚事务
+                db()->rollback();
+                $baseResult->result = false;
+                $msg->$e->getMessage();
+            }
         } catch (Exception $e) {
             $baseResult->result = false;
             $msg->$e->getMessage();
