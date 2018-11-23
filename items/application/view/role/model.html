@@ -98,7 +98,7 @@
             ids.push(v.id);
         })
         askHelper.ajaxPost({
-            url: '/role/addModel',
+            url: '/role/relationdModel',
             data: { ids: JSON.stringify(ids), roleId: roleId, isRelation: isRelation },
             success: function() {
                 //清除选中项
