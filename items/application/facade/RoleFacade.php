@@ -32,7 +32,7 @@ class RoleFacade
             //操作的数据
             $data = array();
             foreach ($ids as $i) {
-                $inId = array_search($i, $in["ModuleId"]);
+                $inId = count($in) < 1 ? false : array_search($i, $in["ModuleId"]);
                 if ($inId !== false) {
                     //更新可用状态，数据复活
                     $update = array(
