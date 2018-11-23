@@ -21,10 +21,12 @@ class Home extends Basic
         try {
             $pid = input("id") ?: 0;
             $module = db('sys_module')->query("
-            SELECT t1.Id,t1.Pid,t1.Name,t1.Icon,t1.Link,t1.Sort,
-            (SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0 AND t2.IsValid=1) AS Son
-            FROM sys_module AS t1 WHERE t1.IsDel=0 AND t1.IsValid=1 AND t1.Pid={$pid} ORDER BY t1.Sort ASC
-            ");
+            SELECT t2.Id,t2.Pid,t2.Name,t2.Icon,t2.Link,t2.Sort,
+            (SELECT COUNT(t3.Id) FROM sys_module AS t3 WHERE t3.Pid=t2.Id AND t3.IsDel=0 AND t3.IsValid=1) AS Son
+            FROM sys_role_module AS t1 JOIN sys_module as t2 on(t2.Id=t1.ModuleId AND t2.IsValid=1 AND t2.IsDel=0)
+            WHERE t1.IsDel=0 AND t1.IsValid=1 and t1.RoleId AND t2.Pid={$pid} in(
+            SELECT t4.RoleId FROM sys_user_role as t4 WHERE t4.UserId={$this->user["Id"]}
+            )GROUP BY t2.Id ORDER BY t2.Sort ASC;");
             $tree = array();
             foreach ($module as $m) {
                 $state = $m["Son"] > 0 ? "closed" : "";
