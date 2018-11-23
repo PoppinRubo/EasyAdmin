@@ -83,7 +83,8 @@ table .tree-expanded:before {
     content: "\e97a";
 }
 
-.datagrid-header-check input {
+.datagrid-header-check>input[type=checkbox],
+.datagrid-cell-check>input[type=checkbox] {
     display: none;
 }
 
