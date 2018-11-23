@@ -46,7 +46,7 @@ var datagridExtend = {
             //选中处理图标
             function radioSelect(t) {
                 var radio = $(t).find("input[type=radio]");
-                //事件延迟等待复选框状态
+                //事件延迟等待选框选中状态
                 setTimeout(function() {
                     //单选根据行选状态设置选框
                     radio[0].checked = t.className.indexOf("datagrid-row-selected") != -1;
@@ -92,7 +92,7 @@ var datagridExtend = {
             });
             //选中处理图标
             function checkboxSelect() {
-                //事件延迟等待复选框状态
+                //事件延迟等待选框选中状态
                 setTimeout(function() {
                     checkbox = view.find("td input[type=checkbox]");
                     $.each(checkbox, function(i, v) {
