@@ -1,8 +1,8 @@
 <?php
 namespace app\controller;
 
+use app\facade\RoleFacade;
 use app\model\SysRole;
-use app\model\SysRoleModule;
 use think\Exception;
 
 class Role extends Basic
@@ -183,7 +183,7 @@ class Role extends Basic
             $ids = json_decode(input("ids"));
             $roleId = input("roleId");
             foreach ($ids as $i) {
-                $this->relation(true, $i, $roleId);
+                $result = RoleFacade::relation(true, $i, $roleId, $this->user["Id"]);
             }
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -198,41 +198,9 @@ class Role extends Basic
             $ids = json_decode(input("ids"));
             $roleId = input("roleId");
             foreach ($ids as $i) {
-                $this->relation(false, $i, $roleId);
+                $result = RoleFacade::relation(false, $i, $roleId, $this->user["Id"]);
             }
             return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
-        }
-    }
-
-    //关联模块 Json
-    protected function relation($isRelation, $moduleId, $roleId)
-    {
-        try {
-            if ($moduleId < 0 || $roleId < 0) {
-                return toJsonData(0, null, "参数错误");
-            }
-            $model = new SysRoleModule();
-            $data = db('sys_role_module')->where(array("ModuleId" => $moduleId, "RoleId" => $roleId))->find();
-            if ($data == null && $isRelation) {
-                //新增关联插入记录
-                $model->save(array(
-                    "ModuleId" => $moduleId,
-                    "RoleId" => $roleId,
-                    "CreateTime" => date("Y-m-d H:i:s"),
-                    "CreateUser" => $this->user["Id"],
-                    "ModifyTime" => date("Y-m-d H:i:s"),
-                    "ModifyUser" => $this->user["Id"],
-                ));
-            } else {
-                //更新可用状态
-                $data['IsValid'] = $isRelation ? 1 : 0;
-                $data['IsDel'] = $isRelation ? 0 : 1;
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $this->user["Id"];
-                $model->save($data, ['Id' => $data['Id']]);
-            }
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
         }
