@@ -57,6 +57,7 @@ class RoleFacade
                 }
             }
             $model = new SysRoleModule();
+            //批量操作数据库
             $model->saveAll($data);
             $baseResult->result = true;
         } catch (Exception $e) {
