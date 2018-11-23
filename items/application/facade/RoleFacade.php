@@ -40,6 +40,7 @@ class RoleFacade
                         "ModifyUser" => $a["operaterId"],
                     );
                     $sql .= db('sys_role_module')->fetchSql(true)->where(array("ModuleId" => $i, "RoleId" => $a["roleId"]))->update($update);
+                    $sql .= ";";
                 } else if ($a["isRelation"]) {
                     $insert = array(
                         "ModuleId" => $a["moduleId"],
@@ -50,6 +51,7 @@ class RoleFacade
                         "ModifyUser" => $a["operaterId"],
                     );
                     $sql .= db('sys_role_module')->fetchSql(true)->insert($insert);
+                    $sql .= ";";
                 }
             }
             $baseResult->result = true;
