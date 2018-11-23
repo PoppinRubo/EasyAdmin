@@ -8,33 +8,68 @@ class RoleFacade
     /**
      *关联模块
      */
-    public static function relation(bool $isRelation, int $moduleId, int $roleId, int $operaterId)
+    public static function relation(array $a)
     {
         $baseResult = new \stdClass();
         try {
-            if ($moduleId < 0 || $roleId < 0) {
+            if ($a["roleId"] < 0 || !is_Array(json_decode($a["ids"]))) {
                 return toJsonData(0, null, "参数错误");
             }
             $model = new SysRoleModule();
-            $data = db('sys_role_module')->where(array("ModuleId" => $moduleId, "RoleId" => $roleId))->find();
-            if ($data == null && $isRelation) {
-                //新增关联插入记录
-                $model->save(array(
-                    "ModuleId" => $moduleId,
-                    "RoleId" => $roleId,
-                    "CreateTime" => date("Y-m-d H:i:s"),
-                    "CreateUser" => $operaterId,
-                    "ModifyTime" => date("Y-m-d H:i:s"),
-                    "ModifyUser" => $operaterId,
-                ));
-            } else {
-                //更新可用状态
-                $data['IsValid'] = $isRelation ? 1 : 0;
-                $data['IsDel'] = $isRelation ? 0 : 1;
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $operaterId;
-                $model->save($data, ['Id' => $data['Id']]);
+            $id = trim(trim($a["ids"], "]"), "[");
+            $ids = json_decode($a["ids"]);
+            $data = db('sys_role_module')->whereIn('ModuleId', $id)->where(array("RoleId" => $a["roleId"]))->select();
+            //存在的记录模块编号
+            $in = array();
+            foreach ($data as $d) {
+                foreach ($ids as $i) {
+                    if ($i == $d["ModuleId"]) {
+                        array_push($in, $i);
+                    }
+                }
             }
+            //关联SQL生成
+            $sql = "";
+            foreach ($ids as $i) {
+                if (in_array($i, $in)) {
+                    //更新可用状态，数据复活
+                    $update = array(
+                        'IsValid' => $a["isRelation"] ? 1 : 0,
+                        'IsDel' => $a["isRelation"] ? 0 : 1,
+                        "ModifyTime" => date("Y-m-d H:i:s"),
+                        "ModifyUser" => $a["operaterId"],
+                    );
+                    $sql .= db('sys_role_module')->fetchSql(true)->update($update)->where(array("ModuleId" => $i, "RoleId" => $a["roleId"]));
+                } else if ($a["isRelation"]) {
+                    $insert = array(
+                        "ModuleId" => $a["moduleId"],
+                        "RoleId" => $a["roleId"],
+                        "CreateTime" => date("Y-m-d H:i:s"),
+                        "CreateUser" => $a["operaterId"],
+                        "ModifyTime" => date("Y-m-d H:i:s"),
+                        "ModifyUser" => $a["operaterId"],
+                    );
+                    $sql .= db('sys_role_module')->fetchSql(true)->insert($insert);
+                }
+            }
+            // if ($data == null && $a["isRelation"]) {
+            //     //新增关联插入记录
+            //     $model->save(array(
+            //         "ModuleId" => $a["moduleId"],
+            //         "RoleId" => $a["roleId"],
+            //         "CreateTime" => date("Y-m-d H:i:s"),
+            //         "CreateUser" => $a["operaterId"],
+            //         "ModifyTime" => date("Y-m-d H:i:s"),
+            //         "ModifyUser" => $a["operaterId"],
+            //     ));
+            // } else {
+            //     //更新可用状态
+            //     $data['IsValid'] = $a["isRelation"] ? 1 : 0;
+            //     $data['IsDel'] = $a["isRelation"] ? 0 : 1;
+            //     $data["ModifyTime"] = date("Y-m-d H:i:s");
+            //     $data["ModifyUser"] = $a["operaterId"];
+            //     $model->save($data, ['Id' => $data['Id']]);
+            // }
             $baseResult->result = true;
         } catch (Exception $e) {
             $baseResult->result = false;

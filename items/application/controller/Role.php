@@ -182,7 +182,7 @@ class Role extends Basic
         try {
             $array = array(
                 "isRelation" => input("isRelation"),
-                "ids" => json_decode(input("ids")),
+                "ids" => input("ids"),
                 "roleId" => input("roleId"),
                 "operaterId" => $this->user["Id"],
             );
