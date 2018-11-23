@@ -108,6 +108,24 @@
         });
     }
 
+    //角色模块按钮
+    function roleModuleButton() {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        layer.open({
+            type: 2,
+            title: '角色模块按钮列表',
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['600px', '600px'],
+            content: '/role/button?roleId=' + row.roleId
+        });
+    }
+
     //搜索
     function search() {
         $('#data-table').treegrid({

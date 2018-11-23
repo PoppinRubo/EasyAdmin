@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="global.php" title="按钮列表"/}
+</head>
+
+<body class="admin-body">
+    <div class="layui-fluid">
+        <div class="layui-card">
+            <div class="layui-form layui-card-header admin-card-header-auto">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline admin-input-comm search">
+                            <input type="text" id="key" placeholder="请输入编号、按钮名" autocomplete="off" class="layui-input">
+                        </div>
+                        <button class="layui-btn admin-btn-comm" lay-submit onclick="search();">
+                            <i class="layui-icon icon-search admin-button-btn"></i>搜索
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-card-body admin-table-body">
+                <table id="data-table" lay-filter="data-table"></table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //easyUi 表格
+        $('#data-table').datagrid({
+            url: '/module/getModuleButtonList?moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
+            singleSelect: true, //行单选
+            height: tableHelper.setHeight(),
+            toolbar: '#toolbar', //表格工具条
+            rownumbers: true, //行号显示
+            pageSize: 15, //页码容量
+            fit: false, //关闭自适应
+            pagination: true, // 分页工具栏
+            pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+            columns: [
+                [
+                    { field: 'id', title: '编号', width: 60, sort: true, align: 'center' },
+                    { field: 'name', title: '按钮名', width: 120, align: 'center' },
+                    { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
+                    {
+                        field: 'isRelation',
+                        title: '是否关联',
+                        width: 80,
+                        align: 'center',
+                        formatter: function(value, row) {
+                            return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
+                        }
+                    },
+                    {
+                        field: 'menu',
+                        title: '操作',
+                        width: 80,
+                        align: 'center',
+                        formatter: function(value, row) {
+                            //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
+                            var button = { relation: ['关联按钮', 1] };
+                            if (row.isRelation) {
+                                button = { delRelation: ['取消关联', 0] };
+                            }
+                            return tableHelper.createButton(button, row);
+                        }
+                    }
+                ]
+            ]
+        });
+
+        //操作方法
+
+        //添加关联
+        function relation(row) {
+            askHelper.ajaxPost({
+                url: '/module/relation',
+                data: { buttonId: row.id, moduleId: row.moduleId },
+                success: function() {
+                    tableHelper.refresh('data-table');
+                }
+            });
+        }
+
+        //删除关联
+        function delRelation(row) {
+            askHelper.ajaxPost({
+                url: '/module/delRelation',
+                data: { buttonId: row.id, moduleId: row.moduleId },
+                success: function() {
+                    tableHelper.refresh('data-table');
+                }
+            });
+        }
+
+        //搜索
+        function search() {
+            $('#data-table').datagrid({
+                queryParams: {
+                    key: $.trim($('#key').val())
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
