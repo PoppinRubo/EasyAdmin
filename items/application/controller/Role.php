@@ -176,31 +176,21 @@ class Role extends Basic
         }
     }
 
-    //角色添加模块关联 Json
-    public function addModel()
+    //角色模块关联 Json
+    public function relationdModel()
     {
         try {
-            $ids = json_decode(input("ids"));
-            $roleId = input("roleId");
-            foreach ($ids as $i) {
-                $result = RoleFacade::relation(true, $i, $roleId, $this->user["Id"]);
+            $array = array(
+                "isRelation" => input("isRelation"),
+                "ids" => json_decode(input("ids")),
+                "roleId" => input("roleId"),
+                "operaterId" => $this->user["Id"],
+            );
+            $result = RoleFacade::relation($array);
+            if ($result->result) {
+                return toJsonData(1, null, "操作成功");
             }
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
-        }
-    }
-
-    //角色删除模块关联 Json
-    public function delModel()
-    {
-        try {
-            $ids = json_decode(input("ids"));
-            $roleId = input("roleId");
-            foreach ($ids as $i) {
-                $result = RoleFacade::relation(false, $i, $roleId, $this->user["Id"]);
-            }
-            return toJsonData(1, null, "操作成功");
+            return toJsonData(0, null, $result->msg);
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
         }
