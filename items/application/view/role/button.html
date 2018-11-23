@@ -28,7 +28,7 @@
     <script type="text/javascript">
         //easyUi 表格
         $('#data-table').datagrid({
-            url: '/role/getRoleModuleButtonList?roleId=<?php echo $_GET["roleId"]?>', //数据接口
+            url: '/role/getRoleModuleButtonList?roleId=<?php echo $_GET["roleId"]?>&moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
             singleSelect: true, //行单选
             height: tableHelper.setHeight(),
             toolbar: '#toolbar', //表格工具条
@@ -74,8 +74,8 @@
         //添加关联
         function relation(row) {
             askHelper.ajaxPost({
-                url: '/module/relation',
-                data: { buttonId: row.id, moduleId: row.moduleId },
+                url: '/module/relationButton',
+                data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
                 }
@@ -85,8 +85,8 @@
         //删除关联
         function delRelation(row) {
             askHelper.ajaxPost({
-                url: '/module/delRelation',
-                data: { buttonId: row.id, moduleId: row.moduleId },
+                url: '/module/delRelationButton',
+                data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
                 }

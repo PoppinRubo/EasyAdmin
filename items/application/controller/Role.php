@@ -208,11 +208,13 @@ class Role extends Basic
         try {
             $key = input("key") ?: "";
             $moduleId = input("moduleId") ?: 0;
+            $roleId = input("roleId") ?: 0;
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = db()->query("
-            SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
-            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
+            SELECT t1.Id,t1.Name,t1.EnglishName,t2.ModuleId,{$roleId} AS RoleId,CASE WHEN t3.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            FROM sys_button AS t1 JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
+            LEFT JOIN sys_role_button AS t3 ON(t3.RoleId={$roleId} AND t3.ModuleId=t2.ModuleId AND t3.ButtonId=t2.ButtonId AND t3.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (Exception $e) {
