@@ -57,13 +57,13 @@
         columns: [
             [
                 { field: 'checkbox', checkbox: true, align: 'center' },
-                { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
+                { field: 'id', title: '编号', width: 50, sort: true, align: 'center' },
                 { field: 'name', title: '模块名', width: 120, align: 'left' },
                 { field: 'level', title: '层级', width: 80, align: 'center' },
                 {
                     field: 'isRelation',
                     title: '是否关联',
-                    width: 80,
+                    width: 60,
                     align: 'center',
                     formatter: function(value, row) {
                         return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
@@ -72,11 +72,11 @@
                 {
                     field: 'menu',
                     title: '操作',
-                    width: 80,
+                    width: 120,
                     align: 'center',
                     formatter: function(value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                        var button = { button: ['关联按钮', 1] };
+                        var button = { roleModuleButton: ['角色关联模块按钮', 1] };
                         return tableHelper.createButton(button, row);
                     }
                 }
@@ -109,19 +109,15 @@
     }
 
     //角色模块按钮
-    function roleModuleButton() {
-        var row = $('#data-table').treegrid('getSelected');
-        if (!row) {
-            layer.msg("请选中一行", { time: 1500, icon: 5 });
-            return;
-        }
+    function roleModuleButton(row) {
         layer.open({
             type: 2,
-            title: '角色模块按钮列表',
+            title: '[' + row.name + ']' + '角色按钮列表',
             shadeClose: false, //是否点击遮罩关闭
             shade: 0.5, //遮罩透明度
             maxmin: false, //开启最大化最小化按钮
-            area: ['600px', '600px'],
+            move: false, //是否允许移动
+            area: ['550px', '520px'],
             content: '/role/button?roleId=' + row.roleId
         });
     }
