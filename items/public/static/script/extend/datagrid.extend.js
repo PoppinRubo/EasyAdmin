@@ -71,7 +71,7 @@ var datagridExtend = {
                             var difference = (new Date().getTime() - Window.checkboxTimestamp) * 0.001;
                             Window.checkboxTimestamp = new Date().getTime();
                             if (difference < 0.5) {
-                                console.log("嘻嘻,点得太快你的表格复选被我拦截了");
+                                console.log("嘻嘻,选得太快表格复选被我拦截了");
                                 return;
                             }
                         };
@@ -82,6 +82,8 @@ var datagridExtend = {
                         checkboxSelect();
                     });
                 }
+                //移除产生的多余图标
+                $(v).siblings("i").remove();
                 //添加样式
                 $(v).addClass("layui-hide").parent().addClass("layui-form-checkbox").attr("lay-skin", "primary").append('<i class="layui-icon layui-icon-ok"></i>')
                 //根据选中绑定样式
