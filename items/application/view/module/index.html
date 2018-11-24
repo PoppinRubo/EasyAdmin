@@ -26,6 +26,7 @@
         </div>
     </div>
     <!--表格工具条-->
+    {notempty name="button"}
     <div class="easyui-table-tool" id="toolbar">
         <div class="layui-btn-container">
             {foreach $button as $b }
@@ -35,6 +36,7 @@
             {/foreach}
         </div>
     </div>
+    {/notempty}
 </body>
 <script type="text/javascript">
     //easyUi 表格树
