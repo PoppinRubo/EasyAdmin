@@ -3,6 +3,7 @@ namespace app\controller;
 
 use app\facade\RoleFacade;
 use app\model\SysRole;
+use app\model\SysRoleButton;
 use think\Exception;
 
 class Role extends Basic
@@ -219,6 +220,69 @@ class Role extends Basic
             return toEasyTable($data);
         } catch (Exception $e) {
             return toEasyTable([], false, $e->getMessage());
+        }
+    }
+
+    //角色模块关联按钮 Json
+    public function relationButton()
+    {
+        try {
+            $moduleId = input("moduleId") ?: 0;
+            $buttonId = input("buttonId") ?: 0;
+            $roleId = input("roleId") ?: 0;
+            if ($moduleId < 0 || $buttonId < 0 || $roleId < 0) {
+                return toJsonData(0, null, "参数错误");
+            }
+            $model = new SysRoleButton();
+            $data = db('sys_role_button')->where(array("RoleId" => $roleId, "ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
+            if ($data == null) {
+                //新增关联插入记录
+                $model->save(array(
+                    "ModuleId" => $moduleId,
+                    "ButtonId" => $buttonId,
+                    "CreateTime" => date("Y-m-d H:i:s"),
+                    "CreateUser" => $this->user["Id"],
+                    "ModifyTime" => date("Y-m-d H:i:s"),
+                    "ModifyUser" => $this->user["Id"],
+                ));
+                return toJsonData(1, null, "操作成功");
+            }
+            //更新可用状态
+            $data['IsValid'] = 1;
+            $data['IsDel'] = 0;
+            $data["ModifyTime"] = date("Y-m-d H:i:s");
+            $data["ModifyUser"] = $this->user["Id"];
+            $model->save($data, ['Id' => $data['Id']]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //角色模块删除关联按钮 Json
+    public function delRelationButton()
+    {
+        try {
+            $moduleId = input("moduleId") ?: 0;
+            $buttonId = input("buttonId") ?: 0;
+            $roleId = input("roleId") ?: 0;
+            if ($moduleId < 0 || $buttonId < 0 || $roleId < 0) {
+                return toJsonData(0, null, "参数错误");
+            }
+            $model = new SysRoleButton();
+            $data = db('sys_role_button')->where(array("RoleId" => $roleId, "ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
+            if ($data == null) {
+                return toJsonData(0, null, "未找到关联数据,无法删除关联");
+            }
+            //恢复可用状态
+            $data['IsValid'] = 0;
+            $data['IsDel'] = 1;
+            $data["ModifyTime"] = date("Y-m-d H:i:s");
+            $data["ModifyUser"] = $this->user["Id"];
+            $model->save($data, ['Id' => $data['Id']]);
+            return toJsonData(1, null, "操作成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
         }
     }
 

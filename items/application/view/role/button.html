@@ -74,7 +74,7 @@
         //添加关联
         function relation(row) {
             askHelper.ajaxPost({
-                url: '/module/relationButton',
+                url: '/role/relationButton',
                 data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
@@ -85,7 +85,7 @@
         //删除关联
         function delRelation(row) {
             askHelper.ajaxPost({
-                url: '/module/delRelationButton',
+                url: '/role/delRelationButton',
                 data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
                 success: function() {
                     tableHelper.refresh('data-table');
