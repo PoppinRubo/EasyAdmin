@@ -80,6 +80,9 @@
                         if (!row.isRelation) {
                             button = { roleModuleButton: ['角色关联模块按钮', 0] };
                         }
+                        if (row.button < 1) {
+                            button = { roleModuleButton: ['角色关联模块按钮', 0] };
+                        }
                         return tableHelper.createButton(button, row);
                     }
                 }
@@ -93,7 +96,7 @@
     function relation(isRelation) {
         var rows = $('#data-table').treegrid('getSelections');
         if (rows.length < 1) {
-            layer.msg("至少选中一行", { time: 1500, icon: 5 });
+            layer.msg("至少选中一行", { time: 2000, icon: 5 });
             return;
         }
         var ids = [];
@@ -114,6 +117,11 @@
     //角色模块按钮
     function roleModuleButton(row) {
         if (!row.isRelation) {
+            layer.msg("请先关联模块后再操作", { time: 2000, icon: 5 });
+            return;
+        }
+        if (row.button < 1) {
+            layer.msg("模块下未配置按钮", { time: 2000, icon: 5 });
             return;
         }
         layer.open({

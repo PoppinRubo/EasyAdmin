@@ -139,10 +139,11 @@ class Role extends Basic
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = db()->query("
-            SELECT t1.Id,t1.Pid,t1.Name,{$roleId} AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
-            (SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son,t1.Level
+            SELECT t1.Id,t1.Pid,t1.Name,t2.RoleId AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
+            (SELECT COUNT(t3.Id) FROM sys_module AS t3 WHERE t3.Pid=t1.Id AND t3.IsDel=0 AND t3.IsValid=1) AS Son,t1.Level,
+            (SELECT COUNT(t4.Id) FROM sys_module_button AS t4 WHERE t4.IsDel=0 AND t4.IsValid=1 AND t4.ModuleId=t2.ModuleId) AS Button
             FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.RoleId={$roleId} AND t2.ModuleId=t1.Id AND t2.IsDel=0)
-            WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            WHERE t1.IsDel=0 AND t1.IsValid=1 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END),t1.Pid,t1.Sort ASC;");
             $tree = array();
             foreach ($module as $m) {
                 //获取一级
