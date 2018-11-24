@@ -238,6 +238,7 @@ class Role extends Basic
             if ($data == null) {
                 //新增关联插入记录
                 $model->save(array(
+                    "RoleId" => $roleId,
                     "ModuleId" => $moduleId,
                     "ButtonId" => $buttonId,
                     "CreateTime" => date("Y-m-d H:i:s"),
