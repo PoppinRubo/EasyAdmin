@@ -25,84 +25,84 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        //easyUi 表格
-        $('#data-table').datagrid({
-            url: '/role/getRoleModuleButtonList?roleId=<?php echo $_GET["roleId"]?>&moduleId=<?php echo $_GET["moduleId"]?>', //数据接口
-            singleSelect: false, //行单选
-            height: tableHelper.setHeight(),
-            toolbar: '#toolbar', //表格工具条
-            rownumbers: true, //行号显示
-            pageSize: 15, //页码容量
-            fit: false, //关闭自适应
-            pagination: true, // 分页工具栏
-            pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
-            columns: [
-                [
-                    { field: 'checkbox', checkbox: true, align: 'center' },
-                    { field: 'id', title: '编号', width: 50, sort: true, hidden: true, align: 'center' },
-                    { field: 'name', title: '按钮名', width: 120, align: 'center' },
-                    { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
-                    {
-                        field: 'isRelation',
-                        title: '是否关联',
-                        width: 60,
-                        align: 'center',
-                        formatter: function(value, row) {
-                            return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
-                        }
-                    },
-                    {
-                        field: 'menu',
-                        title: '操作',
-                        width: 80,
-                        align: 'center',
-                        formatter: function(value, row) {
-                            //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                            var button = { relation: ['关联按钮', 1] };
-                            if (row.isRelation) {
-                                button = { delRelation: ['取消关联', 0] };
-                            }
-                            return tableHelper.createButton(button, row);
-                        }
+    <!--表格工具条-->
+    <div class="easyui-table-tool" id="toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" onclick="relation(true)">
+                <i class="layui-icon layui-icon-add-1"></i> 增加关联
+            </button>
+            <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="relation(false)">
+                <i class="layui-icon layui-icon-delete"></i> 删除关联
+            </button>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var roleId = '<?php echo $_GET["roleId"]?>';
+    var moduleId = '<?php echo $_GET["moduleId"]?>';
+    //easyUi 表格
+    $('#data-table').datagrid({
+        url: '/role/getRoleModuleButtonList?roleId=' + roleId + '&moduleId=' + moduleId, //数据接口
+        singleSelect: false, //行单选
+        height: tableHelper.setHeight(),
+        toolbar: '#toolbar', //表格工具条
+        rownumbers: true, //行号显示
+        pageSize: 10, //页码容量
+        fit: false, //关闭自适应
+        pagination: true, // 分页工具栏
+        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        columns: [
+            [
+                { field: 'checkbox', checkbox: true, align: 'center' },
+                { field: 'id', title: '编号', width: 50, sort: true, hidden: false, align: 'center' },
+                { field: 'name', title: '按钮名', width: 120, align: 'center' },
+                { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
+                {
+                    field: 'isRelation',
+                    title: '是否关联',
+                    width: 60,
+                    align: 'center',
+                    formatter: function(value, row) {
+                        return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
-                ]
+                }
             ]
+        ]
+    });
+
+    //操作方法
+
+    //角色关联模块按钮
+    function relation(isRelation) {
+        var rows = $('#data-table').treegrid('getSelections');
+        if (rows.length < 1) {
+            layer.msg("至少选中一行", { time: 2000, icon: 5 });
+            return;
+        }
+        var ids = [];
+        rows.forEach(function(v, i, a) {
+            ids.push(v.id);
+        })
+        askHelper.ajaxPost({
+            url: '/role/relationButton',
+            data: { ids: JSON.stringify(ids), roleId: roleId, moduleId: moduleId, isRelation: isRelation },
+            success: function() {
+                //清除选中项
+                $('#data-table').treegrid('clearSelections');
+                tableHelper.refresh('data-table');
+            }
         });
+    }
 
-        //操作方法
-
-        //添加关联
-        function relation(row) {
-            askHelper.ajaxPost({
-                url: '/role/relationButton',
-                data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
-                success: function() {
-                    tableHelper.refresh('data-table');
-                }
-            });
-        }
-
-        //删除关联
-        function delRelation(row) {
-            askHelper.ajaxPost({
-                url: '/role/delRelationButton',
-                data: { roleId: row.roleId, buttonId: row.id, moduleId: row.moduleId },
-                success: function() {
-                    tableHelper.refresh('data-table');
-                }
-            });
-        }
-
-        //搜索
-        function search() {
-            $('#data-table').datagrid({
-                queryParams: {
-                    key: $.trim($('#key').val())
-                }
-            });
-        }
-    </script>
+    //搜索
+    function search() {
+        $('#data-table').datagrid({
+            queryParams: {
+                key: $.trim($('#key').val())
+            }
+        });
+    }
+</script>
 </body>
 
 </html>
