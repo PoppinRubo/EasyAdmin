@@ -1,8 +1,8 @@
 <?php
 namespace app\controller;
 
+use app\facade\ModuleFacade;
 use app\model\SysModule;
-use app\model\SysModuleButton;
 use think\Exception;
 
 class Module extends Basic
@@ -155,61 +155,20 @@ class Module extends Basic
     }
 
     //模块关联按钮 Json
-    public function relation()
+    public function relationButton()
     {
         try {
-            $moduleId = input("moduleId") ?: 0;
-            $buttonId = input("buttonId") ?: 0;
-            if ($moduleId < 0 || $buttonId < 0) {
-                return toJsonData(0, null, "参数错误");
-            }
-            $model = new SysModuleButton();
-            $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
-            if ($data == null) {
-                //新增关联插入记录
-                $model->save(array(
-                    "ModuleId" => $moduleId,
-                    "ButtonId" => $buttonId,
-                    "CreateTime" => date("Y-m-d H:i:s"),
-                    "CreateUser" => $this->user["Id"],
-                    "ModifyTime" => date("Y-m-d H:i:s"),
-                    "ModifyUser" => $this->user["Id"],
-                ));
+            $array = array(
+                "isRelation" => (bool) json_decode(input("isRelation")),
+                "ids" => input("ids"),
+                "moduleId" => input("moduleId"),
+                "operaterId" => $this->user["Id"],
+            );
+            $result = ModuleFacade::relationButton($array);
+            if ($result->result) {
                 return toJsonData(1, null, "操作成功");
             }
-            //更新可用状态
-            $data['IsValid'] = 1;
-            $data['IsDel'] = 0;
-            $data["ModifyTime"] = date("Y-m-d H:i:s");
-            $data["ModifyUser"] = $this->user["Id"];
-            $model->save($data, ['Id' => $data['Id']]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
-        }
-    }
-
-    //模块删除关联按钮 Json
-    public function delRelation()
-    {
-        try {
-            $moduleId = input("moduleId") ?: 0;
-            $buttonId = input("buttonId") ?: 0;
-            if ($moduleId < 0 || $buttonId < 0) {
-                return toJsonData(0, null, "参数错误");
-            }
-            $model = new SysModuleButton();
-            $data = db('sys_module_button')->where(array("ModuleId" => $moduleId, "ButtonId" => $buttonId))->find();
-            if ($data == null) {
-                return toJsonData(0, null, "未找到关联数据,无法删除关联");
-            }
-            //恢复可用状态
-            $data['IsValid'] = 0;
-            $data['IsDel'] = 1;
-            $data["ModifyTime"] = date("Y-m-d H:i:s");
-            $data["ModifyUser"] = $this->user["Id"];
-            $model->save($data, ['Id' => $data['Id']]);
-            return toJsonData(1, null, "操作成功");
+            return toJsonData(0, null, $result->msg);
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
         }
