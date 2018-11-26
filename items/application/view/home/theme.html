@@ -12,6 +12,8 @@
     </form>
     <script>
         var skin = [
+            //默认配色
+            {},
             //酷黑配色
             {
                 button: '#232323'
@@ -25,7 +27,7 @@
         });
 
         function setSkin(i) {
-            !i ? $.removeCookie('theme') : $.cookie('theme', skin[i]);
+            !i ? $.removeCookie('theme') : $.cookie('theme', JSON.stringify(skin[i]));
         }
     </script>
 </body>
