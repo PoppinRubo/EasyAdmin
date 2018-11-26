@@ -11,14 +11,8 @@
         <input type="radio" lay-filter="theme" name="theme" value="1" title="酷黑">
     </form>
     <script>
-        var skin = [
-            //默认配色
-            {},
-            //酷黑配色
-            {
-                button: '#232323'
-            }
-        ]
+        //配色方案
+        var skin = ["black"]
         layui.use(['form'], function() {
             //监听选择
             layui.form.on('radio(theme)', function(data) {
@@ -27,7 +21,7 @@
         });
 
         function setSkin(i) {
-            !i ? $.removeCookie('theme') : $.cookie('theme', JSON.stringify(skin[i]), { expires: 365 });
+            !i ? $.removeCookie('theme') : $.cookie('theme', skin[i], { expires: 365 });
         }
     </script>
 </body>
