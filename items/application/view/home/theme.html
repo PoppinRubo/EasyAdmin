@@ -27,7 +27,7 @@
         });
 
         function setSkin(i) {
-            !i ? $.removeCookie('theme') : $.cookie('theme', JSON.stringify(skin[i]));
+            !i ? $.removeCookie('theme') : $.cookie('theme', JSON.stringify(skin[i]), { expires: 365 });
         }
     </script>
 </body>
