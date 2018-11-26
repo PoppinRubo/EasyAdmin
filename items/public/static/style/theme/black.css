@@ -19,3 +19,19 @@
 .layui-form-radioed>i {
     color: #232323;
 }
+
+#menu-tree .tree-node-selected {
+    background-color: #666666 !important;
+}
+
+#menu-tree .tree-node-hover {
+    background: #888888;
+}
+
+.layui-side-menu {
+    background-color: #232323 !important;
+}
+
+.layui-layout-admin .layui-logo {
+    background-color: #444444 !important;
+}
