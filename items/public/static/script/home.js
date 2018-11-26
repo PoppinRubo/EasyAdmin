@@ -314,7 +314,7 @@
                     area: ['300px', '400px'],
                     content: '/home/theme'
                 });
-            },
+            }
         }
     //监听Tab切换
     element.on('tab(' + tabs + ')', function(obj) {

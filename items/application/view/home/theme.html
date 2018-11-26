@@ -7,29 +7,26 @@
 
 <body class="form-body">
     <form class="layui-form" lay-filter="form">
-        <input type="radio" name="theme" value="1" title="默认">
-        <input type="radio" name="theme" value="2" title="酷黑">
+        <input type="radio" lay-filter="theme" name="theme" value="0" title="默认">
+        <input type="radio" lay-filter="theme" name="theme" value="1" title="酷黑">
     </form>
     <script>
+        var skin = [
+            //酷黑配色
+            {
+                button: '#232323'
+            }
+        ]
         layui.use(['form'], function() {
-            var form = layui.form;
-            //监听提交
-            form.on('submit(submit)', function(data) {
-                askHelper.ajaxPost({
-                    url: '/module/edit',
-                    data: data.field,
-                    success: function() {
-                        //表格刷新
-                        window.parent.$('#data-table').treegrid('reload');
-                        //窗口关闭
-                        window.parent.layer.closeAll('iframe');
-                    }
-                });
-
-                //阻止表单提交
-                return false;
+            //监听选择
+            layui.form.on('radio(theme)', function(data) {
+                setSkin(parseInt(data.value));
             });
         });
+
+        function setSkin(i) {
+            !i ? $.removeCookie('theme') : $.cookie('theme', skin[i]);
+        }
     </script>
 </body>
 
