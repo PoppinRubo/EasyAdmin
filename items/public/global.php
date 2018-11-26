@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/style/menuTree.css" media="all">
     <link rel="stylesheet" href="/static/icomoon/style.css" media="all">
     <link rel="stylesheet" href="/static/style/admin.css" media="all">
+    <link rel="stylesheet" href="/static/style/theme/black.css" media="all">
     <script type="text/javascript" src="/static/script/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="/static/script/jquery.cookie.js"></script>
     <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>

@@ -1,3 +1,21 @@
 .layui-btn {
     background-color: #232323;
 }
+
+.layui-btn-primary {
+    background-color: #fff;
+}
+
+.layui-btn-primary:hover {
+    border-color: #232323;
+}
+
+.layui-form-onswitch {
+    border-color: #232323;
+    background-color: #232323;
+}
+
+.layui-form-radio>i:hover,
+.layui-form-radioed>i {
+    color: #232323;
+}
