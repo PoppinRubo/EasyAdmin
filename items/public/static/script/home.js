@@ -277,7 +277,7 @@
             contextMenu: function() {
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
                 $('.layui-tab-title li').on('contextmenu', function() {
-                    pageId = $(this).data("id") || $(this).attr('lay-id');;
+                    pageId = $(this).data("id") || $(this).attr('lay-id');
                     var x = $(this).position().left;
                     contextmenu.css({
                         "margin-left": x + "px"
@@ -301,7 +301,20 @@
                     }
                     return false;
                 })
-            }
+            },
+            theme: function() {
+                //主题设置
+                layer.open({
+                    type: 2,
+                    title: '主题皮肤',
+                    shadeClose: false, //是否点击遮罩关闭
+                    shade: 0.5, //遮罩透明度
+                    maxmin: false, //开启最大化最小化按钮
+                    move: false, //禁止移动
+                    area: ['300px', '400px'],
+                    content: '/home/theme'
+                });
+            },
         }
     //监听Tab切换
     element.on('tab(' + tabs + ')', function(obj) {

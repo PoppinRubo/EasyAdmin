@@ -44,4 +44,10 @@ class Home extends Basic
             echo json_encode($e->getMessage());
         }
     }
+
+    //系统皮肤 view
+    public function theme()
+    {
+        return View();
+    }
 }
