@@ -1,5 +1,5 @@
 /**
- * EasyUI for jQuery 1.6.6
+ * EasyUI for jQuery 1.6.10
  * 
  * Copyright (c) 2009-2018 www.jeasyui.com. All rights reserved.
  *
@@ -84,19 +84,19 @@ _f(this,_1e);
 });
 },getHours:function(jq){
 var _1f=$.data(jq[0],"timespinner").options;
-var vv=jq.timespinner("getValue").split(_1f.separator);
-return parseInt(vv[0],10);
+var _20=_1f.parser.call(jq[0],jq.timespinner("getValue"));
+return _20?_20.getHours():null;
 },getMinutes:function(jq){
-var _20=$.data(jq[0],"timespinner").options;
-var vv=jq.timespinner("getValue").split(_20.separator);
-return parseInt(vv[1],10);
-},getSeconds:function(jq){
 var _21=$.data(jq[0],"timespinner").options;
-var vv=jq.timespinner("getValue").split(_21.separator);
-return parseInt(vv[2],10)||0;
+var _22=_21.parser.call(jq[0],jq.timespinner("getValue"));
+return _22?_22.getMinutes():null;
+},getSeconds:function(jq){
+var _23=$.data(jq[0],"timespinner").options;
+var _24=_23.parser.call(jq[0],jq.timespinner("getValue"));
+return _24?_24.getSeconds():null;
 }};
-$.fn.timespinner.parseOptions=function(_22){
-return $.extend({},$.fn.spinner.parseOptions(_22),$.parser.parseOptions(_22,["separator",{showSeconds:"boolean",highlight:"number"}]));
+$.fn.timespinner.parseOptions=function(_25){
+return $.extend({},$.fn.spinner.parseOptions(_25),$.parser.parseOptions(_25,["separator",{showSeconds:"boolean",highlight:"number"}]));
 };
 $.fn.timespinner.defaults=$.extend({},$.fn.spinner.defaults,{inputEvents:$.extend({},$.fn.spinner.defaults.inputEvents,{click:function(e){
 _5.call(this,e);
@@ -108,42 +108,42 @@ if(e.keyCode==13){
 var t=$(e.data.target);
 t.timespinner("setValue",t.timespinner("getText"));
 }
-}}),formatter:function(_23){
-if(!_23){
+}}),formatter:function(_26){
+if(!_26){
 return "";
 }
-var _24=$(this).timespinner("options");
-var tt=[_25(_23.getHours()),_25(_23.getMinutes())];
-if(_24.showSeconds){
-tt.push(_25(_23.getSeconds()));
+var _27=$(this).timespinner("options");
+var tt=[_28(_26.getHours()),_28(_26.getMinutes())];
+if(_27.showSeconds){
+tt.push(_28(_26.getSeconds()));
 }
-return tt.join(_24.separator);
-function _25(_26){
-return (_26<10?"0":"")+_26;
+return tt.join(_27.separator);
+function _28(_29){
+return (_29<10?"0":"")+_29;
 };
 },parser:function(s){
-var _27=$(this).timespinner("options");
-var _28=_29(s);
-if(_28){
-var min=_29(_27.min);
-var max=_29(_27.max);
-if(min&&min>_28){
-_28=min;
+var _2a=$(this).timespinner("options");
+var _2b=_2c(s);
+if(_2b){
+var min=_2c(_2a.min);
+var max=_2c(_2a.max);
+if(min&&min>_2b){
+_2b=min;
 }
-if(max&&max<_28){
-_28=max;
+if(max&&max<_2b){
+_2b=max;
 }
 }
-return _28;
-function _29(s){
+return _2b;
+function _2c(s){
 if(!s){
 return null;
 }
-var tt=s.split(_27.separator);
+var tt=s.split(_2a.separator);
 return new Date(1900,0,0,parseInt(tt[0],10)||0,parseInt(tt[1],10)||0,parseInt(tt[2],10)||0);
 };
-},selections:[[0,2],[3,5],[6,8]],separator:":",showSeconds:false,highlight:0,spin:function(_2a){
-_14(this,_2a);
+},selections:[[0,2],[3,5],[6,8]],separator:":",showSeconds:false,highlight:0,spin:function(_2d){
+_14(this,_2d);
 }});
 })(jQuery);
 

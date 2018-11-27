@@ -1,5 +1,5 @@
 /**
- * EasyUI for jQuery 1.6.6
+ * EasyUI for jQuery 1.6.10
  * 
  * Copyright (c) 2009-2018 www.jeasyui.com. All rights reserved.
  *
@@ -1731,7 +1731,7 @@ var _1ac=$.extend({},opts.queryParams);
 if(opts.pagination){
 $.extend(_1ac,{page:opts.pageNumber||1,rows:opts.pageSize});
 }
-if(opts.sortName){
+if(opts.sortName&&opts.remoteSort){
 $.extend(_1ac,{sort:opts.sortName,order:opts.sortOrder});
 }
 if(opts.onBeforeLoad.call(_1aa,_1ac)==false){

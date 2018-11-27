@@ -1,5 +1,5 @@
 /**
- * EasyUI for jQuery 1.6.6
+ * EasyUI for jQuery 1.6.10
  * 
  * Copyright (c) 2009-2018 www.jeasyui.com. All rights reserved.
  *
@@ -104,8 +104,10 @@ var _14=v.substr(v.length-1,1);
 if(_14=="%"){
 v=parseFloat(v.substr(0,v.length-1));
 if(_10.toLowerCase().indexOf("width")>=0){
+_13+=_12[0].offsetWidth-_12[0].clientWidth;
 v=Math.floor((_12.width()-_13)*v/100);
 }else{
+_13+=_12[0].offsetHeight-_12[0].clientHeight;
 v=Math.floor((_12.height()-_13)*v/100);
 }
 }else{
