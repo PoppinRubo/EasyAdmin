@@ -18,7 +18,7 @@ $.extend($.fn.treegrid.defaults.view, {
 
 //窗口大小变化
 window.onresize = function() {
-    datagridExtend.autoWidth();
+    datagridExtend.autoSize();
 }
 
 //扩展方法
@@ -106,8 +106,8 @@ var datagridExtend = {
             }
         }
     },
-    autoWidth: function() {
-        //表格宽度适应设置
+    autoSize: function() {
+        //表格大小自适应设置
         var table = $(document).find(".datagrid-f");
         if (table.length > 0) {
             $.each(table, function(i, v) {
@@ -116,8 +116,9 @@ var datagridExtend = {
                 var type = table.closest(".datagrid-view").find(".treegrid-tr-tree").length > 0 ? "treegrid" : "datagrid";
                 //获取配置
                 var options = table[type]('options');
-                if (options.fitWidth != false) {
+                if (options.fitSize != false) {
                     table[type]('resize', {
+                        height: tableHelper.setHeight(),
                         width: $(window).width() - 60
                     })
                 }
