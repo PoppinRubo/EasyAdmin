@@ -196,6 +196,8 @@
                         $(this).addClass("layui-show");
                         //记录当前页面索引
                         selectPageIndex = index;
+                        //自动滚动至标签
+                        home.rollPage('auto', index);
                     }
                 });
                 element.tabChange(tabs, id);
@@ -301,6 +303,81 @@
                     }
                     return false;
                 })
+            },
+            rollPage: function(type, index) {
+                //左右滚动页面标签
+                var tabsHeader = $('#tabs-header'),
+                    liItem = tabsHeader.children('li'),
+                    scrollWidth = tabsHeader.prop('scrollWidth'),
+                    outerWidth = tabsHeader.outerWidth(),
+                    tabsLeft = parseFloat(tabsHeader.css('left'));
+
+                //右左往右
+                if (type === 'left') {
+                    if (!tabsLeft && tabsLeft <= 0) return;
+
+                    //当前的left减去可视宽度，用于与上一轮的页标比较
+                    var prefLeft = -tabsLeft - outerWidth;
+
+                    liItem.each(function(index, item) {
+                        var li = $(item),
+                            left = li.position().left;
+
+                        if (left >= prefLeft) {
+                            tabsHeader.css('left', -left);
+                            return false;
+                        }
+                    });
+                } else if (type === 'auto') { //自动滚动
+                    (function() {
+                        var thisLi = liItem.eq(index),
+                            thisLeft;
+
+                        if (!thisLi[0]) return;
+                        thisLeft = thisLi.position().left;
+
+                        //当目标标签在可视区域左侧时
+                        if (thisLeft < -tabsLeft) {
+                            return tabsHeader.css('left', -thisLeft);
+                        }
+
+                        //当目标标签在可视区域右侧时
+                        if (thisLeft + thisLi.outerWidth() >= outerWidth - tabsLeft) {
+                            var subLeft = thisLeft + thisLi.outerWidth() - (outerWidth - tabsLeft);
+                            liItem.each(function(i, item) {
+                                var li = $(item),
+                                    left = li.position().left;
+
+                                //从当前可视区域的最左第二个节点遍历，如果减去最左节点的差 > 目标在右侧不可见的宽度，则将该节点放置可视区域最左
+                                if (left + tabsLeft > 0) {
+                                    if (left - tabsLeft > subLeft) {
+                                        tabsHeader.css('left', -left);
+                                        return false;
+                                    }
+                                }
+                            });
+                        }
+                    }());
+                } else {
+                    //默认向左滚动
+                    liItem.each(function(i, item) {
+                        var li = $(item),
+                            left = li.position().left;
+
+                        if (left + li.outerWidth() >= outerWidth - tabsLeft) {
+                            tabsHeader.css('left', -left);
+                            return false;
+                        }
+                    });
+                }
+            },
+            leftPage: function() {
+                //向右滚动页面标签
+                home.rollPage('left');
+            },
+            rightPage: function() {
+                //向左滚动页面标签
+                home.rollPage();
             }
         }
     //监听Tab切换
