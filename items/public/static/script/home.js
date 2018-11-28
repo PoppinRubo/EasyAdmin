@@ -170,6 +170,8 @@
                 t.tabChange(e.id);
                 //开启右键菜单
                 home.contextMenu();
+                //滚动按钮显示处理
+                home.showRoll();
             },
             tabDelete: function(id) {
                 var t = this;
@@ -184,6 +186,8 @@
                         t.tabChange($(iframe[index - 1]).data("id"));
                     }
                 });
+                //滚动按钮显示处理
+                home.showRoll();
             },
             tabChange: function(id) {
                 //切换到指定Tab项
@@ -304,6 +308,24 @@
                     return false;
                 })
             },
+            showRoll: function() {
+                setTimeout(function() {
+                    //显示左右滚动按钮
+                    var tabsHeader = $('#tabs-header'),
+                        pageTabs = $('.admin-page-tabs'),
+                        leftBtn = pageTabs.find('.layui-icon-prev'),
+                        rightBtn = pageTabs.find('.layui-icon-next');
+                    if (parseFloat(tabsHeader.css('left')) == 0) {
+                        pageTabs.css({ 'padding-left': '0 15px 0 40px' });
+                        leftBtn.addClass('layui-hide');
+                        rightBtn.removeClass('layui-hide');
+                    } else {
+                        pageTabs.css({ 'padding': '0 40px 0 15px' });
+                        leftBtn.removeClass('layui-hide');
+                        rightBtn.addClass('layui-hide');
+                    }
+                }, 500)
+            },
             rollPage: function(type, index) {
                 //左右滚动页面标签
                 var tabsHeader = $('#tabs-header'),
@@ -311,18 +333,14 @@
                     scrollWidth = tabsHeader.prop('scrollWidth'),
                     outerWidth = tabsHeader.outerWidth(),
                     tabsLeft = parseFloat(tabsHeader.css('left'));
-
                 //右左往右
                 if (type === 'left') {
                     if (!tabsLeft && tabsLeft <= 0) return;
-
                     //当前的left减去可视宽度，用于与上一轮的页标比较
                     var prefLeft = -tabsLeft - outerWidth;
-
                     liItem.each(function(index, item) {
                         var li = $(item),
                             left = li.position().left;
-
                         if (left >= prefLeft) {
                             tabsHeader.css('left', -left);
                             return false;
@@ -340,7 +358,6 @@
                         if (thisLeft < -tabsLeft) {
                             return tabsHeader.css('left', -thisLeft);
                         }
-
                         //当目标标签在可视区域右侧时
                         if (thisLeft + thisLi.outerWidth() >= outerWidth - tabsLeft) {
                             var subLeft = thisLeft + thisLi.outerWidth() - (outerWidth - tabsLeft);
@@ -370,6 +387,8 @@
                         }
                     });
                 }
+                //滚动按钮显示处理
+                home.showRoll();
             },
             leftPage: function() {
                 //向右滚动页面标签
