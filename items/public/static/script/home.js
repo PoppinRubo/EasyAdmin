@@ -170,8 +170,6 @@
                 t.tabChange(e.id);
                 //开启右键菜单
                 home.contextMenu();
-                //滚动按钮显示处理
-                home.showRoll();
             },
             tabDelete: function(id) {
                 var t = this;
@@ -186,8 +184,6 @@
                         t.tabChange($(iframe[index - 1]).data("id"));
                     }
                 });
-                //滚动按钮显示处理
-                home.showRoll();
             },
             tabChange: function(id) {
                 //切换到指定Tab项
@@ -315,7 +311,7 @@
                         pageTabs = $('.admin-page-tabs'),
                         leftBtn = pageTabs.find('.layui-icon-prev'),
                         rightBtn = pageTabs.find('.layui-icon-next');
-                    if (parseFloat(tabsHeader.css('left')) == 0) {
+                    if (!parseFloat(tabsHeader.css('left'))) {
                         pageTabs.css({ 'padding': '0 40px 0 15px' });
                         leftBtn.addClass('layui-hide');
                         rightBtn.removeClass('layui-hide');
