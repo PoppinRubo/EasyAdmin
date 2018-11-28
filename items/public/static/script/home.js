@@ -316,11 +316,11 @@
                         leftBtn = pageTabs.find('.layui-icon-prev'),
                         rightBtn = pageTabs.find('.layui-icon-next');
                     if (parseFloat(tabsHeader.css('left')) == 0) {
-                        pageTabs.css({ 'padding-left': '0 15px 0 40px' });
+                        pageTabs.css({ 'padding': '0 40px 0 15px' });
                         leftBtn.addClass('layui-hide');
                         rightBtn.removeClass('layui-hide');
                     } else {
-                        pageTabs.css({ 'padding': '0 40px 0 15px' });
+                        pageTabs.css({ 'padding': '0 15px 0 40px' });
                         leftBtn.removeClass('layui-hide');
                         rightBtn.addClass('layui-hide');
                     }
