@@ -1,6 +1,7 @@
 /**
  * EasyUI Datagrid 扩展
  */
+
 //表格视图扩展
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
