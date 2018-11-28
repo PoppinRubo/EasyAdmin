@@ -324,10 +324,10 @@
                     var lastTab = tabsHeader.children(':last');
                     tabWidth = parseInt(lastTab.position().left + lastTab.outerWidth());
                     if (tabWidth >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
-                        pageTabs.css({ 'padding-right': '15px' });
+                        pageTabs.css({ 'padding-right': '40px' });
                         rightBtn.removeClass('layui-hide');
                     } else {
-                        pageTabs.css({ 'padding-right': '40px' });
+                        pageTabs.css({ 'padding-right': '15px' });
                         rightBtn.addClass('layui-hide');
                     }
                 }, 200);
