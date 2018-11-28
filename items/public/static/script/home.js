@@ -184,6 +184,8 @@
                         t.tabChange($(iframe[index - 1]).data("id"));
                     }
                 });
+                //滚动按钮显示处理
+                home.showRoll();
             },
             tabChange: function(id) {
                 //切换到指定Tab项
@@ -314,15 +316,20 @@
                     if (!parseFloat(tabsHeader.css('left'))) {
                         pageTabs.css({ 'padding': '0 40px 0 15px' });
                         leftBtn.addClass('layui-hide');
-                        rightBtn.removeClass('layui-hide');
+                        var lastTab = tabsHeader.children(':last');
+                        if (parseInt(lastTab.position().left + lastTab.outerWidth()) >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
+                            rightBtn.removeClass('layui-hide');
+                        }
                     } else {
                         pageTabs.css({ 'padding': '0 15px 0 40px' });
                         leftBtn.removeClass('layui-hide');
                         rightBtn.addClass('layui-hide');
                     }
-                }, 500)
+                }, 500);
             },
             rollPage: function(type, index) {
+                //滚动按钮显示处理
+                home.showRoll();
                 //左右滚动页面标签
                 var tabsHeader = $('#tabs-header'),
                     liItem = tabsHeader.children('li'),
@@ -376,15 +383,12 @@
                     liItem.each(function(i, item) {
                         var li = $(item),
                             left = li.position().left;
-
                         if (left + li.outerWidth() >= outerWidth - tabsLeft) {
                             tabsHeader.css('left', -left);
                             return false;
                         }
                     });
                 }
-                //滚动按钮显示处理
-                home.showRoll();
             },
             leftPage: function() {
                 //向右滚动页面标签
