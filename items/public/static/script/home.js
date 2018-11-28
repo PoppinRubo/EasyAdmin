@@ -280,9 +280,10 @@
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
                 $('.layui-tab-title li').on('contextmenu', function() {
                     pageId = $(this).data("id") || $(this).attr('lay-id');
-                    var x = $(this).position().left;
+                    var tabLeft = $(".layui-tab").offset().left,
+                        left = $(this).offset().left - tabLeft;
                     contextmenu.css({
-                        "margin-left": x + "px"
+                        "margin-left": left + "px"
                     }).addClass("layui-show");
                     //隐藏显示控制
                     $(".layui-this").hover(function() {
