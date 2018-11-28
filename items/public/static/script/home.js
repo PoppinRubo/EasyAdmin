@@ -184,8 +184,6 @@
                         t.tabChange($(iframe[index - 1]).data("id"));
                     }
                 });
-                //滚动按钮显示处理
-                home.showRoll();
             },
             tabChange: function(id) {
                 //切换到指定Tab项
@@ -319,6 +317,8 @@
                         var lastTab = tabsHeader.children(':last');
                         if (parseInt(lastTab.position().left + lastTab.outerWidth()) >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
                             rightBtn.removeClass('layui-hide');
+                        } else {
+                            rightBtn.addClass('layui-hide');
                         }
                     } else {
                         pageTabs.css({ 'padding': '0 15px 0 40px' });
