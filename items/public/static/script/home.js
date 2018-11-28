@@ -305,27 +305,32 @@
                 })
             },
             showRoll: function() {
+                //等待标签处理，延时处理
                 setTimeout(function() {
                     //显示左右滚动按钮
                     var tabsHeader = $('#tabs-header'),
                         pageTabs = $('.admin-page-tabs'),
                         leftBtn = pageTabs.find('.layui-icon-prev'),
                         rightBtn = pageTabs.find('.layui-icon-next');
+                    //左侧按钮
                     if (!parseFloat(tabsHeader.css('left'))) {
-                        pageTabs.css({ 'padding': '0 40px 0 15px' });
+                        pageTabs.css({ 'padding-left': '15px' });
                         leftBtn.addClass('layui-hide');
-                        var lastTab = tabsHeader.children(':last');
-                        if (parseInt(lastTab.position().left + lastTab.outerWidth()) >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
-                            rightBtn.removeClass('layui-hide');
-                        } else {
-                            rightBtn.addClass('layui-hide');
-                        }
                     } else {
-                        pageTabs.css({ 'padding': '0 15px 0 40px' });
+                        pageTabs.css({ 'padding-left': '40px' });
                         leftBtn.removeClass('layui-hide');
+                    }
+                    //右侧按钮
+                    var lastTab = tabsHeader.children(':last');
+                    tabWidth = parseInt(lastTab.position().left + lastTab.outerWidth());
+                    if (tabWidth >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
+                        pageTabs.css({ 'padding-right': '15px' });
+                        rightBtn.removeClass('layui-hide');
+                    } else {
+                        pageTabs.css({ 'padding-right': '40px' });
                         rightBtn.addClass('layui-hide');
                     }
-                }, 500);
+                }, 200);
             },
             rollPage: function(type, index) {
                 //滚动按钮显示处理
