@@ -1,6 +1,6 @@
 <?php
+use app\facade\UserFacade;
 use think\facade\Session;
-
 /**
  * 封装需要的json格式
  * @param $code int 返回的状态码
@@ -81,7 +81,9 @@ function toEasyTable($array, $convert = true, $msg = "")
  */
 function getUserAuthentication()
 {
-    return Session::get('Authentication');
+    $user = Session::get('Authentication');
+    $user = empty($user) ? (UserFacade::autoSignIn()) : $user;
+    return $user;
 }
 
 /**

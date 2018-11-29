@@ -1,9 +1,11 @@
 <?php
 namespace app\controller;
 
+use app\facade\CommonFacade;
 use think\captcha\Captcha;
 use think\Controller;
 use think\Exception;
+use think\facade\Cookie;
 use think\facade\Session;
 
 class Index extends Controller
@@ -39,7 +41,12 @@ class Index extends Controller
             if (getUserAuthentication() == null) {
                 return toJsonData(0, null, "登录失败,请联系管理员");
             }
-            //登录记录
+            //记住登录
+            if (!empty(input('remember'))) {
+                $authentication = CommonFacade::encode(json_encode(array('Id' => $user["Id"], 'Password' => $user["Password"])), 'authentication');
+                Cookie::set('authentication', $authentication, (60 * 60 * 24 * 7));
+            }
+            //登录日志
             $this->insertLoginLog($user["Id"], "账号密码登录");
             return toJsonData(1, "/home", "登录成功");
         } catch (Exception $e) {
