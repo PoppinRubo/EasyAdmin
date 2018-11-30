@@ -2,6 +2,7 @@
 namespace app\controller;
 
 use app\facade\CommonFacade;
+use app\facade\UserFacade;
 use think\captcha\Captcha;
 use think\Controller;
 use think\Exception;
@@ -47,35 +48,10 @@ class Index extends Controller
                 Cookie::set('authentication', $authentication, (60 * 60 * 24 * 7));
             }
             //登录日志
-            $this->insertLoginLog($user["Id"], "账号密码登录");
+            UserFacade::signInLog("账号密码登录");
             return toJsonData(1, "/home", "登录成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
-        }
-    }
-
-    //创建登录记录
-    private function insertLoginLog($userId, $remark)
-    {
-        // 启动事务
-        db()->startTrans();
-        try {
-            $now = date("Y-m-d H:i:s");
-            //创建登录记录
-            db('sys_user_login_log')->insert(array(
-                "UserId" => $userId,
-                "CreateTime" => $now,
-                "Remark" => $remark,
-                "Ip" => Request()->ip(),
-                "IsDel" => 0,
-            ));
-            //更新用户表
-            db()->execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.Id) FROM `sys_user_login_log` AS t2 WHERE t2.UserId IN ({$userId}) AND t2.IsDel=0),LastLoginTime='{$now}' WHERE Id={$userId}");
-            // 提交事务
-            db()->commit();
-        } catch (Exception $e) {
-            // 回滚事务
-            db()->rollback();
         }
     }
 
@@ -111,10 +87,11 @@ class Index extends Controller
     public function signOut()
     {
         try {
-            if (getUserAuthentication() != null) {
+            if (!empty(getUserAuthentication())) {
                 // 清除session（当前作用域）
                 Session::clear();
-                if (getUserAuthentication() != null) {
+                cookie('authentication', null);
+                if (!empty(getUserAuthentication())) {
                     return toJsonData(0, null, "退出时出现问题，请稍后重试！");
                 }
                 //清理cookie记录,马上过期
