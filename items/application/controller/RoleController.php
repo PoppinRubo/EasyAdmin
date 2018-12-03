@@ -61,7 +61,7 @@ class RoleController extends BasicController
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysRole::get($id)->getData();
+        $model = SysRoleModel::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
