@@ -117,7 +117,7 @@ class User extends Basic
                 if ($user == null) {
                     return toJsonData(0, null, "获取当前登录用户失败");
                 }
-                if ($data["OldPassword"] != $user["Password"]) {
+                if (md5($data["OldPassword"]) != $user["Password"]) {
                     return toJsonData(0, null, "旧密码不正确");
                 }
                 if ($data["NewPassword"] != $data["Password"]) {
