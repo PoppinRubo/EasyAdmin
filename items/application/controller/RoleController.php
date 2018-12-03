@@ -115,7 +115,7 @@ class RoleController extends BasicController
                 $sort += 10;
             }
             //批量更新数据
-            $model = new SysRole;
+            $model = new SysRoleModel();
             $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
