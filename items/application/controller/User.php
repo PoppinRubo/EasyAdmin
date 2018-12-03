@@ -24,6 +24,8 @@ class User extends Basic
             try {
                 //首字母还原为大写
                 $data = convertInitials(input(), false);
+                //密码md5加密
+                $data["Password"] = md5($data["Password"]);
                 $data["CreateTime"] = date("Y-m-d H:i:s");
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
@@ -121,6 +123,8 @@ class User extends Basic
                 if ($data["NewPassword"] != $data["Password"]) {
                     return toJsonData(0, null, "新密码与确认密码不一致");
                 }
+                //密码md5加密
+                $data["Password"] = md5($data["Password"]);
                 $model = new SysUser();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $this->user["Id"]]);
