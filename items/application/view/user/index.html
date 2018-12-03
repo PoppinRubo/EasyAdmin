@@ -42,7 +42,7 @@
     //easyUi 表格
     $('#data-table').datagrid({
         url: '/user/getUserList', //数据接口
-        singleSelect: false, //行单选
+        singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
         rownumbers: true, //行号显示
@@ -123,7 +123,8 @@
         }
         askHelper.ajaxPost({
             url: '/user/resetPassword',
-            data: { userId: row.id }
+            data: { userId: row.id },
+            success: function() {}
         });
     }
 
