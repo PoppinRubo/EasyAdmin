@@ -90,18 +90,14 @@ class Index extends Controller
     {
         try {
             if (!empty(getUserAuthentication())) {
-                // 清除session（当前作用域）
-                Session::clear();
-                cookie('authentication', null);
+                //删除登录信息session
+                Session::delete("Authentication");
+                //删除记住登录cookie记录
+                Cookie::delete('admin_authentication');
                 if (!empty(getUserAuthentication())) {
                     return toJsonData(0, null, "退出时出现问题，请稍后重试！");
                 }
-                //清理cookie记录,马上过期
-                if (setcookie("autoSignIn", "Clear", time(), "/")) {
-                    return toJsonData(1, "/", "退出成功");
-                } else {
-                    return toJsonData(0, null, "记住密码清除失败,可手动清理浏览器cookie");
-                }
+                return toJsonData(1, "/", "退出成功");
             } else {
                 return toJsonData(1, "/", "退出成功");
             }
