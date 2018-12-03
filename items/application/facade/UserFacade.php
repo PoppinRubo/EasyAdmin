@@ -17,7 +17,7 @@ class UserFacade
     //记住密码，自动登录
     public static function autoSignIn()
     {
-        $authentication = Cookie::get('authentication');
+        $authentication = Cookie::get('admin_authentication');
         if (empty($authentication)) {
             return null;
         }

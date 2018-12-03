@@ -47,7 +47,7 @@ class Index extends Controller
             //记住登录
             if (!empty(input('remember'))) {
                 $authentication = CommonFacade::encode(json_encode(array('Id' => $user["Id"], 'Password' => $user["Password"])), 'authentication');
-                Cookie::set('authentication', $authentication, (60 * 60 * 24 * 7));
+                Cookie::set('admin_authentication', $authentication, (60 * 60 * 24 * 7));
             }
             //登录日志
             UserFacade::signInLog("账号密码登录");
