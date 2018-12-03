@@ -94,7 +94,7 @@ class UserController extends BasicController
     public function getUserList()
     {
         try {
-            $limit = input("limit") ?: 10;
+            $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
             $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);

@@ -88,7 +88,7 @@ class RoleController extends BasicController
     public function getRoleList()
     {
         try {
-            $limit = input("limit") ?: 10;
+            $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
             $data = db('sys_role')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);
