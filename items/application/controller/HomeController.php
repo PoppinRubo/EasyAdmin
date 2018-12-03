@@ -1,7 +1,7 @@
 <?php
 namespace app\controller;
 
-class Home extends Basic
+class HomeController extends BasicController
 {
     //系统主页 view
     public function index()

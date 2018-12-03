@@ -9,7 +9,7 @@ use think\Exception;
 use think\facade\Cookie;
 use think\facade\Session;
 
-class Index extends Controller
+class IndexController extends Controller
 {
     //登录 view
     public function index()

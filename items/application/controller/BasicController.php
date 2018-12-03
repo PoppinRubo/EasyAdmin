@@ -4,7 +4,7 @@ namespace app\controller;
 use think\Controller;
 use think\facade\Request;
 
-class Basic extends Controller
+class BasicController extends Controller
 {
     /*
      *当前登录用户

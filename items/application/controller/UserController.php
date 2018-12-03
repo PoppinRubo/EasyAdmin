@@ -6,7 +6,7 @@ use app\model\SysUser;
 use app\model\SysUserRole;
 use think\Exception;
 
-class User extends Basic
+class UserController extends BasicController
 {
     //用户列表 View
     public function index()

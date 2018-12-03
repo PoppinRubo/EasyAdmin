@@ -1,7 +1,7 @@
 <?php
 namespace app\controller;
 
-class Icon extends Basic
+class IconController extends BasicController
 {
     public function index()
     {

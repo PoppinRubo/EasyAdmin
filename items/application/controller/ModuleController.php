@@ -5,7 +5,7 @@ use app\facade\ModuleFacade;
 use app\model\SysModule;
 use think\Exception;
 
-class Module extends Basic
+class ModuleController extends BasicController
 {
     //模块列表 View
     public function index()

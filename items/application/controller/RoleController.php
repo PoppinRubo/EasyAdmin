@@ -5,7 +5,7 @@ use app\facade\RoleFacade;
 use app\model\SysRole;
 use think\Exception;
 
-class Role extends Basic
+class RoleController extends BasicController
 {
     //角色列表 View
     public function index()

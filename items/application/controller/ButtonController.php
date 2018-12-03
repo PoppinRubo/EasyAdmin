@@ -4,7 +4,7 @@ namespace app\controller;
 use app\model\SysButton;
 use think\Exception;
 
-class Button extends Basic
+class ButtonController extends BasicController
 {
     //按钮列表 View
     public function index()
