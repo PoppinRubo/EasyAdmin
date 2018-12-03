@@ -29,10 +29,9 @@ html {
 }
 
 .user-login-header h2 {
-    margin-bottom: 10px;
-    font-weight: 300;
     font-size: 30px;
-    color: #000;
+    font-weight: bold;
+    color: #444444;
 }
 
 .user-login-body .layui-form-item {
