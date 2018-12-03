@@ -3,7 +3,7 @@ namespace app\controller;
 
 use app\facade\UserFacade;
 use app\model\SysUserModel;
-use app\model\SysUserRole;
+use app\model\SysUserRoleModel;
 use think\Exception;
 
 class UserController extends BasicController
@@ -196,7 +196,7 @@ class UserController extends BasicController
             if ($userId < 0 || $roleId < 0) {
                 return toJsonData(0, null, "参数错误");
             }
-            $model = new SysUserRole();
+            $model = new SysUserRoleModel();
             $data = db('sys_user_role')->where(array("UserId" => $userId, "RoleId" => $roleId))->find();
             if ($data == null) {
                 //新增关联插入记录
@@ -231,7 +231,7 @@ class UserController extends BasicController
             if ($userId < 0 || $roleId < 0) {
                 return toJsonData(0, null, "参数错误");
             }
-            $model = new SysUserRole();
+            $model = new SysUserRoleModel();
             $data = db('sys_user_role')->where(array("UserId" => $userId, "RoleId" => $roleId))->find();
             if ($data == null) {
                 return toJsonData(0, null, "未找到关联数据,无法删除关联");
