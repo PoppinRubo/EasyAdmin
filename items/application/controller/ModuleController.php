@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use app\facade\ModuleFacade;
-use app\model\SysModule;
+use app\model\SysModuleModel;
 use think\Exception;
 
 class ModuleController extends BasicController
@@ -27,7 +27,7 @@ class ModuleController extends BasicController
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
-                $model = new SysModule();
+                $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -53,7 +53,7 @@ class ModuleController extends BasicController
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysModule();
+                $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -63,7 +63,7 @@ class ModuleController extends BasicController
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysModule::get($id)->getData();
+        $model = SysModuleModel::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -78,7 +78,7 @@ class ModuleController extends BasicController
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysModule();
+            $model = new SysModuleModel();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -194,7 +194,7 @@ class ModuleController extends BasicController
                 $data[] = $l;
             }
             //批量更新数据
-            $model = new SysModule;
+            $model = new SysModuleModel;
             $model->saveAll($data);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {

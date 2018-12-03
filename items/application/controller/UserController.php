@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use app\facade\UserFacade;
-use app\model\SysUser;
+use app\model\SysUserModel;
 use app\model\SysUserRole;
 use think\Exception;
 
@@ -33,7 +33,7 @@ class UserController extends BasicController
                 if (UserFacade::isExist($data["Account"])) {
                     return toJsonData(0, null, "账号已存在");
                 }
-                $model = new SysUser();
+                $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -57,7 +57,7 @@ class UserController extends BasicController
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysUser();
+                $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -67,7 +67,7 @@ class UserController extends BasicController
         }
         //输出页面
         $id = input("id") ?: 0;
-        $model = SysUser::get($id)->getData();
+        $model = SysUserModel::get($id)->getData();
         $this->assign('model', convertInitials($model));
         return View();
     }
@@ -82,7 +82,7 @@ class UserController extends BasicController
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysUser();
+            $model = new SysUserModel();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {
@@ -125,7 +125,7 @@ class UserController extends BasicController
                 }
                 //密码md5加密
                 $data["Password"] = md5($data["Password"]);
-                $model = new SysUser();
+                $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $this->user["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -152,7 +152,7 @@ class UserController extends BasicController
                     "ModifyTime" => date("Y-m-d H:i:s"),
                     "ModifyUser" => $this->user["Id"],
                 );
-                $model = new SysUser();
+                $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $userId]);
                 return toJsonData(1, null, "密码已重置为 666666");

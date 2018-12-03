@@ -1,8 +1,8 @@
 <?php
 namespace app\facade;
 
-use app\model\SysRoleButton;
-use app\model\SysRoleModule;
+use app\model\SysRoleButtonModel;
+use app\model\SysRoleModuleModel;
 
 class RoleFacade
 {
@@ -56,7 +56,7 @@ class RoleFacade
                     array_push($data, $insert);
                 }
             }
-            $model = new SysRoleModule();
+            $model = new SysRoleModuleModel();
             //批量操作数据库
             $model->saveAll($data);
             $baseResult->result = true;
@@ -118,7 +118,7 @@ class RoleFacade
                     array_push($data, $insert);
                 }
             }
-            $model = new SysRoleButton();
+            $model = new SysRoleButtonModel();
             //批量操作数据库
             $model->saveAll($data);
             $baseResult->result = true;

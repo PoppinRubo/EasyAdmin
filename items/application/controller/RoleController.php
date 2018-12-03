@@ -2,7 +2,7 @@
 namespace app\controller;
 
 use app\facade\RoleFacade;
-use app\model\SysRole;
+use app\model\SysRoleModel;
 use think\Exception;
 
 class RoleController extends BasicController
@@ -27,7 +27,7 @@ class RoleController extends BasicController
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
-                $model = new SysRole();
+                $model = new SysRoleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
                 return toJsonData(1, null, "操作成功");
@@ -51,7 +51,7 @@ class RoleController extends BasicController
                 $data = convertInitials(input(), false);
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
-                $model = new SysRole();
+                $model = new SysRoleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
                 return toJsonData(1, null, "操作成功");
@@ -76,7 +76,7 @@ class RoleController extends BasicController
                 "ModifyTime" => date("Y-m-d H:i:s"),
                 "ModifyUser" => $this->user["Id"],
             );
-            $model = new SysRole();
+            $model = new SysRoleModel();
             $model->save($data, ['Id' => $id]);
             return toJsonData(1, null, "操作成功");
         } catch (Exception $e) {

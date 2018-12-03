@@ -3,7 +3,7 @@ namespace app\model;
 
 use think\Model;
 
-class SysRole extends Model
+class SysUserModel extends Model
 {
     //主键
     protected $pk = 'Id';

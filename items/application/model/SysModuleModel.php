@@ -3,7 +3,7 @@ namespace app\model;
 
 use think\Model;
 
-class SysButton extends Model
+class SysModuleModel extends Model
 {
     //主键
     protected $pk = 'Id';

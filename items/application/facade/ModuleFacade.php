@@ -1,7 +1,7 @@
 <?php
 namespace app\facade;
 
-use app\model\SysModuleButton;
+use app\model\SysModuleButtonModel;
 
 class ModuleFacade
 {
@@ -56,7 +56,7 @@ class ModuleFacade
                     array_push($data, $insert);
                 }
             }
-            $model = new SysModuleButton();
+            $model = new SysModuleButtonModel();
             //批量操作数据库
             $model->saveAll($data);
             $baseResult->result = true;
