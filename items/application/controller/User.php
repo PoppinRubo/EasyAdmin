@@ -136,6 +136,33 @@ class User extends Basic
         return View();
     }
 
+    //密码重置 Json
+    public function resetPassword()
+    {
+        //数据请求
+        if (request()->isPost()) {
+            try {
+                $userId = input("userId");
+                if (empty($userId) || $userId <= 0) {
+                    return toJsonData(0, null, "参数错误");
+                }
+                $data = array(
+                    "Id" => $userId,
+                    "Password" => md5("666666"),
+                    "ModifyTime" => date("Y-m-d H:i:s"),
+                    "ModifyUser" => $this->user["Id"],
+                );
+                $model = new SysUser();
+                // 过滤表单数组中的非数据表字段数据
+                $model->allowField(true)->save($data, ['Id' => $userId]);
+                return toJsonData(1, null, "密码已重置为 666666");
+            } catch (Exception $e) {
+                return toJsonData(0, null, $e->getMessage());
+            }
+        }
+        return toJsonData(0, null, "不被接受的请求");
+    }
+
     //用户角色列表 View
     public function role()
     {

@@ -114,6 +114,19 @@
         });
     }
 
+    //密码重置
+    function resetPassword() {
+        var row = $('#data-table').datagrid('getSelected');
+        if (!row) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        askHelper.ajaxPost({
+            url: '/user/resetPassword',
+            data: { userId: row.id }
+        });
+    }
+
     //删除
     function remove() {
         var row = $('#data-table').datagrid('getSelected');
