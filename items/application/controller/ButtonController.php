@@ -21,7 +21,7 @@ class ButtonController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["CreateTime"] = date("Y-m-d H:i:s");
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
@@ -36,7 +36,7 @@ class ButtonController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysButton');
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 
@@ -47,7 +47,7 @@ class ButtonController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysButtonModel();
@@ -61,7 +61,7 @@ class ButtonController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysButtonModel::get($id)->getData();
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 

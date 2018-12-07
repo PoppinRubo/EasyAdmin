@@ -23,7 +23,7 @@ class UserController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 //密码md5加密
                 $data["Password"] = md5($data["Password"]);
                 $data["CreateTime"] = date("Y-m-d H:i:s");
@@ -43,7 +43,7 @@ class UserController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysUser');
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 
@@ -54,7 +54,7 @@ class UserController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysUserModel();
@@ -68,7 +68,7 @@ class UserController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysUserModel::get($id)->getData();
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 
@@ -110,7 +110,7 @@ class UserController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $user = db('sys_user')->where(array("Id" => $this->user["Id"]))->find();

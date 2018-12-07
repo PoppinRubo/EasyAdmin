@@ -19,30 +19,36 @@ function toJsonData($code, $data = null, $msg = "")
 }
 
 /**
- * 对象键名转化首字母小写或大写
+ * 对象键名转化首字母小写
  * @param $array 一、二维对象数组
- * @param bool $isLower 是否小写
  * @return array
  */
-function convertInitials($array, $isLower = true)
+function convertLower($array)
 {
-    //转化,键名转换为首字母小写的驼峰命名
-    if ($isLower) {
-        $o = [];
-        foreach ($array as $key => $value) {
-            if (!is_array($value)) {
-                $o[lcfirst($key)] = $value;
-            } else {
-                $d = [];
-                foreach ($value as $k => $v) {
-                    $d[lcfirst($k)] = $v;
-                }
-                $o[lcfirst($key)] = $d;
+    //键名转换为首字母小写的驼峰命名
+    $o = [];
+    foreach ($array as $key => $value) {
+        if (!is_array($value)) {
+            $o[lcfirst($key)] = $value;
+        } else {
+            $d = [];
+            foreach ($value as $k => $v) {
+                $d[lcfirst($k)] = $v;
             }
+            $o[lcfirst($key)] = $d;
         }
-        return $o;
     }
-    //还原,键名转换为首字母大写写的驼峰命名
+    return $o;
+}
+
+/**
+ * 对象键名转化首字母大写
+ * @param $array 一、二维对象数组
+ * @return array
+ */
+function convertToupper($array)
+{
+    //键名转换为首字母大写写的驼峰命名
     $o = [];
     foreach ($array as $key => $value) {
         if (!is_array($value)) {

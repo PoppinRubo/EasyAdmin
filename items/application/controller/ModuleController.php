@@ -22,7 +22,7 @@ class ModuleController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["CreateTime"] = date("Y-m-d H:i:s");
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
@@ -39,7 +39,7 @@ class ModuleController extends BasicController
         $model = getEmptyModel('SysModule');
         $model["Pid"] = input("pid") ?: 0;
         $model["Level"] = (input("level") ?: 0) + 1;
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 
@@ -50,7 +50,7 @@ class ModuleController extends BasicController
         if (request()->isPost()) {
             try {
                 //首字母还原为大写
-                $data = convertInitials(input(), false);
+                $data = convertToupper(input());
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysModuleModel();
@@ -64,7 +64,7 @@ class ModuleController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysModuleModel::get($id)->getData();
-        $this->assign('model', convertInitials($model));
+        $this->assign('model', convertLower($model));
         return View();
     }
 
