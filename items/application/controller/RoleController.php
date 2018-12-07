@@ -149,7 +149,7 @@ class RoleController extends BasicController
                 if ($m["Pid"] == 0) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
                     $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["Id"]) : [];
-                    $tree[] = convertInitials($m);
+                    $tree[] = convertLower($m);
                 }
             }
             return toEasyTable($tree, false);
@@ -168,7 +168,7 @@ class RoleController extends BasicController
                 if ($m["Pid"] == $pid) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
                     $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["Id"]) : [];
-                    $data[] = convertInitials($m);
+                    $data[] = convertLower($m);
                 }
             }
             return $data;
