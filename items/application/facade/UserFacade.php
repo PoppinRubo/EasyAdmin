@@ -26,6 +26,9 @@ class UserFacade
             return null;
         }
         $user = db('sys_user')->where(array("Id" => $authentication->Id, "Password" => $authentication->Password, "IsDel" => 0, "IsValid" => 1))->find();
+        if (empty($user)) {
+            return null;
+        }
         Session::set('Authentication', $user);
         UserFacade::signInLog("记住密码登录");
         return Session::get('Authentication');
