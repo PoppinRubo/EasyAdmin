@@ -75,7 +75,7 @@ function toEasyTable($array, $convert = true, $msg = "")
 
     $result = array(
         "total" => is_object($array) ? $array->total() : count($array),
-        "rows" => $convert ? convertInitials($array) : $array,
+        "rows" => $convert ? convertLower($array) : $array,
         "errorMessage" => $msg,
     );
     echo json_encode($result);
