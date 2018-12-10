@@ -54,11 +54,12 @@ var askHelper = {
             //窗口关闭
             window.parent.layer.closeAll('iframe');
         };
+        var msgIndex = 0;
         o.fail = o.fail || function(result) {};
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
-        o.before = o.before || function() { layer.msg('处理中', { icon: 16, shade: 0.5, time: 86400 * 1000 }); }
+        o.before = o.before || function() { msgIndex = layer.msg('处理中', { icon: 16, shade: 0.5, time: 86400 * 1000 }); }
         o.original = o.original || false;
         $.ajax({
             url: o.url, //请求接口
@@ -72,7 +73,9 @@ var askHelper = {
                 //是否直接返回结果
                 if (o.original) {
                     //关闭加载
-                    layer.close(layer.msg());
+                    if (msgIndex) {
+                        layer.close(layer.msg());
+                    }
                     return o.success(result);
                 }
                 if (result.code === 1) {
