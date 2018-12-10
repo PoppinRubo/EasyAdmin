@@ -59,6 +59,7 @@ var askHelper = {
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
         o.before = o.before || function() { layer.msg('处理中', { icon: 16, shade: 0.5, time: 86400 * 1000 }); }
+        o.original = o.original || false;
         $.ajax({
             url: o.url, //请求接口
             type: o.type, //GET、POST
@@ -68,6 +69,10 @@ var askHelper = {
             dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
             beforeSend: function() { o.before(); }, //请求前方法
             success: function(result) {
+                //是否直接返回结果
+                if (o.original) {
+                    return result;
+                }
                 if (result.code === 1) {
                     layer.msg(result.msg, { time: 500, icon: 1 }, function() { o.success(result); });
                 } else {
@@ -178,5 +183,35 @@ var timeHelper = {
             }
         }
         return format;
+    }
+}
+
+var pictureHelper = {
+    showBig: function(t, z) {
+        z = z || 1;
+        var width = parseInt(t.naturalWidth * z);
+        var height = parseInt(t.naturalHeight * z);
+        var scale = width / height;
+        //超宽处理
+        if (width > $(window).width()) {
+            width = $(window).width() - 20;
+        }
+        //超高处理
+        if (height > $(window).height()) {
+            height = $(window).height() - 20;
+            width = height * scale;
+        }
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: width + 'px',
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: '<img src="' + t.src + '" width="' + width + '" height="' + height + '"> '
+        });
+        $(".layui-layer-content img").click(function() {
+            $(".layui-layer-shade").click();
+        });
     }
 }
