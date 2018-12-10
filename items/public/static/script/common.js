@@ -71,6 +71,8 @@ var askHelper = {
             success: function(result) {
                 //是否直接返回结果
                 if (o.original) {
+                    //关闭加载
+                    layer.close(layer.msg());
                     return o.success(result);
                 }
                 if (result.code === 1) {
