@@ -71,7 +71,7 @@ var askHelper = {
             success: function(result) {
                 //是否直接返回结果
                 if (o.original) {
-                    return result;
+                    return o.success(result);
                 }
                 if (result.code === 1) {
                     layer.msg(result.msg, { time: 500, icon: 1 }, function() { o.success(result); });
