@@ -151,6 +151,12 @@ var tableHelper = {
                     'class="' + genre + '">' + btnList[b][0] + "</a>";
             }
         }
+        //点击按钮不点击行
+        setTimeout(function() {
+            $("table .layui-btn").click(function(e) {
+                e.stopPropagation();
+            });
+        }, 1000);
         return btn;
     }
 };
