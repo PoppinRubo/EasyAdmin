@@ -68,7 +68,7 @@ var askHelper = {
             timeout: 6000, //超时时间
             data: o.data, //请求对象
             dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
-            beforeSend: function() { o.before(); }, //请求前方法
+            beforeSend: function(xhr) { o.before(xhr); }, //请求前方法
             success: function(result) {
                 //是否直接返回结果
                 if (o.original) {
