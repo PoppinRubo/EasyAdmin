@@ -89,7 +89,9 @@ class ButtonController extends BasicController
         try {
             $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
-            $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order("Sort", "ASC")->paginate($limit);
+            $sort = input("sort") ?: "Sort";
+            $order = input("order") ?: "ASC";
+            $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (Exception $e) {
             return toEasyTable([], false, $e->getMessage());
