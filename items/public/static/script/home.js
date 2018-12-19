@@ -165,7 +165,6 @@
                 r.eq(r.length - 1).children(".layui-tab-close").on("click", function() {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
                 });
-                element.init();
                 //切换到该tab
                 t.tabChange(e.id);
                 //开启右键菜单
@@ -428,7 +427,8 @@
         resizeSystem.lock = true;
     }
     $(window).on('resize', layui.data.resizeSystem);
-
+    //元素渲染
+    element.render()
     //开启事件
     home.click();
     //开启右键菜单
