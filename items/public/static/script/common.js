@@ -197,6 +197,9 @@ var timeHelper = {
     }
 }
 
+/**
+ * 图片助手
+ */
 var pictureHelper = {
     showBig: function(t, z) {
         z = z || 1;
@@ -224,5 +227,12 @@ var pictureHelper = {
         $(".layui-layer-content img").click(function() {
             $(".layui-layer-shade").click();
         });
+    },
+    error: function(t, s = false) {
+        if (s) {
+            t.parentElement.innerHTML = '图片损坏或不存在';
+        } else {
+            t.parentElement.innerHTML = '';
+        }
     }
 }
