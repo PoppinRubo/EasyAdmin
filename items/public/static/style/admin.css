@@ -44,6 +44,7 @@
 
 /*表格图标*/
 table .icon {
+    line-height: 100%;
     font-size: 26px;
 }
 
