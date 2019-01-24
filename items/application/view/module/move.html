@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="global.php" title="调整模块层级"/}
+</head>
+
+<body class="form-body">
+    <form class="layui-form" lay-filter="form">
+        <input type="hidden" name="id" value="{$id}" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label">父级模块</label>
+            <div class="layui-input-block">
+                <input name='pid' class="easyui-combotreegrid" data-options="
+                    width:'100%',
+                    panelWidth:350,
+                    labelPosition:'top',
+                    url:'/module/getModuleList?root=1',
+                    idField:'id',
+                    treeField:'name',
+                    columns:[[
+                        {field:'id',title:'编号',align: 'center',width:50},
+                        {field:'name',title:'模块名',width:260}
+                    ]]">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <div class="layui-btn" lay-submit lay-filter="submit">立即提交</div>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        layui.use(['form'], function() {
+            var form = layui.form;
+            //监听提交
+            form.on('submit(submit)', function(data) {
+                askHelper.ajaxPost({
+                    url: '/module/move',
+                    data: data.field,
+                    success: function() {
+                        //表格刷新
+                        window.parent.$('#data-table').treegrid('reload');
+                        //窗口关闭
+                        window.parent.layer.closeAll('iframe');
+                    }
+                });
+
+                //阻止表单提交
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

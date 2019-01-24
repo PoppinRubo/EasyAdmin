@@ -58,7 +58,7 @@
             [
                 { field: 'checkbox', checkbox: true, align: 'center' },
                 { field: 'id', title: '编号', width: 80, sort: true, align: 'center' },
-                { field: 'name', title: '模块名', width: 120, align: 'left' },
+                { field: 'name', title: '模块名', width: 150, align: 'left' },
                 { field: 'link', title: '链接', width: 120, align: 'left' },
                 { field: 'level', title: '层级', width: 80, align: 'center' },
                 { field: 'sort', title: '排序', width: 80, align: 'center' },
@@ -107,6 +107,24 @@
             maxmin: false, //开启最大化最小化按钮
             area: ['700px', '500px'],
             content: '/module/edit?id=' + row.id
+        });
+    }
+
+    //调整层级
+    function move() {
+        var row = $('#data-table').treegrid('getSelected');
+        if (!row) {
+            layer.msg("请选中一行", { time: 1500, icon: 5 });
+            return;
+        }
+        layer.open({
+            type: 2,
+            title: '调整层级',
+            shadeClose: false, //是否点击遮罩关闭
+            shade: 0.5, //遮罩透明度
+            maxmin: false, //开启最大化最小化按钮
+            area: ['500px', '500px'],
+            content: '/module/move?id=' + row.id
         });
     }
 

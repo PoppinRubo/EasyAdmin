@@ -68,6 +68,32 @@ class ModuleController extends BasicController
         return View();
     }
 
+    //调整层级 View || Json
+    public function move()
+    {
+        //数据请求
+        if (request()->isPost()) {
+            try {
+                //首字母还原为大写
+                $data = convertToupper(input());
+                $data["ModifyTime"] = date("Y-m-d H:i:s");
+                $data["ModifyUser"] = $this->user["Id"];
+                $data['Pid'] = (int) $data['Pid'];
+                $data["Level"] = ((int) db('sys_module')->where('Id', $data['Pid'])->field('Level')->find()) + 1;
+                $model = new SysModuleModel();
+                // 过滤表单数组中的非数据表字段数据
+                $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
+                return toJsonData(1, null, "操作成功");
+            } catch (Exception $e) {
+                return toJsonData(0, null, $e->getMessage());
+            }
+        }
+        //输出页面
+        $id = input("id") ?: 0;
+        $this->assign('id', $id);
+        return View();
+    }
+
     //删除模块 Json
     public function remove()
     {
@@ -105,7 +131,8 @@ class ModuleController extends BasicController
                     $tree[] = convertLower($m);
                 }
             }
-            return toEasyTable($tree, false);
+            $data = (bool) input("root") ? array(array('id' => 0, 'name' => '根目录', 'children' => $tree)) : $tree;
+            return toEasyTable($data, false);
         } catch (Exception $e) {
             return toEasyTable([], false);
         }

@@ -141,3 +141,17 @@ table .tree-expanded:before {
     background-image: url('/static/layui/css/modules/layer/default/loading-2.gif');
     background-size: 20px;
 }
+
+form .combo {
+    border-radius: 2px;
+    padding: 4px 0;
+}
+
+form .combo .textbox-addon {
+    padding: 4px 0;
+    background-color: #F2F2F2;
+}
+
+form .combo .textbox-addon:hover {
+    background-color: #e6e6e6;
+}
