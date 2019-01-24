@@ -79,7 +79,7 @@ class ModuleController extends BasicController
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $data['Pid'] = (int) $data['Pid'];
-                $data["Level"] = ((int) db('sys_module')->where('Id', $data['Pid'])->field('Level')->find()) + 1;
+                $data["Level"] = ((int) db('sys_module')->where('Id', $data['Pid'])->value('Level')) + 1;
                 $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
