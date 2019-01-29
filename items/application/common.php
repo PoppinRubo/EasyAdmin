@@ -70,11 +70,11 @@ function convertToupper($array)
  * @param bool $convert 字段首字母是否转换小写
  * @return string
  */
-function toEasyTable($array, $convert = true, $msg = "")
+function toEasyTable($array, $total = 0, $convert = true, $msg = "")
 {
 
     $result = array(
-        "total" => is_object($array) ? $array->total() : count($array),
+        "total" => is_object($array) ? $array->total() : $total,
         "rows" => $convert ? convertLower($array) : $array,
         "errorMessage" => $msg,
     );
