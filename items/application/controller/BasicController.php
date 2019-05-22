@@ -22,8 +22,18 @@ class BasicController extends Controller
         //检测登录状态
         $this->user = getUserAuthentication();
         if ($this->user == null) {
-            //强行登录
-            $this->error("未登录或登录已过期", "/");
+            if (request()->isPost()) {
+                //Post请求返回登录过期信息
+                echo json_encode(array(
+                    "rows" => 0,
+                    "code" => 403,
+                    "msg" => "当前登录账号已过期，请重新登录",
+                ));
+                exit();
+            } else {
+                //其他请求跳登录页面
+                $this->redirect("/");
+            }
         }
     }
 

@@ -33,9 +33,12 @@ class IndexController extends Controller
             }
             //明文密码加密比对
             $password = md5(input("password"));
-            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password, "IsDel" => 0, "IsValid" => 1))->find();
+            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
             if ($user == null) {
                 return toJsonData(0, null, "登录失败,账号或密码错误");
+            }
+            if ($user['IsDel']) {
+                return toJsonData(0, null, "账号已删除,请联系管理员");
             }
             if (!$user['IsValid']) {
                 return toJsonData(0, null, "账号无效,请联系管理员");
@@ -52,6 +55,37 @@ class IndexController extends Controller
             //登录日志
             UserFacade::signInLog("账号密码登录");
             return toJsonData(1, "/home", "登录成功");
+        } catch (Exception $e) {
+            return toJsonData(0, null, $e->getMessage());
+        }
+    }
+
+    //过期再次登录
+    public function againSignIn()
+    {
+        try {
+            if (request()->isGet()) {
+                return toJsonData(0, null, "不被接受的请求", true);
+            }
+            //明文密码加密比对
+            $password = md5(input("password"));
+            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
+            if ($user == null) {
+                return toJsonData(0, null, "登录失败,账号或密码错误");
+            }
+            if ($user['IsDel']) {
+                return toJsonData(0, null, "账号已删除,请联系管理员");
+            }
+            if (!$user['IsValid']) {
+                return toJsonData(0, null, "账号无效,请联系管理员");
+            }
+            Session::set('Authentication', $user);
+            if (getUserAuthentication() == null) {
+                return toJsonData(0, null, "登录失败,请联系管理员");
+            }
+            //登录日志
+            UserFacade::signInLog("账号密码登录");
+            return toJsonData(1, null, "登录成功");
         } catch (Exception $e) {
             return toJsonData(0, null, $e->getMessage());
         }

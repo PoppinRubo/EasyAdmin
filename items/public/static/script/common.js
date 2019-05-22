@@ -236,3 +236,44 @@ var pictureHelper = {
         }
     }
 }
+
+/**
+ * 监听登录过期
+ */
+$(document).ajaxSuccess(function(event, xhr, options) {
+    var data = xhr.responseJSON;
+    if (data && data.rows === 0 && data.code === 403) {
+        if ($("#again-form").length <= 0) {
+            var html = '<form class="layui-form" style="padding: 20px" id="again-form">' +
+                '<div class="layui-form-item" >' +
+                '<input class="layui-input" id="account" placeholder="账号" lay-verify="required" type="text" autocomplete="off">' +
+                '</div>' +
+                '<div class="layui-form-item">' +
+                '<input class="layui-input" id="password" placeholder="密码" lay-verify="required" type="password" autocomplete="off">' +
+                '</div>' +
+                '<div class="layui-btn" style="width: 100%" id="again-login">登录</div>' +
+                '</form>';
+            var open = layer.open({
+                type: 1,
+                title: data.msg,
+                shadeClose: false,
+                shade: 0.8,
+                area: ['380px', '240px'],
+                content: html
+            });
+            $("#again-login").click(function() {
+                var form = $(this).parent();
+                askHelper.ajaxPost({
+                    url: "/index/againSignIn",
+                    data: {
+                        account: form.find("#account").val(),
+                        password: form.find("#password").val()
+                    },
+                    success: function() {
+                        layer.close(open);
+                    }
+                });
+            });
+        }
+    }
+});
