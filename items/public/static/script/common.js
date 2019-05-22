@@ -129,7 +129,7 @@ var tableHelper = {
             return p;
         }
         var height = parseInt($(window).height() - header.height() - 45);
-        var toolbar = $("#toolbar").length <= 0 ? 0 : $("#toolbar").height();
+        var toolbar = $("#toolbar").length <= 0 ? -20 : $("#toolbar").height();
         var viewHeight = height - toolbar;
         var pageSize = parseInt((viewHeight - 75) / 35);
         //页码容量列表
