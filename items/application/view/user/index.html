@@ -46,11 +46,11 @@
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
         rownumbers: true, //行号显示
-        pageSize: 15, //页码容量
+        pageSize: tableHelper.setPage(10), //页码容量
         fit: false, //关闭自适应
         fitSize: true, //随浏览器变化适应表格大小(自定义扩展)
         pagination: true, // 分页工具栏
-        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
         columns: [
             [
                 { field: 'checkbox', checkbox: true, align: 'center' },

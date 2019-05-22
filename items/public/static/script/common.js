@@ -122,6 +122,26 @@ var tableHelper = {
         var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 45);
         return unit ? height + "px" : height;
     },
+    //表格行数适配
+    setPage: function(p) {
+        var header = $(".admin-card-header-auto");
+        if (!header || header.length <= 0) {
+            return p;
+        }
+        var height = parseInt($(window).height() - header.height() - 45);
+        var toolbar = $("#toolbar").length <= 0 ? 0 : $("#toolbar").height();
+        var viewHeight = height - toolbar;
+        var pageSize = parseInt((viewHeight - 75) / 35);
+        //页码容量列表
+        if (Array.isArray(p)) {
+            p.push(pageSize);
+            //去重并排序
+            return Array.from(new Set(p)).sort(function(a, b) {
+                return a - b;
+            });
+        }
+        return pageSize;
+    },
     //easyUI表格刷新
     refresh: function(tableId) {
         var table = $("#" + tableId);

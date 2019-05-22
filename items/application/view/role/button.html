@@ -50,7 +50,7 @@
         pageSize: 10, //页码容量
         fit: false, //关闭自适应
         pagination: true, // 分页工具栏
-        pageList: [10, 15, 20, 30, 40, 50, 100], // 可以设置每页记录条数的列表
+        pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
         columns: [
             [
                 { field: 'checkbox', checkbox: true, align: 'center' },
