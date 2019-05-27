@@ -177,7 +177,7 @@ var tableHelper = {
         }
         table.datagrid('reload');
     },
-    createButton: function (object, value) {
+    createButton: function (object, value, clickRow = true) {
         //表格按钮创建助手
         var btn = "",
             btnList = object,
@@ -197,11 +197,13 @@ var tableHelper = {
             }
         }
         //点击按钮不点击行
-        setTimeout(function () {
-            $("table .layui-btn").click(function (e) {
-                e.stopPropagation();
-            });
-        }, 1000);
+        if (!clickRow) {
+            setTimeout(function () {
+                $("table .layui-btn").click(function (e) {
+                    e.stopPropagation();
+                });
+            }, 1000);
+        }
         return btn;
     }
 };
