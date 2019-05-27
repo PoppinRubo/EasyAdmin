@@ -166,6 +166,8 @@ var datagridExtend = {
                             iconCls: 'icon-checkbox-checked'
                         });
                     }
+                    //保持显示菜单
+                    $(this).menu("show");
                 }
             })
             var fields = $(target).datagrid('getColumnFields', true).concat($(target).datagrid('getColumnFields', false));
