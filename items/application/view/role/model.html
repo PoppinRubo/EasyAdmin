@@ -55,18 +55,38 @@
         animate: true, //节点展开或折叠时显示动画效果
         pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
         columns: [
-            [
-                { field: 'checkbox', checkbox: true, align: 'center' },
-                { field: 'id', title: '编号', width: 50, sort: true, align: 'center' },
-                { field: 'name', title: '模块名', width: 120, align: 'left' },
-                { field: 'level', title: '层级', width: 80, align: 'center' },
+            [{
+                    field: 'checkbox',
+                    checkbox: true,
+                    align: 'center'
+                },
+                {
+                    field: 'id',
+                    title: '编号',
+                    width: 50,
+                    sort: true,
+                    align: 'center'
+                },
+                {
+                    field: 'name',
+                    title: '模块名',
+                    width: 120,
+                    align: 'left'
+                },
+                {
+                    field: 'level',
+                    title: '层级',
+                    width: 80,
+                    align: 'center'
+                },
                 {
                     field: 'isRelation',
                     title: '是否关联',
                     width: 60,
                     align: 'center',
-                    formatter: function(value, row) {
-                        return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
+                    formatter: function (value, row) {
+                        return value ? '<i class="icon icon-true"></i>' :
+                            '<i class="icon icon-false"></i>';
                     }
                 },
                 {
@@ -74,16 +94,22 @@
                     title: '操作',
                     width: 120,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                        var button = { roleModuleButton: ['角色关联模块按钮', 1] };
+                        var button = {
+                            roleModuleButton: ['角色关联模块按钮', 1]
+                        };
                         if (!row.isRelation) {
-                            button = { roleModuleButton: ['角色关联模块按钮', 0] };
+                            button = {
+                                roleModuleButton: ['角色关联模块按钮', 0]
+                            };
                         }
                         if (row.button < 1) {
-                            button = { roleModuleButton: ['角色关联模块按钮', 0] };
+                            button = {
+                                roleModuleButton: ['角色关联模块按钮', 0]
+                            };
                         }
-                        return tableHelper.createButton(button, row);
+                        return tableHelper.createButton(button, row, false);
                     }
                 }
             ]
@@ -96,17 +122,24 @@
     function relation(isRelation) {
         var rows = $('#data-table').treegrid('getSelections');
         if (rows.length < 1) {
-            layer.msg("至少选中一行", { time: 2000, icon: 5 });
+            layer.msg("至少选中一行", {
+                time: 2000,
+                icon: 5
+            });
             return;
         }
         var ids = [];
-        rows.forEach(function(v, i, a) {
+        rows.forEach(function (v, i, a) {
             ids.push(v.id);
         })
         askHelper.ajaxPost({
             url: '/role/relationdModel',
-            data: { ids: JSON.stringify(ids), roleId: roleId, isRelation: isRelation },
-            success: function() {
+            data: {
+                ids: JSON.stringify(ids),
+                roleId: roleId,
+                isRelation: isRelation
+            },
+            success: function () {
                 //清除选中项
                 $('#data-table').treegrid('clearSelections');
                 tableHelper.refresh('data-table');
@@ -117,11 +150,17 @@
     //角色模块按钮
     function roleModuleButton(row) {
         if (!row.isRelation) {
-            layer.msg("请先关联模块后再操作", { time: 2000, icon: 5 });
+            layer.msg("请先关联模块后再操作", {
+                time: 2000,
+                icon: 5
+            });
             return;
         }
         if (row.button < 1) {
-            layer.msg("模块下未配置按钮", { time: 2000, icon: 5 });
+            layer.msg("模块下未配置按钮", {
+                time: 2000,
+                icon: 5
+            });
             return;
         }
         layer.open({
