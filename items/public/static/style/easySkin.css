@@ -150,3 +150,9 @@ form .combo .textbox-addon {
 form .combo .textbox-addon:hover {
     background-color: #e6e6e6
 }
+
+.menu-active {
+    background-color: #f2f2f2;
+    border-color: #e6e6e6;
+    color: #000000;
+}
