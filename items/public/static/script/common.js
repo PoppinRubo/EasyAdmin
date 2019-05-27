@@ -1,6 +1,6 @@
-﻿$(function() {
+﻿$(function () {
     //文本表单自动填充 placeholder
-    $.each($(".layui-input-block").find("input,textarea"), function(i, v) {
+    $.each($(".layui-input-block").find("input,textarea"), function (i, v) {
         if ($(this).data('auto')) {
             //使用同级表单label值
             $(this).attr('placeholder', "请输入" + $(this).parent().prev().html());
@@ -8,22 +8,24 @@
     });
 
     //处理开关未点击状态下的值设置为0或1
-    $.each($('input[lay-skin="switch"]'), function(i, v) {
+    $.each($('input[lay-skin="switch"]'), function (i, v) {
         $(v).val(this.checked ? 1 : 0);
     });
     //处理开关点击状态下的值设置为0或1
-    layui.use(['form'], function() {
+    layui.use(['form'], function () {
         var form = layui.form;
         //表单开关值处理
-        form.on('switch', function(data) {
+        form.on('switch', function (data) {
             $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
         });
     });
     //处理easyui表格右边框超出隐藏问题
-    $(".datagrid-wrap").css({ width: parseInt($(".datagrid-wrap").width() - 2) + "px" });
+    $(".datagrid-wrap").css({
+        width: parseInt($(".datagrid-wrap").width() - 2) + "px"
+    });
 
     //搜索框回车搜索
-    $(".search input").keydown(function(e) {
+    $(".search input").keydown(function (e) {
         if (e.keyCode == 13) {
             $(this).parent().next('button').click();
         }
@@ -35,14 +37,19 @@
  */
 var askHelper = {
     //ajax 误处理
-    ajaxError: function(xhr, textStatus, error) {
-        error = error || function() {};
+    ajaxError: function (xhr, textStatus, error) {
+        error = error || function () {};
         var msg = "请求出现错误,状态码:" + xhr.status + ",描述:" + textStatus;
-        layer.msg(msg, { time: 3000, icon: 5 }, function() { error(); });
+        layer.msg(msg, {
+            time: 3000,
+            icon: 5
+        }, function () {
+            error();
+        });
     },
     //Post请求
-    ajaxPost: function(o) {
-        o.success = o.success || function(result) {
+    ajaxPost: function (o) {
+        o.success = o.success || function (result) {
             //非开窗口刷新的处理
             if (window.parent.isHome) {
                 //表格刷新
@@ -55,11 +62,17 @@ var askHelper = {
             window.parent.layer.closeAll('iframe');
         };
         var msgIndex = 0;
-        o.fail = o.fail || function(result) {};
+        o.fail = o.fail || function (result) {};
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
-        o.before = o.before || function() { msgIndex = layer.msg('处理中', { icon: 16, shade: 0.5, time: 86400 * 1000 }); }
+        o.before = o.before || function () {
+            msgIndex = layer.msg('处理中', {
+                icon: 16,
+                shade: 0.5,
+                time: 86400 * 1000
+            });
+        }
         o.original = o.original || false;
         $.ajax({
             url: o.url, //请求接口
@@ -68,8 +81,10 @@ var askHelper = {
             timeout: 6000, //超时时间
             data: o.data, //请求对象
             dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
-            beforeSend: function(xhr) { o.before(xhr); }, //请求前方法
-            success: function(result) {
+            beforeSend: function (xhr) {
+                o.before(xhr);
+            }, //请求前方法
+            success: function (result) {
                 //是否直接返回结果
                 if (o.original) {
                     //关闭加载
@@ -79,34 +94,44 @@ var askHelper = {
                     return o.success(result);
                 }
                 if (result.code === 1) {
-                    layer.msg(result.msg, { time: 500, icon: 1 }, function() { o.success(result); });
+                    layer.msg(result.msg, {
+                        time: 500,
+                        icon: 1
+                    }, function () {
+                        o.success(result);
+                    });
                 } else {
-                    layer.msg(result.msg, { time: 2000, icon: 5 }, function() { o.fail(result); });
+                    layer.msg(result.msg, {
+                        time: 2000,
+                        icon: 5
+                    }, function () {
+                        o.fail(result);
+                    });
                 }
             },
-            error: function(xhr, textStatus) {
+            error: function (xhr, textStatus) {
                 askHelper.ajaxError(xhr, textStatus, o.error);
             }
         });
     },
     // Get请求
-    ajaxGet: function(o) {
+    ajaxGet: function (o) {
         o.type = "GET";
         askHelper.ajaxPost(o);
     },
     //询问数据请求
-    ajaxConfirm: function(o) {
-        o.cancel = o.cancel || function() {};
+    ajaxConfirm: function (o) {
+        o.cancel = o.cancel || function () {};
         //询问
         var index = layer.confirm(o.msg + '？', {
                 btn: ['确定', '取消'] //按钮
             },
-            function() {
+            function () {
                 //确认
                 layer.close(index);
                 askHelper.ajaxPost(o);
             },
-            function() {
+            function () {
                 //取消
                 layer.close(index);
                 o.cancel();
@@ -118,32 +143,32 @@ var askHelper = {
 */
 var tableHelper = {
     //高度适配
-    setHeight: function(unit = true) {
+    setHeight: function (unit = true) {
         var height = parseInt($(window).height() - $(".admin-card-header-auto").height() - 45);
         return unit ? height + "px" : height;
     },
     //表格行数适配
-    setPage: function(p) {
+    setPage: function (p) {
         var header = $(".admin-card-header-auto");
         if (!header || header.length <= 0) {
             return p;
         }
         var height = parseInt($(window).height() - header.height() - 45);
-        var toolbar = $("#toolbar").length <= 0 ? -20 : $("#toolbar").height();
+        var toolbar = $("#toolbar").length <= 0 ? 0 : $("#toolbar").outerHeight();
         var viewHeight = height - toolbar;
-        var pageSize = parseInt((viewHeight - 75) / 35);
+        var pageSize = parseInt((viewHeight - 65) / 35);
         //页码容量列表
         if (Array.isArray(p)) {
             p.push(pageSize);
             //去重并排序
-            return Array.from(new Set(p)).sort(function(a, b) {
+            return Array.from(new Set(p)).sort(function (a, b) {
                 return a - b;
             });
         }
         return pageSize;
     },
     //easyUI表格刷新
-    refresh: function(tableId) {
+    refresh: function (tableId) {
         var table = $("#" + tableId);
         //树形表格
         if (table.closest(".datagrid-view").find(".treegrid-tr-tree").length > 0) {
@@ -152,7 +177,7 @@ var tableHelper = {
         }
         table.datagrid('reload');
     },
-    createButton: function(object, value) {
+    createButton: function (object, value) {
         //表格按钮创建助手
         var btn = "",
             btnList = object,
@@ -172,8 +197,8 @@ var tableHelper = {
             }
         }
         //点击按钮不点击行
-        setTimeout(function() {
-            $("table .layui-btn").click(function(e) {
+        setTimeout(function () {
+            $("table .layui-btn").click(function (e) {
                 e.stopPropagation();
             });
         }, 1000);
@@ -186,7 +211,7 @@ var tableHelper = {
 */
 var timeHelper = {
     //格式化日期,使用方法 传入时间(可以是时间字符串)及格式(如 yyyy-MM-dd HH:mm:ss)
-    formatDate: function(time, format) {
+    formatDate: function (time, format) {
         if (typeof time === 'string') {
             time = time.replace(/-/g, '/').replace(/T/g, ' ');
             if (time.indexOf('.') > 0) {
@@ -221,7 +246,7 @@ var timeHelper = {
  * 图片助手
  */
 var pictureHelper = {
-    showBig: function(t, z) {
+    showBig: function (t, z) {
         z = z || 1;
         var width = parseInt(t.naturalWidth * z);
         var height = parseInt(t.naturalHeight * z);
@@ -244,11 +269,11 @@ var pictureHelper = {
             shadeClose: true,
             content: '<img src="' + t.src + '" width="' + width + '" height="' + height + '"> '
         });
-        $(".layui-layer-content img").click(function() {
+        $(".layui-layer-content img").click(function () {
             $(".layui-layer-shade").click();
         });
     },
-    error: function(t, s = false) {
+    error: function (t, s = false) {
         if (s) {
             t.parentElement.innerHTML = '图片损坏或不存在';
         } else {
@@ -260,7 +285,7 @@ var pictureHelper = {
 /**
  * 监听登录过期
  */
-$(document).ajaxSuccess(function(event, xhr, options) {
+$(document).ajaxSuccess(function (event, xhr, options) {
     var data = xhr.responseJSON;
     if (data && data.rows === 0 && data.code === 403) {
         if ($("#again-form").length <= 0) {
@@ -281,7 +306,7 @@ $(document).ajaxSuccess(function(event, xhr, options) {
                 area: ['380px', '240px'],
                 content: html
             });
-            $("#again-login").click(function() {
+            $("#again-login").click(function () {
                 var form = $(this).parent();
                 askHelper.ajaxPost({
                     url: "/index/againSignIn",
@@ -289,7 +314,7 @@ $(document).ajaxSuccess(function(event, xhr, options) {
                         account: form.find("#account").val(),
                         password: form.find("#password").val()
                     },
-                    success: function() {
+                    success: function () {
                         layer.close(open);
                     }
                 });
