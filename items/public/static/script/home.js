@@ -1,4 +1,4 @@
-﻿layui.define(['layer', 'element'], function(exports) {
+﻿layui.define(['layer', 'element'], function (exports) {
     //菜单树
     var body = $("body"),
         element = layui.element,
@@ -9,31 +9,31 @@
         selectPageIndex = 0,
         status = '',
         home = {
-            tree: function() {
+            tree: function () {
                 $('#menu-tree').tree({
                     url: "/home/getMenuTree",
                     method: "post",
                     animate: true,
-                    onBeforeLoad: function(node) {
+                    onBeforeLoad: function (node) {
                         //当加载数据的请求发出前触发
                         home.treeLoading(node, true);
                     },
-                    onLoadSuccess: function(node, data) {
+                    onLoadSuccess: function (node, data) {
                         //当数据加载成功时触发
                         if (data.code === 0) {
                             layer.msg(data.msg, {
                                 time: 1000,
                                 icon: 5
-                            }, function() {
+                            }, function () {
                                 window.location.href = data.url;
                             });
                         }
                         home.treeLoading(node, false);
                     },
-                    onLoadError: function(arguments) {
+                    onLoadError: function (arguments) {
                         //当数据加载失败时触发
                     },
-                    onSelect: function(node) {
+                    onSelect: function (node) {
                         //节点被选中前触发，返回 false 则取消选择动作
                         //单击节点展开||关闭
                         if (node.state == "closed") {
@@ -53,7 +53,7 @@
                     }
                 });
             },
-            treeLoading: function(node, open) {
+            treeLoading: function (node, open) {
                 var anim = "layui-icon layui-icon-loading-1 layui-anim layui-anim-rotate layui-anim-loop";
                 //节点动画
                 if (node) {
@@ -63,7 +63,7 @@
                 }
                 open ? $("#menu-tree").html("<i class='" + anim + " loading-anim'></i><span class='loading-text'>加载中</span>") : "";
             },
-            fullscreen: function(e) {
+            fullscreen: function (e) {
                 //全屏切换
                 var a = "layui-icon-screen-full",
                     i = "layui-icon-screen-restore",
@@ -82,7 +82,7 @@
                         document.webkitCancelFullScreen ? document.webkitCancelFullScreen() : document.msExitFullscreen && document.msExitFullscreen();
                 }
             },
-            sideFlexible: function() {
+            sideFlexible: function () {
                 //侧边伸缩
                 var app = $('#admin-app'),
                     iconElem = $('#app-flexible'),
@@ -121,7 +121,7 @@
                 }
                 status = status === 'spread' ? '' : 'spread';
             },
-            screen: function() {
+            screen: function () {
                 //屏幕类型
                 var width = $(window).width()
                 if (width >= 1200) {
@@ -134,7 +134,7 @@
                     return 0; //超小屏幕
                 }
             },
-            tabAdd: function(e) {
+            tabAdd: function (e) {
                 var t = this;
                 //父模块不开新窗口,
                 if (e.son > 0) {
@@ -162,7 +162,7 @@
                 //每次新打开tab都是最后一个，所以只对最后一个tab添加点击关闭事件
                 var r = $(".layui-tab-title").find("li");
                 //加点击关闭事件  
-                r.eq(r.length - 1).children(".layui-tab-close").on("click", function() {
+                r.eq(r.length - 1).children(".layui-tab-close").on("click", function () {
                     t.tabDelete($(this).parent("li").attr('lay-id'));
                 });
                 //切换到该tab
@@ -170,13 +170,13 @@
                 //开启右键菜单
                 home.contextMenu();
             },
-            tabDelete: function(id) {
+            tabDelete: function (id) {
                 var t = this;
                 //删除指定Tab项
                 element.tabDelete(tabs, id);
                 //移除iframe
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function(index) {
+                iframe.each(function (index) {
                     if ($(this).data("id") == id) {
                         $(this).parent().remove();
                         //显示前一个iframe
@@ -184,12 +184,12 @@
                     }
                 });
             },
-            tabChange: function(id) {
+            tabChange: function (id) {
                 //切换到指定Tab项
                 var item = tabBody.find(".body-item");
                 //隐藏其他iframe
                 item.removeClass("layui-show");
-                item.each(function(index) {
+                item.each(function (index) {
                     if ($(this).children().data("id") == id) {
                         //显示指定页面
                         $(this).addClass("layui-show");
@@ -201,21 +201,21 @@
                 });
                 element.tabChange(tabs, id);
             },
-            refresh: function() {
+            refresh: function () {
                 //刷新菜单树
                 this.tree();
             },
-            refreshThisTabs: function() {
+            refreshThisTabs: function () {
                 //刷新当前标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function() {
+                iframe.each(function () {
                     if ($(this).data("id") == pageId) {
                         this.src = this.src;
                     }
                 });
                 contextmenu.removeClass("layui-show");
             },
-            closeTabs: function(id) {
+            closeTabs: function (id) {
                 //关闭标签页
                 if (id == "first") {
                     return;
@@ -223,38 +223,40 @@
                 this.tabDelete(id);
                 contextmenu.removeClass("layui-show");
             },
-            closeThisTabs: function() {
+            closeThisTabs: function () {
                 this.closeTabs(pageId);
             },
-            closeOtherTabs: function() {
+            closeOtherTabs: function () {
                 var t = this;
                 //关闭其他标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function() {
+                iframe.each(function () {
                     if ($(this).data("id") != pageId) {
                         t.closeTabs($(this).data("id"));
                     }
                 });
+                //选中当前标签
+                t.tabChange(pageId);
             },
-            closeAllTabs: function() {
+            closeAllTabs: function () {
                 var t = this;
                 //关闭全部标签页
                 var iframe = tabBody.find(".admin-iframe");
-                iframe.each(function() {
+                iframe.each(function () {
                     t.closeTabs($(this).data("id"));
                 });
             },
-            logout: function() {
+            logout: function () {
                 //退出登录
                 askHelper.ajaxConfirm({
                     msg: "确定退出系统吗",
                     url: '/index/signOut',
-                    success: function(result) {
+                    success: function (result) {
                         window.location.href = result.data;
                     }
                 });
             },
-            editPwd: function() {
+            editPwd: function () {
                 //修改密码
                 layer.open({
                     type: 2,
@@ -266,18 +268,18 @@
                     content: '/user/password'
                 });
             },
-            click: function() {
+            click: function () {
                 var t = this;
-                body.on("click", "*[admin-event]", function() {
+                body.on("click", "*[admin-event]", function () {
                     var e = $(this);
                     var i = e.attr("admin-event");
                     //方法调用
                     eval("t." + i + "(e)");
                 })
             },
-            contextMenu: function() {
+            contextMenu: function () {
                 // 阻止浏览器鼠标右键单击事件，生成右键菜单
-                $('.layui-tab-title li').on('contextmenu', function() {
+                $('.layui-tab-title li').on('contextmenu', function () {
                     pageId = $(this).data("id") || $(this).attr('lay-id');
                     var tabLeft = $(".layui-tab").offset().left,
                         left = $(this).offset().left - tabLeft;
@@ -285,14 +287,14 @@
                         "margin-left": left + "px"
                     }).addClass("layui-show");
                     //隐藏显示控制
-                    $(".layui-this").hover(function() {
+                    $(".layui-this").hover(function () {
 
-                    }, function() {
+                    }, function () {
                         contextmenu.removeClass("layui-show");
                     });
-                    $("#context-menu").hover(function() {
+                    $("#context-menu").hover(function () {
                         contextmenu.addClass("layui-show");
-                    }, function() {
+                    }, function () {
                         contextmenu.removeClass("layui-show");
                     });
                     //生成屏蔽首页关闭标签页样式
@@ -304,9 +306,9 @@
                     return false;
                 })
             },
-            showRoll: function() {
+            showRoll: function () {
                 //等待标签处理，延时处理
-                setTimeout(function() {
+                setTimeout(function () {
                     //显示左右滚动按钮
                     var tabsHeader = $('#tabs-header'),
                         pageTabs = $('.admin-page-tabs'),
@@ -314,25 +316,33 @@
                         rightBtn = pageTabs.find('.layui-icon-next');
                     //左侧按钮
                     if (!parseFloat(tabsHeader.css('left'))) {
-                        pageTabs.css({ 'padding-left': '15px' });
+                        pageTabs.css({
+                            'padding-left': '15px'
+                        });
                         leftBtn.addClass('layui-hide');
                     } else {
-                        pageTabs.css({ 'padding-left': '40px' });
+                        pageTabs.css({
+                            'padding-left': '40px'
+                        });
                         leftBtn.removeClass('layui-hide');
                     }
                     //右侧按钮
                     var lastTab = tabsHeader.children(':last');
                     tabWidth = parseInt(lastTab.position().left + lastTab.outerWidth());
                     if (tabWidth >= tabsHeader.outerWidth() - parseFloat(tabsHeader.css('left'))) {
-                        pageTabs.css({ 'padding-right': '40px' });
+                        pageTabs.css({
+                            'padding-right': '40px'
+                        });
                         rightBtn.removeClass('layui-hide');
                     } else {
-                        pageTabs.css({ 'padding-right': '15px' });
+                        pageTabs.css({
+                            'padding-right': '15px'
+                        });
                         rightBtn.addClass('layui-hide');
                     }
                 }, 200);
             },
-            rollPage: function(type, index) {
+            rollPage: function (type, index) {
                 //滚动按钮显示处理
                 home.showRoll();
                 //左右滚动页面标签
@@ -346,7 +356,7 @@
                     if (!tabsLeft && tabsLeft <= 0) return;
                     //当前的left减去可视宽度，用于与上一轮的页标比较
                     var prefLeft = -tabsLeft - outerWidth;
-                    liItem.each(function(index, item) {
+                    liItem.each(function (index, item) {
                         var li = $(item),
                             left = li.position().left;
                         if (left >= prefLeft) {
@@ -355,7 +365,7 @@
                         }
                     });
                 } else if (type === 'auto') { //自动滚动
-                    (function() {
+                    (function () {
                         var thisLi = liItem.eq(index),
                             thisLeft;
 
@@ -369,7 +379,7 @@
                         //当目标标签在可视区域右侧时
                         if (thisLeft + thisLi.outerWidth() >= outerWidth - tabsLeft) {
                             var subLeft = thisLeft + thisLi.outerWidth() - (outerWidth - tabsLeft);
-                            liItem.each(function(i, item) {
+                            liItem.each(function (i, item) {
                                 var li = $(item),
                                     left = li.position().left;
 
@@ -385,7 +395,7 @@
                     }());
                 } else {
                     //默认向左滚动
-                    liItem.each(function(i, item) {
+                    liItem.each(function (i, item) {
                         var li = $(item),
                             left = li.position().left;
                         if (left + li.outerWidth() >= outerWidth - tabsLeft) {
@@ -395,17 +405,17 @@
                     });
                 }
             },
-            leftPage: function() {
+            leftPage: function () {
                 //向右滚动页面标签
                 home.rollPage('left');
             },
-            rightPage: function() {
+            rightPage: function () {
                 //向左滚动页面标签
                 home.rollPage();
             }
         }
     //监听Tab切换
-    element.on('tab(' + tabs + ')', function(obj) {
+    element.on('tab(' + tabs + ')', function (obj) {
         if (selectPageIndex == obj.index) {
             //点击当前显示不处理
             return;
@@ -416,9 +426,9 @@
     });
 
     //窗口resize事件
-    var resizeSystem = layui.data.resizeSystem = function() {
+    var resizeSystem = layui.data.resizeSystem = function () {
         if (!resizeSystem.lock) {
-            setTimeout(function() {
+            setTimeout(function () {
                 status = home.screen() < 2 ? '' : 'spread';
                 home.sideFlexible();
                 delete resizeSystem.lock;
