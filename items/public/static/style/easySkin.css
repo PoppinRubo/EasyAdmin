@@ -1,5 +1,9 @@
 .easyui-table-tool {
-    padding: 10px 0 0 15px
+    padding: 5px 0 0 5px
+}
+
+.easyui-table-tool .layui-btn-container .layui-btn {
+    margin-bottom: 5px;
 }
 
 .panel-body {
