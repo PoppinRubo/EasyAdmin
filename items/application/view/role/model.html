@@ -29,10 +29,10 @@
     <div class="easyui-table-tool" id="toolbar">
         <div class="layui-btn-container">
             <button class="layui-btn layui-btn-sm" onclick="relation(true)">
-                <i class="layui-icon layui-icon-add-1"></i> 增加关联
+                <i class="layui-icon layui-icon-add-1"></i> 设置模块权限
             </button>
             <button class="layui-btn layui-btn-sm layui-btn-danger" onclick="relation(false)">
-                <i class="layui-icon layui-icon-delete"></i> 删除关联
+                <i class="layui-icon layui-icon-delete"></i> 删除模块权限
             </button>
         </div>
     </div>
@@ -81,7 +81,7 @@
                 },
                 {
                     field: 'isRelation',
-                    title: '是否关联',
+                    title: '模块权限',
                     width: 60,
                     align: 'center',
                     formatter: function (value, row) {
@@ -97,16 +97,16 @@
                     formatter: function (value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
                         var button = {
-                            roleModuleButton: ['角色关联模块按钮', 1]
+                            roleModuleButton: ['设置按钮权限', 1]
                         };
                         if (!row.isRelation) {
                             button = {
-                                roleModuleButton: ['角色关联模块按钮', 0]
+                                roleModuleButton: ['设置按钮权限', 0]
                             };
                         }
                         if (row.button < 1) {
                             button = {
-                                roleModuleButton: ['角色关联模块按钮', 0]
+                                roleModuleButton: ['设置按钮权限', 0]
                             };
                         }
                         return tableHelper.createButton(button, row, false);
@@ -150,7 +150,7 @@
     //角色模块按钮
     function roleModuleButton(row) {
         if (!row.isRelation) {
-            layer.msg("请先关联模块后再操作", {
+            layer.msg("请先设置模块权限后再操作", {
                 time: 2000,
                 icon: 5
             });
@@ -165,7 +165,7 @@
         }
         layer.open({
             type: 2,
-            title: '[' + row.name + ']' + '角色按钮列表',
+            title: '[' + row.name + ']' + '按钮权限列表',
             shadeClose: false, //是否点击遮罩关闭
             shade: 0.5, //遮罩透明度
             maxmin: false, //开启最大化最小化按钮
