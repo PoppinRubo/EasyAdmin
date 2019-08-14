@@ -16,6 +16,7 @@ class IndexController extends Controller
     {
         //检测登录状态,已登录不停留在登录页面
         if (getUserAuthentication() == null) {
+            $this->assign('year', date('Y'));
             return View();
         }
         $this->redirect('/home');

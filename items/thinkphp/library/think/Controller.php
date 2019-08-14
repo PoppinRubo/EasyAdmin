@@ -67,6 +67,8 @@ class Controller
         // 控制器初始化
         $this->initialize();
 
+        $this->registerMiddleware();
+
         // 前置操作方法 即将废弃
         foreach ((array) $this->beforeActionList as $method => $options) {
             is_numeric($method) ?
@@ -156,7 +158,7 @@ class Controller
      */
     protected function fetch($template = '', $vars = [], $config = [])
     {
-        return $this->view->fetch($template, $vars, $config);
+        return Response::create($template, 'view')->assign($vars)->config($config);
     }
 
     /**
@@ -169,7 +171,7 @@ class Controller
      */
     protected function display($content = '', $vars = [], $config = [])
     {
-        return $this->view->display($content, $vars, $config);
+        return Response::create($content, 'view')->assign($vars)->config($config)->isContent(true);
     }
 
     /**
