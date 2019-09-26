@@ -1,4 +1,4 @@
-# ThinkAdmin
+# EasyAdmin
 ThinkPHP + LayUI + EasyUI 信息管理系统</br>
 ThinkPHP 版本 5.1.38 </br>
 LayUI    版本 2.5.4  </br>
