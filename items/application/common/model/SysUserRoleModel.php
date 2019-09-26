@@ -1,9 +1,9 @@
 <?php
-namespace app\model;
+namespace app\common\model;
 
 use think\Model;
 
-class SysButtonModel extends Model
+class SysUserRoleModel extends Model
 {
     //主键
     protected $pk = 'Id';

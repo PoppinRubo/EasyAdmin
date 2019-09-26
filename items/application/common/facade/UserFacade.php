@@ -1,7 +1,7 @@
 <?php
-namespace app\facade;
+namespace app\common\facade;
 
-use app\facade\CommonFacade;
+use app\common\facade\CommonFacade;
 use think\facade\Cookie;
 use think\facade\Session;
 
@@ -55,7 +55,7 @@ class UserFacade
                 db()->execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.Id) FROM `sys_user_login_log` AS t2 WHERE t2.UserId IN ({$user['Id']}) AND t2.IsDel=0),LastLoginTime='{$now}' WHERE Id={$user['Id']}");
                 // 提交事务
                 db()->commit();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // 回滚事务
                 db()->rollback();
             }

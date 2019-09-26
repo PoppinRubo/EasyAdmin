@@ -1,8 +1,9 @@
 <?php
-namespace app\facade;
+namespace app\common\facade;
 
-use app\model\SysRoleButtonModel;
-use app\model\SysRoleModuleModel;
+use app\common\facade\ResultFacade;
+use app\common\model\SysRoleButtonModel;
+use app\common\model\SysRoleModuleModel;
 
 class RoleFacade
 {
@@ -11,10 +12,11 @@ class RoleFacade
      */
     public static function relationModule(array $a)
     {
-        $baseResult = new \stdClass();
+        $result = new ResultFacade(config('code.error'));
         try {
             if ($a["roleId"] < 0 || !is_Array(json_decode($a["ids"]))) {
-                return toJsonData(0, null, "参数错误");
+                $result->msg = "参数错误";
+                return $result;
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
@@ -59,12 +61,11 @@ class RoleFacade
             $model = new SysRoleModuleModel();
             //批量操作数据库
             $model->saveAll($data);
-            $baseResult->result = true;
-        } catch (Exception $e) {
-            $baseResult->result = false;
-            $msg->$e->getMessage();
+            $result->code = config('code.success');
+        } catch (\Exception $e) {
+            $result->msg = $e->getMessage();
         }
-        return $baseResult;
+        return $result;
     }
 
     /**
@@ -72,10 +73,11 @@ class RoleFacade
      */
     public static function relationButton(array $a)
     {
-        $baseResult = new \stdClass();
+        $result = new ResultFacade(config('code.error'));
         try {
             if ($a["roleId"] < 0 || $a["moduleId"] < 0 || !is_Array(json_decode($a["ids"]))) {
-                return toJsonData(0, null, "参数错误");
+                $result->msg = "参数错误";
+                return $result;
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
@@ -121,12 +123,11 @@ class RoleFacade
             $model = new SysRoleButtonModel();
             //批量操作数据库
             $model->saveAll($data);
-            $baseResult->result = true;
-        } catch (Exception $e) {
-            $baseResult->result = false;
-            $msg->$e->getMessage();
+            $result->code = config('code.success');
+        } catch (\Exception $e) {
+            $result->msg = $e->getMessage();
         }
-        return $baseResult;
+        return $result;
     }
 
 }

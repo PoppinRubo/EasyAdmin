@@ -1,8 +1,7 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
-use app\model\SysButtonModel;
-use think\Exception;
+use app\common\model\SysButtonModel;
 
 class ButtonController extends BasicController
 {
@@ -29,9 +28,9 @@ class ButtonController extends BasicController
                 $model = new SysButtonModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -53,9 +52,9 @@ class ButtonController extends BasicController
                 $model = new SysButtonModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -77,9 +76,9 @@ class ButtonController extends BasicController
             );
             $model = new SysButtonModel();
             $model->save($data, ['Id' => $id]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -93,7 +92,7 @@ class ButtonController extends BasicController
             $order = input("order") ?: "ASC";
             $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -105,7 +104,7 @@ class ButtonController extends BasicController
         try {
             $list = db('sys_button')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
             if ($list == null) {
-                return toJsonData(0, null, "操作失败,没有按钮");
+                return jsonOut(config('code.error'), "操作失败,没有按钮");
             }
             $sort = 10;
             $data = array();
@@ -118,9 +117,9 @@ class ButtonController extends BasicController
             //批量更新数据
             $model = new SysButtonModel;
             $model->saveAll($data);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 }

@@ -1,15 +1,19 @@
 <?php
-use app\facade\UserFacade;
-use think\facade\Session;
+use app\common\facade\UserFacade;
+
 /**
  * 封装需要的json格式
  * @param $code int 返回的状态码
- * @param null $data 输出数据
  * @param string $msg 返回消息
+ * @param null $data 输出数据
  * @return string
  */
-function toJsonData($code, $data = null, $msg = "")
+function jsonOut($code, $msg = "", $data = null)
 {
+    //是否驼峰小写输出
+    if (empty(config('app.lower_hump'))) {
+        $data = convertLower($data);
+    }
     $result = array(
         "code" => $code,
         "data" => $data,
@@ -19,21 +23,31 @@ function toJsonData($code, $data = null, $msg = "")
 }
 
 /**
- * 对象键名转化首字母小写
- * @param $array 一、二维对象数组
+ * 数组键名转化首字母小写
+ * @param $array 多维对象数组
  * @return array
  */
 function convertLower($array)
 {
+    if ((!is_array($array) && !is_object($array)) || empty($array)) {
+        return $array;
+    }
     //键名转换为首字母小写的驼峰命名
     $o = [];
+    //一维
     foreach ($array as $key => $value) {
         if (!is_array($value)) {
             $o[lcfirst($key)] = $value;
         } else {
             $d = [];
+            //二维
             foreach ($value as $k => $v) {
-                $d[lcfirst($k)] = $v;
+                if (!is_array($v)) {
+                    $d[lcfirst($k)] = $v;
+                } else {
+                    //多维
+                    $d[lcfirst($k)] = convertLower($v);
+                }
             }
             $o[lcfirst($key)] = $d;
         }
@@ -65,29 +79,12 @@ function convertToupper($array)
 }
 
 /**
- * 封装easyui 表格数据
- * @param $array 对象数组
- * @param bool $convert 字段首字母是否转换小写
- * @return string
- */
-function toEasyTable($array, $total = 0, $convert = true, $msg = "")
-{
-
-    $result = array(
-        "total" => is_object($array) ? $array->total() : $total,
-        "rows" => $convert ? convertLower($array) : $array,
-        "msg" => $msg,
-    );
-    echo json_encode($result);
-}
-
-/**
  * 用于验证当前登录状态,返回用户信息
  * @return bool|mixed
  */
 function getUserAuthentication()
 {
-    $user = Session::get('Authentication');
+    $user = session('Authentication');
     $user = empty($user) ? (UserFacade::autoSignIn()) : $user;
     return $user;
 }

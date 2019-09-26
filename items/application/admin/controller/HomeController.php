@@ -1,5 +1,5 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
 class HomeController extends BasicController
 {
@@ -40,7 +40,7 @@ class HomeController extends BasicController
                 );
             }
             echo json_encode($tree);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo json_encode($e->getMessage());
         }
     }

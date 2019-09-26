@@ -1,5 +1,5 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
 class IconController extends BasicController
 {

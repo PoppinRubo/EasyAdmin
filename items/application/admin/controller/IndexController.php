@@ -1,13 +1,10 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
-use app\facade\CommonFacade;
-use app\facade\UserFacade;
+use app\common\facade\CommonFacade;
+use app\common\facade\UserFacade;
 use think\captcha\Captcha;
 use think\Controller;
-use think\Exception;
-use think\facade\Cookie;
-use think\facade\Session;
 
 class IndexController extends Controller
 {
@@ -27,37 +24,37 @@ class IndexController extends Controller
     {
         try {
             if (request()->isGet()) {
-                return toJsonData(0, null, "不被接受的请求", true);
+                return jsonOut(config('code.error'), "不被接受的请求", true);
             }
             if (!$this->checkCaptcha(input('vercode'))) {
-                return toJsonData(0, null, "登录失败,验证码错误或已过期");
+                return jsonOut(config('code.error'), "登录失败,验证码错误或已过期");
             }
             //明文密码加密比对
             $password = md5(input("password"));
             $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
             if ($user == null) {
-                return toJsonData(0, null, "登录失败,账号或密码错误");
+                return jsonOut(config('code.error'), "登录失败,账号或密码错误");
             }
             if ($user['IsDel']) {
-                return toJsonData(0, null, "账号已删除,请联系管理员");
+                return jsonOut(config('code.error'), "账号已删除,请联系管理员");
             }
             if (!$user['IsValid']) {
-                return toJsonData(0, null, "账号无效,请联系管理员");
+                return jsonOut(config('code.error'), "账号无效,请联系管理员");
             }
-            Session::set('Authentication', $user);
+            session('Authentication', $user);
             if (getUserAuthentication() == null) {
-                return toJsonData(0, null, "登录失败,请联系管理员");
+                return jsonOut(config('code.error'), "登录失败,请联系管理员");
             }
             //记住登录
             if (!empty(input('remember'))) {
                 $authentication = CommonFacade::encode(json_encode(array('Id' => $user["Id"], 'Password' => $user["Password"])), 'authentication');
-                Cookie::set('admin_authentication', $authentication, (60 * 60 * 24 * 7));
+                cookie('admin_authentication', $authentication, (60 * 60 * 24 * 7));
             }
             //登录日志
             UserFacade::signInLog("账号密码登录");
-            return toJsonData(1, "/home", "登录成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "登录成功", "/home");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -66,29 +63,29 @@ class IndexController extends Controller
     {
         try {
             if (request()->isGet()) {
-                return toJsonData(0, null, "不被接受的请求", true);
+                return jsonOut(config('code.error'), "不被接受的请求", true);
             }
             //明文密码加密比对
             $password = md5(input("password"));
             $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
             if ($user == null) {
-                return toJsonData(0, null, "登录失败,账号或密码错误");
+                return jsonOut(config('code.error'), "登录失败,账号或密码错误");
             }
             if ($user['IsDel']) {
-                return toJsonData(0, null, "账号已删除,请联系管理员");
+                return jsonOut(config('code.error'), "账号已删除,请联系管理员");
             }
             if (!$user['IsValid']) {
-                return toJsonData(0, null, "账号无效,请联系管理员");
+                return jsonOut(config('code.error'), "账号无效,请联系管理员");
             }
-            Session::set('Authentication', $user);
+            session('Authentication', $user);
             if (getUserAuthentication() == null) {
-                return toJsonData(0, null, "登录失败,请联系管理员");
+                return jsonOut(config('code.error'), "登录失败,请联系管理员");
             }
             //登录日志
             UserFacade::signInLog("账号密码登录");
-            return toJsonData(1, null, "登录成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "登录成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -126,18 +123,18 @@ class IndexController extends Controller
         try {
             if (!empty(getUserAuthentication())) {
                 //删除登录信息session
-                Session::delete("Authentication");
+                session("Authentication", null);
                 //删除记住登录cookie记录
-                Cookie::delete('admin_authentication');
+                cookie('admin_authentication', null);
                 if (!empty(getUserAuthentication())) {
-                    return toJsonData(0, null, "退出时出现问题，请稍后重试！");
+                    return jsonOut(config('code.error'), "退出时出现问题，请稍后重试！");
                 }
-                return toJsonData(1, "/", "退出成功");
+                return jsonOut(config('code.success'), "退出成功", "/");
             } else {
-                return toJsonData(1, "/", "退出成功");
+                return jsonOut(config('code.success'), "退出成功", "/");
             }
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 }

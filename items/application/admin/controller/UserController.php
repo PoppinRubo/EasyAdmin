@@ -1,10 +1,9 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
-use app\facade\UserFacade;
-use app\model\SysUserModel;
-use app\model\SysUserRoleModel;
-use think\Exception;
+use app\common\facade\UserFacade;
+use app\common\model\SysUserModel;
+use app\common\model\SysUserRoleModel;
 
 class UserController extends BasicController
 {
@@ -31,14 +30,14 @@ class UserController extends BasicController
                 $data["ModifyTime"] = $data["CreateTime"];
                 $data["ModifyUser"] = $data["CreateUser"];
                 if (UserFacade::isExist($data["Account"])) {
-                    return toJsonData(0, null, "账号已存在");
+                    return jsonOut(config('code.error'), "账号已存在");
                 }
                 $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -60,9 +59,9 @@ class UserController extends BasicController
                 $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -84,9 +83,9 @@ class UserController extends BasicController
             );
             $model = new SysUserModel();
             $model->save($data, ['Id' => $id]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -98,7 +97,7 @@ class UserController extends BasicController
             $key = input("key") ?: "";
             $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -115,22 +114,22 @@ class UserController extends BasicController
                 $data["ModifyUser"] = $this->user["Id"];
                 $user = db('sys_user')->where(array("Id" => $this->user["Id"]))->find();
                 if ($user == null) {
-                    return toJsonData(0, null, "获取当前登录用户失败");
+                    return jsonOut(config('code.error'), "获取当前登录用户失败");
                 }
                 if (md5($data["OldPassword"]) != $user["Password"]) {
-                    return toJsonData(0, null, "旧密码不正确");
+                    return jsonOut(config('code.error'), "旧密码不正确");
                 }
                 if ($data["NewPassword"] != $data["Password"]) {
-                    return toJsonData(0, null, "新密码与确认密码不一致");
+                    return jsonOut(config('code.error'), "新密码与确认密码不一致");
                 }
                 //密码md5加密
                 $data["Password"] = md5($data["Password"]);
                 $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $this->user["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         return View();
@@ -144,7 +143,7 @@ class UserController extends BasicController
             try {
                 $userId = input("userId");
                 if (empty($userId) || $userId <= 0) {
-                    return toJsonData(0, null, "参数错误");
+                    return jsonOut(config('code.error'), "参数错误");
                 }
                 $data = array(
                     "Id" => $userId,
@@ -155,12 +154,12 @@ class UserController extends BasicController
                 $model = new SysUserModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $userId]);
-                return toJsonData(1, null, "密码已重置为 666666");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "密码已重置为 666666");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
-        return toJsonData(0, null, "不被接受的请求");
+        return jsonOut(config('code.error'), "不被接受的请求");
     }
 
     //用户角色列表 View
@@ -182,7 +181,7 @@ class UserController extends BasicController
             FROM sys_role AS t1 LEFT JOIN sys_user_role AS t2 ON(t2.UserId={$userId} AND t2.RoleId=t1.Id AND t2.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -194,7 +193,7 @@ class UserController extends BasicController
             $userId = input("userId") ?: 0;
             $roleId = input("roleId") ?: 0;
             if ($userId < 0 || $roleId < 0) {
-                return toJsonData(0, null, "参数错误");
+                return jsonOut(config('code.error'), "参数错误");
             }
             $model = new SysUserRoleModel();
             $data = db('sys_user_role')->where(array("UserId" => $userId, "RoleId" => $roleId))->find();
@@ -208,7 +207,7 @@ class UserController extends BasicController
                     "ModifyTime" => date("Y-m-d H:i:s"),
                     "ModifyUser" => $this->user["Id"],
                 ));
-                return toJsonData(1, null, "操作成功");
+                return jsonOut(config('code.success'), "操作成功");
             }
             //更新可用状态
             $data['IsValid'] = 1;
@@ -216,9 +215,9 @@ class UserController extends BasicController
             $data["ModifyTime"] = date("Y-m-d H:i:s");
             $data["ModifyUser"] = $this->user["Id"];
             $model->save($data, ['Id' => $data['Id']]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -229,12 +228,12 @@ class UserController extends BasicController
             $userId = input("userId") ?: 0;
             $roleId = input("roleId") ?: 0;
             if ($userId < 0 || $roleId < 0) {
-                return toJsonData(0, null, "参数错误");
+                return jsonOut(config('code.error'), "参数错误");
             }
             $model = new SysUserRoleModel();
             $data = db('sys_user_role')->where(array("UserId" => $userId, "RoleId" => $roleId))->find();
             if ($data == null) {
-                return toJsonData(0, null, "未找到关联数据,无法删除关联");
+                return jsonOut(config('code.error'), "未找到关联数据,无法删除关联");
             }
             //恢复可用状态
             $data['IsValid'] = 0;
@@ -242,9 +241,9 @@ class UserController extends BasicController
             $data["ModifyTime"] = date("Y-m-d H:i:s");
             $data["ModifyUser"] = $this->user["Id"];
             $model->save($data, ['Id' => $data['Id']]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 }

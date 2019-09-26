@@ -1,9 +1,8 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
-use app\facade\RoleFacade;
-use app\model\SysRoleModel;
-use think\Exception;
+use app\common\facade\RoleFacade;
+use app\common\model\SysRoleModel;
 
 class RoleController extends BasicController
 {
@@ -30,9 +29,9 @@ class RoleController extends BasicController
                 $model = new SysRoleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -54,9 +53,9 @@ class RoleController extends BasicController
                 $model = new SysRoleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -78,9 +77,9 @@ class RoleController extends BasicController
             );
             $model = new SysRoleModel();
             $model->save($data, ['Id' => $id]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -92,7 +91,7 @@ class RoleController extends BasicController
             $key = input("key") ?: "";
             $data = db('sys_role')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->paginate($limit);
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -104,7 +103,7 @@ class RoleController extends BasicController
         try {
             $list = db('sys_role')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
             if ($list == null) {
-                return toJsonData(0, null, "操作失败,没有角色");
+                return jsonOut(config('code.error'), "操作失败,没有角色");
             }
             $sort = 10;
             $data = array();
@@ -117,9 +116,9 @@ class RoleController extends BasicController
             //批量更新数据
             $model = new SysRoleModel();
             $model->saveAll($data);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -153,7 +152,7 @@ class RoleController extends BasicController
                 }
             }
             return toEasyTable($tree, false);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -172,7 +171,7 @@ class RoleController extends BasicController
                 }
             }
             return $data;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [];
         }
     }
@@ -188,12 +187,12 @@ class RoleController extends BasicController
                 "operaterId" => $this->user["Id"],
             );
             $result = RoleFacade::relationModule($array);
-            if ($result->result) {
-                return toJsonData(1, null, "操作成功");
+            if ($result->code) {
+                return jsonOut(config('code.success'), "操作成功");
             }
-            return toJsonData(0, null, $result->msg);
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.error'), $result->msg);
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -218,7 +217,7 @@ class RoleController extends BasicController
             LEFT JOIN sys_role_button AS t3 ON(t3.RoleId={$roleId} AND t3.ModuleId=t2.ModuleId AND t3.ButtonId=t2.ButtonId AND t3.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -235,12 +234,12 @@ class RoleController extends BasicController
                 "operaterId" => $this->user["Id"],
             );
             $result = RoleFacade::relationButton($array);
-            if ($result->result) {
-                return toJsonData(1, null, "操作成功");
+            if ($result->code) {
+                return jsonOut(config('code.success'), "操作成功");
             }
-            return toJsonData(0, null, $result->msg);
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.error'), $result->msg);
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 

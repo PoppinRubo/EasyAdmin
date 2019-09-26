@@ -1,9 +1,8 @@
 <?php
-namespace app\controller;
+namespace app\admin\controller;
 
-use app\facade\ModuleFacade;
-use app\model\SysModuleModel;
-use think\Exception;
+use app\common\facade\ModuleFacade;
+use app\common\model\SysModuleModel;
 
 class ModuleController extends BasicController
 {
@@ -30,9 +29,9 @@ class ModuleController extends BasicController
                 $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -56,9 +55,9 @@ class ModuleController extends BasicController
                 $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -83,9 +82,9 @@ class ModuleController extends BasicController
                 $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->allowField(true)->save($data, ['Id' => $data["Id"]]);
-                return toJsonData(1, null, "操作成功");
-            } catch (Exception $e) {
-                return toJsonData(0, null, $e->getMessage());
+                return jsonOut(config('code.success'), "操作成功");
+            } catch (\Exception $e) {
+                return jsonOut(config('code.error'), $e->getMessage());
             }
         }
         //输出页面
@@ -106,9 +105,9 @@ class ModuleController extends BasicController
             );
             $model = new SysModuleModel();
             $model->save($data, ['Id' => $id]);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -133,7 +132,7 @@ class ModuleController extends BasicController
             }
             $data = (bool) input("root") ? array(array('id' => 0, 'name' => '根目录', 'children' => $tree)) : $tree;
             return toEasyTable($data, false);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false);
         }
     }
@@ -152,7 +151,7 @@ class ModuleController extends BasicController
                 }
             }
             return $data;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return [];
         }
     }
@@ -176,7 +175,7 @@ class ModuleController extends BasicController
             FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -192,12 +191,12 @@ class ModuleController extends BasicController
                 "operaterId" => $this->user["Id"],
             );
             $result = ModuleFacade::relationButton($array);
-            if ($result->result) {
-                return toJsonData(1, null, "操作成功");
+            if ($result->code) {
+                return jsonOut(config('code.success'), "操作成功");
             }
-            return toJsonData(0, null, $result->msg);
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.error'), $result->msg);
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 
@@ -208,7 +207,7 @@ class ModuleController extends BasicController
         try {
             $list = db('sys_module')->where(array("IsDel" => 0))->order("Sort", "ASC")->select();
             if ($list == null) {
-                return toJsonData(0, null, "操作失败,没有按模块");
+                return jsonOut(config('code.error'), "操作失败,没有按模块");
             }
             $data = array();
             $sort = array();
@@ -223,9 +222,9 @@ class ModuleController extends BasicController
             //批量更新数据
             $model = new SysModuleModel;
             $model->saveAll($data);
-            return toJsonData(1, null, "操作成功");
-        } catch (Exception $e) {
-            return toJsonData(0, null, $e->getMessage());
+            return jsonOut(config('code.success'), "操作成功");
+        } catch (\Exception $e) {
+            return jsonOut(config('code.error'), $e->getMessage());
         }
     }
 }

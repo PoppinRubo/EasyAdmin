@@ -1,5 +1,5 @@
 <?php
-namespace app\facade;
+namespace app\common\facade;
 
 class CommonFacade
 {
