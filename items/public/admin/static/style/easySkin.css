@@ -137,7 +137,7 @@ table .tree-expanded:before {
     padding: 20px 10px 20px 30px;
     border: 1px solid #d3d4d3;
     box-shadow: none;
-    background-image: url(/static/layui/css/modules/layer/default/loading-2.gif);
+    background-image: url(/admin/static/layui/css/modules/layer/default/loading-2.gif);
     background-size: 20px
 }
 
