@@ -6,10 +6,12 @@ use think\facade\Request;
 
 class BasicController extends Controller
 {
-    /*
-     *当前登录用户
-     */
+
+    //当前登录用户
     protected $user;
+
+    //访问标识
+    protected $accessToken;
 
     /**
      * 构造函数
@@ -18,6 +20,13 @@ class BasicController extends Controller
     {
         //防止构造函数覆盖了父类的构造函数,调用一下父类的构造函数
         parent::__construct();
+
+        //访问标识
+        $this->accessToken = (string) cookie("AdminAccessToken");
+        if (empty($this->accessToken)) {
+            $this->accessToken = strtoupper(md5(uniqid(microtime(true), true)));
+            cookie("AdminAccessToken", $this->accessToken, 60 * 60 * 24 * 366);
+        }
 
         //检测登录状态
         $this->user = getUserAuthentication();
@@ -35,6 +44,24 @@ class BasicController extends Controller
                 $this->redirect("/");
             }
         }
+    }
+
+    /**
+     * 用于验证当前登录状态,返回用户信息
+     * @return bool|mixed
+     */
+    protected function getUser()
+    {
+        $user = cache('user.' . $this->accessToken);
+        return $user;
+    }
+
+    /**
+     * 设置用户登录信息
+     */
+    protected function setUser($user, $day = 7)
+    {
+        cache('user.' . $this->accessToken, $user, 60 * 60 * 24 * $day);
     }
 
     /**
