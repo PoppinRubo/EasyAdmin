@@ -32,6 +32,11 @@
     });
 });
 
+/**
+ * 框架下的全局变量设置
+ */
+window.admin = window.admin || parent.window.admin;
+
 /*
  * 请求助手
  */
@@ -308,10 +313,11 @@ $(document).ajaxSuccess(function (event, xhr, options) {
                 area: ['380px', '240px'],
                 content: html
             });
+            $.cookie('expire', true);
             $("#again-login").click(function () {
                 var form = $(this).parent();
                 askHelper.ajaxPost({
-                    url: "/index/againSignIn",
+                    url: window.admin.ajaxUrl + '/index/signIn',
                     data: {
                         account: form.find("#account").val(),
                         password: form.find("#password").val()

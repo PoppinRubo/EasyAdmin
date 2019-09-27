@@ -7,7 +7,10 @@ class HomeController extends BasicController
     public function index()
     {
         $user = $this->user;
-        $this->assign(['user' => $user]);
+        $this->assign([
+            'user' => $user,
+            'ajaxUrl' => config('app.admin_ajax_url') ?? '',
+        ]);
         return View();
     }
 

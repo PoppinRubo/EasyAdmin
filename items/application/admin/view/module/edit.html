@@ -13,25 +13,29 @@
         <div class="layui-form-item">
             <label class="layui-form-label">模块名</label>
             <div class="layui-input-block">
-                <input type="text" name="name" value="{$model.name}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="name" value="{$model.name}" data-auto="true" lay-verify="required"
+                    autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">模块链接</label>
             <div class="layui-input-block">
-                <input type="text" name="link" value="{$model.link}" data-auto="true" autocomplete="off" class="layui-input">
+                <input type="text" name="link" value="{$model.link}" data-auto="true" autocomplete="off"
+                    class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">模块图标</label>
             <div class="layui-input-block">
-                <input type="text" name="icon" value="{$model.icon}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="icon" value="{$model.icon}" data-auto="true" lay-verify="required"
+                    autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
-                <input type="number" name="sort" value="{$model.sort}" data-auto="true" autocomplete="off" class="layui-input">
+                <input type="number" name="sort" value="{$model.sort}" data-auto="true" autocomplete="off"
+                    class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -48,14 +52,14 @@
         </div>
     </form>
     <script>
-        layui.use(['form'], function() {
+        layui.use(['form'], function () {
             var form = layui.form;
             //监听提交
-            form.on('submit(submit)', function(data) {
+            form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: '/module/edit',
+                    url: window.admin.ajaxUrl + '/module/edit',
                     data: data.field,
-                    success: function() {
+                    success: function () {
                         //表格刷新
                         window.parent.$('#data-table').treegrid('reload');
                         //窗口关闭

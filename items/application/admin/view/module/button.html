@@ -41,7 +41,7 @@
     var moduleId = '<?php echo $_GET["moduleId"]?>';
     //easyUi 表格
     $('#data-table').datagrid({
-        url: '/module/getModuleButtonList?moduleId=' + moduleId, //数据接口
+        url: window.admin.ajaxUrl + '/module/getModuleButtonList?moduleId=' + moduleId, //数据接口
         singleSelect: false, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -61,7 +61,7 @@
                     title: '是否关联',
                     width: 80,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
                 }
@@ -79,13 +79,13 @@
             return;
         }
         var ids = [];
-        rows.forEach(function(v, i, a) {
+        rows.forEach(function (v, i, a) {
             ids.push(v.id);
         })
         askHelper.ajaxPost({
-            url: '/module/relationButton',
+            url: window.admin.ajaxUrl + '/module/relationButton',
             data: { ids: JSON.stringify(ids), moduleId: moduleId, isRelation: isRelation },
-            success: function() {
+            success: function () {
                 //清除选中项
                 $('#data-table').treegrid('clearSelections');
                 tableHelper.refresh('data-table');

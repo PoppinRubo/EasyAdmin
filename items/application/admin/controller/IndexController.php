@@ -11,7 +11,10 @@ class IndexController extends BasicController
     {
         //检测登录状态,已登录不停留在登录页面
         if (empty($this->user)) {
-            $this->assign('year', date('Y'));
+            $this->assign([
+                'year' => date('Y'),
+                'ajaxUrl' => config('app.admin_ajax_url') ?? '',
+            ]);
             return View();
         }
         $this->redirect('/home');
@@ -24,9 +27,13 @@ class IndexController extends BasicController
             if (request()->isGet()) {
                 return jsonOut(config('code.error'), "不被接受的请求");
             }
-            if (!$this->checkCaptcha(input('vercode'))) {
-                return jsonOut(config('code.error'), "登录失败,验证码错误或已过期");
+            //过期登录免验证码
+            if (empty(cookie('expire'))) {
+                if (!$this->checkCaptcha(input('vercode'))) {
+                    return jsonOut(config('code.error'), "登录失败,验证码错误或已过期");
+                }
             }
+            cookie('expire', null);
             //明文密码加密比对
             $password = md5(input("password"));
             $user = db('sys_user')->where(["Account" => input("account"), "Password" => $password])->find();

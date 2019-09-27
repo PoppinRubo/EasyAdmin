@@ -30,7 +30,7 @@
     var userId = '<?php echo $_GET["userId"]?>';
     //easyUi 表格
     $('#data-table').datagrid({
-        url: '/user/getUserRoleList?userId=' + userId, //数据接口
+        url: window.admin.ajaxUrl + '/user/getUserRoleList?userId=' + userId, //数据接口
         singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -50,7 +50,7 @@
                     title: '是否设置角色',
                     width: 85,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
                 },
@@ -59,7 +59,7 @@
                     title: '操作',
                     width: 80,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
                         var button = { relation: ['设置角色', 1] };
                         if (row.isRelation) {
@@ -77,9 +77,9 @@
     //添加关联
     function relation(row) {
         askHelper.ajaxPost({
-            url: '/user/relationRole',
+            url: window.admin.ajaxUrl + '/user/relationRole',
             data: { userId: row.userId, roleId: row.id },
-            success: function() {
+            success: function () {
                 tableHelper.refresh('data-table');
             }
         });
@@ -88,9 +88,9 @@
     //删除关联
     function delRelation(row) {
         askHelper.ajaxPost({
-            url: '/user/delRelationRole',
+            url: window.admin.ajaxUrl + '/user/delRelationRole',
             data: { userId: row.userId, roleId: row.id },
-            success: function() {
+            success: function () {
                 tableHelper.refresh('data-table');
             }
         });

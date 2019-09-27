@@ -5,4 +5,6 @@
 return [
     //Json是否驼峰小写输出
     'lower_hump' => true,
+    //ajax 请求数据根目录，非单应用路由设置为模块路径 /admin
+    'admin_ajax_url' => '',
 ];

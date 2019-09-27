@@ -41,7 +41,7 @@
 <script type="text/javascript">
     //easyUi 表格树
     $('#data-table').treegrid({
-        url: '/module/getModuleList', //数据接口
+        url: window.admin.ajaxUrl + '/module/getModuleList', //数据接口
         singleSelect: true, //行单选
         idField: 'id', //定义标识树节点的键字段
         treeField: 'name', //定义树节点字段
@@ -158,7 +158,7 @@
             return;
         }
         askHelper.ajaxConfirm({
-            url: '/module/remove',
+            url: window.admin.ajaxUrl + '/module/remove',
             data: { id: row.id },
             msg: "确认删除吗"
         });
@@ -167,7 +167,7 @@
     //自动排序
     function sorting() {
         askHelper.ajaxConfirm({
-            url: '/module/sorting',
+            url: window.admin.ajaxUrl + '/module/sorting',
             msg: "将当前排序依次设置为间隔为10的排序,确定继续"
         });
     }

@@ -33,7 +33,7 @@ class BasicController extends Controller
         //登录检测，
         if (empty($this->user)) {
             //过滤登录页
-            if (request()->module() != 'admin' && request()->action() != 'index') {
+            if (request()->controller() != 'Index') {
                 if (request()->isPost()) {
                     //Post请求返回登录过期信息
                     echo json_encode(array(

@@ -11,13 +11,15 @@
         <div class="layui-form-item">
             <label class="layui-form-label">角色名称</label>
             <div class="layui-input-block">
-                <input type="text" name="name" value="{$model.name}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="text" name="name" value="{$model.name}" data-auto="true" lay-verify="required"
+                    autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">序号</label>
             <div class="layui-input-block">
-                <input type="number" name="sort" value="{$model.sort}" data-auto="true" lay-verify="required" autocomplete="off" class="layui-input">
+                <input type="number" name="sort" value="{$model.sort}" data-auto="true" lay-verify="required"
+                    autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -42,12 +44,12 @@
     <script>
         //表单渲染
         layui.form.render();
-        layui.use(['form'], function() {
+        layui.use(['form'], function () {
             var form = layui.form;
             //监听提交
-            form.on('submit(submit)', function(data) {
+            form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: '/role/edit',
+                    url: window.admin.ajaxUrl + '/role/edit',
                     data: data.field
                 });
 

@@ -11,7 +11,7 @@
         home = {
             tree: function () {
                 $('#menu-tree').tree({
-                    url: "/home/getMenuTree",
+                    url: window.admin.ajaxUrl + '/home/getMenuTree',
                     method: "post",
                     animate: true,
                     onBeforeLoad: function (node) {
@@ -250,7 +250,7 @@
                 //退出登录
                 askHelper.ajaxConfirm({
                     msg: "确定退出系统吗",
-                    url: '/index/signOut',
+                    url: window.admin.ajaxUrl + '/index/signOut',
                     success: function (result) {
                         window.location.href = result.data;
                     }

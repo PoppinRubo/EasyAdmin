@@ -41,7 +41,7 @@
 <script type="text/javascript">
     //easyUi 表格
     $('#data-table').datagrid({
-        url: '/role/getRoleList', //数据接口
+        url: window.admin.ajaxUrl + '/role/getRoleList', //数据接口
         singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -62,7 +62,7 @@
                     title: '是否有效',
                     width: 100,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
                 },
@@ -112,7 +112,7 @@
             return;
         }
         askHelper.ajaxConfirm({
-            url: '/role/remove',
+            url: window.admin.ajaxUrl + '/role/remove',
             data: { id: row.id },
             msg: "确认删除吗"
         });
@@ -139,7 +139,7 @@
     //自动排序
     function sorting() {
         askHelper.ajaxConfirm({
-            url: '/role/sorting',
+            url: window.admin.ajaxUrl + '/role/sorting',
             msg: "将当前排序依次设置为间隔为10的排序,确定继续"
         });
     }

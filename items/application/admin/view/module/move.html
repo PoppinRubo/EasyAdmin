@@ -32,14 +32,14 @@
         </div>
     </form>
     <script>
-        layui.use(['form'], function() {
+        layui.use(['form'], function () {
             var form = layui.form;
             //监听提交
-            form.on('submit(submit)', function(data) {
+            form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: '/module/move',
+                    url: window.admin.ajaxUrl + '/module/move',
                     data: data.field,
-                    success: function() {
+                    success: function () {
                         //表格刷新
                         window.parent.$('#data-table').treegrid('reload');
                         //窗口关闭

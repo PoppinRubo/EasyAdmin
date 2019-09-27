@@ -40,7 +40,7 @@
     <script type="text/javascript">
         //easyUi 表格
         $('#data-table').datagrid({
-            url: '/button/getButtonList', //数据接口
+            url: window.admin.ajaxUrl + '/button/getButtonList', //数据接口
             singleSelect: true, //行单选
             height: tableHelper.setHeight(),
             toolbar: '#toolbar', //表格工具条
@@ -122,7 +122,7 @@
                 return;
             }
             askHelper.ajaxConfirm({
-                url: '/button/remove',
+                url: window.admin.ajaxUrl + '/button/remove',
                 data: { id: row.id },
                 msg: "确认删除吗"
             });
@@ -131,7 +131,7 @@
         //自动排序
         function sorting() {
             askHelper.ajaxConfirm({
-                url: '/button/sorting',
+                url: window.admin.ajaxUrl + '/button/sorting',
                 msg: "将当前排序依次设置为间隔为10的排序,确定继续"
             });
         }

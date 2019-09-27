@@ -41,7 +41,7 @@
 <script type="text/javascript">
     //easyUi 表格
     $('#data-table').datagrid({
-        url: '/user/getUserList', //数据接口
+        url: window.admin.ajaxUrl + '/user/getUserList', //数据接口
         singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -62,7 +62,7 @@
                     title: '是否有效',
                     width: 100,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                     }
                 },
@@ -72,7 +72,7 @@
                     title: '最后登录时间',
                     width: 170,
                     align: 'center',
-                    formatter: function(value, row) {
+                    formatter: function (value, row) {
                         return !value ? "尚未登录" : value;
                     }
                 },
@@ -122,9 +122,9 @@
             return;
         }
         askHelper.ajaxPost({
-            url: '/user/resetPassword',
+            url: window.admin.ajaxUrl + '/user/resetPassword',
             data: { userId: row.id },
-            success: function() {}
+            success: function () { }
         });
     }
 
@@ -136,7 +136,7 @@
             return;
         }
         askHelper.ajaxConfirm({
-            url: '/user/remove',
+            url: window.admin.ajaxUrl + '/user/remove',
             data: { id: row.id },
             msg: "确认删除吗"
         });
