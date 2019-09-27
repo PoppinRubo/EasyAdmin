@@ -6,12 +6,8 @@ class HomeController extends BasicController
     //系统主页 view
     public function index()
     {
-        $user = getUserAuthentication();
-        $this->assign(
-            array(
-                'user' => $user,
-            )
-        );
+        $user = $this->user;
+        $this->assign(['user' => $user]);
         return View();
     }
 

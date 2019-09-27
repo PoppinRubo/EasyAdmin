@@ -28,20 +28,24 @@ class BasicController extends Controller
             cookie("AdminAccessToken", $this->accessToken, 60 * 60 * 24 * 366);
         }
 
-        //检测登录状态
-        $this->user = getUserAuthentication();
-        if ($this->user == null) {
-            if (request()->isPost()) {
-                //Post请求返回登录过期信息
-                echo json_encode(array(
-                    "rows" => 0,
-                    "code" => 403,
-                    "msg" => "当前登录账号已过期，请重新登录",
-                ));
-                exit();
-            } else {
-                //其他请求跳登录页面
-                $this->redirect("/");
+        //获取当前登录用户
+        $this->user = $this->getUser();
+        //登录检测，
+        if (empty($this->user)) {
+            //过滤登录页
+            if (request()->module() != 'admin' && request()->action() != 'index') {
+                if (request()->isPost()) {
+                    //Post请求返回登录过期信息
+                    echo json_encode(array(
+                        "rows" => 0,
+                        "code" => 403,
+                        "msg" => "当前登录账号已过期，请重新登录",
+                    ));
+                    exit();
+                } else {
+                    //其他请求跳登录页面
+                    $this->redirect("/");
+                }
             }
         }
     }
@@ -59,7 +63,7 @@ class BasicController extends Controller
     /**
      * 设置用户登录信息
      */
-    protected function setUser($user, $day = 7)
+    protected function setUser($user, $day = 1)
     {
         cache('user.' . $this->accessToken, $user, 60 * 60 * 24 * $day);
     }

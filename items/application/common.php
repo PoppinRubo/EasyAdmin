@@ -1,6 +1,4 @@
 <?php
-use app\common\facade\UserFacade;
-
 /**
  * 封装需要的json格式
  * @param $code int 返回的状态码
@@ -76,17 +74,6 @@ function convertToupper($array)
         }
     }
     return $o;
-}
-
-/**
- * 用于验证当前登录状态,返回用户信息
- * @return bool|mixed
- */
-function getUserAuthentication()
-{
-    $user = session('Authentication');
-    $user = empty($user) ? (UserFacade::autoSignIn()) : $user;
-    return $user;
 }
 
 /**

@@ -1,7 +1,7 @@
 /*
 MySQL Backup
 Database: admin
-Backup Time: 2019-07-17 00:27:22
+Backup Time: 2019-09-27 23:26:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -116,7 +116,6 @@ CREATE TABLE `sys_user_login_log` (
   `Id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `Ip` varchar(255) NOT NULL DEFAULT '' COMMENT '登录IP地址',
   `UserId` varchar(50) NOT NULL COMMENT '用户编号',
-  `Remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注信息',
   `CreateTime` datetime NOT NULL COMMENT '创建时间',
   `IsDel` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`Id`)

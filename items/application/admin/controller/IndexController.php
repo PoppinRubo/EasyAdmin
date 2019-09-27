@@ -1,18 +1,16 @@
 <?php
 namespace app\admin\controller;
 
-use app\common\facade\CommonFacade;
 use app\common\facade\UserFacade;
 use think\captcha\Captcha;
-use think\Controller;
 
-class IndexController extends Controller
+class IndexController extends BasicController
 {
     //登录 view
     public function index()
     {
         //检测登录状态,已登录不停留在登录页面
-        if (getUserAuthentication() == null) {
+        if (empty($this->user)) {
             $this->assign('year', date('Y'));
             return View();
         }
@@ -24,15 +22,15 @@ class IndexController extends Controller
     {
         try {
             if (request()->isGet()) {
-                return jsonOut(config('code.error'), "不被接受的请求", true);
+                return jsonOut(config('code.error'), "不被接受的请求");
             }
             if (!$this->checkCaptcha(input('vercode'))) {
                 return jsonOut(config('code.error'), "登录失败,验证码错误或已过期");
             }
             //明文密码加密比对
             $password = md5(input("password"));
-            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
-            if ($user == null) {
+            $user = db('sys_user')->where(["Account" => input("account"), "Password" => $password])->find();
+            if (empty($user)) {
                 return jsonOut(config('code.error'), "登录失败,账号或密码错误");
             }
             if ($user['IsDel']) {
@@ -41,49 +39,18 @@ class IndexController extends Controller
             if (!$user['IsValid']) {
                 return jsonOut(config('code.error'), "账号无效,请联系管理员");
             }
-            session('Authentication', $user);
-            if (getUserAuthentication() == null) {
-                return jsonOut(config('code.error'), "登录失败,请联系管理员");
-            }
-            //记住登录
+            //登录过期时间默认3天
+            $day = 3;
+            //记住登录状态
             if (!empty(input('remember'))) {
-                $authentication = CommonFacade::encode(json_encode(array('Id' => $user["Id"], 'Password' => $user["Password"])), 'authentication');
-                cookie('admin_authentication', $authentication, (60 * 60 * 24 * 7));
+                //记住30天
+                $day = 30;
             }
+            //记录登录信息
+            $this->setUser($user, $day);
             //登录日志
-            UserFacade::signInLog("账号密码登录");
+            UserFacade::signInLog($user['Id']);
             return jsonOut(config('code.success'), "登录成功", "/home");
-        } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
-        }
-    }
-
-    //过期再次登录
-    public function againSignIn()
-    {
-        try {
-            if (request()->isGet()) {
-                return jsonOut(config('code.error'), "不被接受的请求", true);
-            }
-            //明文密码加密比对
-            $password = md5(input("password"));
-            $user = db('sys_user')->where(array("Account" => input("account"), "Password" => $password))->find();
-            if ($user == null) {
-                return jsonOut(config('code.error'), "登录失败,账号或密码错误");
-            }
-            if ($user['IsDel']) {
-                return jsonOut(config('code.error'), "账号已删除,请联系管理员");
-            }
-            if (!$user['IsValid']) {
-                return jsonOut(config('code.error'), "账号无效,请联系管理员");
-            }
-            session('Authentication', $user);
-            if (getUserAuthentication() == null) {
-                return jsonOut(config('code.error'), "登录失败,请联系管理员");
-            }
-            //登录日志
-            UserFacade::signInLog("账号密码登录");
-            return jsonOut(config('code.success'), "登录成功");
         } catch (\Exception $e) {
             return jsonOut(config('code.error'), $e->getMessage());
         }
@@ -121,18 +88,11 @@ class IndexController extends Controller
     public function signOut()
     {
         try {
-            if (!empty(getUserAuthentication())) {
-                //删除登录信息session
-                session("Authentication", null);
-                //删除记住登录cookie记录
-                cookie('admin_authentication', null);
-                if (!empty(getUserAuthentication())) {
-                    return jsonOut(config('code.error'), "退出时出现问题，请稍后重试！");
-                }
-                return jsonOut(config('code.success'), "退出成功", "/");
-            } else {
-                return jsonOut(config('code.success'), "退出成功", "/");
+            if (!empty($this->user)) {
+                //删除登录信息
+                $this->setUser(null);
             }
+            return jsonOut(config('code.success'), "退出成功", "/");
         } catch (\Exception $e) {
             return jsonOut(config('code.error'), $e->getMessage());
         }
