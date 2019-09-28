@@ -9,7 +9,7 @@
 function jsonOut($code, $msg = "", $data = null)
 {
     //是否驼峰小写输出
-    if (empty(config('app.lower_hump'))) {
+    if (!empty(config('app.lower_hump'))) {
         $data = convertLower($data);
     }
     $result = array(
