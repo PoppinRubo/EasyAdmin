@@ -41,7 +41,7 @@ class UserController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysUser');
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 
@@ -65,7 +65,7 @@ class UserController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysUserModel::get($id)->getData();
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 

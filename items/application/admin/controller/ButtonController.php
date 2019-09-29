@@ -34,7 +34,7 @@ class ButtonController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysButton');
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 
@@ -58,7 +58,7 @@ class ButtonController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysButtonModel::get($id)->getData();
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 

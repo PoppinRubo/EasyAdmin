@@ -37,7 +37,7 @@ class ModuleController extends BasicController
         $model = getEmptyModel('SysModule');
         $model["Pid"] = input("pid") ?: 0;
         $model["Level"] = (input("level") ?: 0) + 1;
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 
@@ -61,7 +61,7 @@ class ModuleController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysModuleModel::get($id)->getData();
-        $this->assign('model', convertLower($model));
+        $this->assign('model', $model);
         return View();
     }
 
