@@ -19,8 +19,7 @@ class ButtonController extends BasicController
         //数据请求
         if (request()->isPost()) {
             try {
-                //首字母还原为大写
-                $data = convertToupper(input());
+                $data = input();
                 $data["CreateTime"] = date("Y-m-d H:i:s");
                 $data["CreateUser"] = $this->user["Id"];
                 $data["ModifyTime"] = $data["CreateTime"];
@@ -45,8 +44,7 @@ class ButtonController extends BasicController
         //数据请求
         if (request()->isPost()) {
             try {
-                //首字母还原为大写
-                $data = convertToupper(input());
+                $data = input();
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysButtonModel();

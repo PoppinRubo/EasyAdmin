@@ -21,8 +21,7 @@ class UserController extends BasicController
         //数据请求
         if (request()->isPost()) {
             try {
-                //首字母还原为大写
-                $data = convertToupper(input());
+                $data = input();
                 //密码md5加密
                 $data["Password"] = md5($data["Password"]);
                 $data["CreateTime"] = date("Y-m-d H:i:s");
@@ -52,8 +51,7 @@ class UserController extends BasicController
         //数据请求
         if (request()->isPost()) {
             try {
-                //首字母还原为大写
-                $data = convertToupper(input());
+                $data = input();
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $model = new SysUserModel();
@@ -108,8 +106,7 @@ class UserController extends BasicController
         //数据请求
         if (request()->isPost()) {
             try {
-                //首字母还原为大写
-                $data = convertToupper(input());
+                $data = input();
                 $data["ModifyTime"] = date("Y-m-d H:i:s");
                 $data["ModifyUser"] = $this->user["Id"];
                 $user = db('sys_user')->where(array("Id" => $this->user["Id"]))->find();
