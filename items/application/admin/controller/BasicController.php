@@ -2,7 +2,6 @@
 namespace app\admin\controller;
 
 use think\Controller;
-use think\facade\Request;
 
 class BasicController extends Controller
 {
@@ -76,7 +75,7 @@ class BasicController extends Controller
     protected function getModuleButton()
     {
         //获取模块页面按钮是根据该模块请求路径查询数据库配置路径获取,请务必将数据库路径与其模块路径对应
-        $url = Request::url();
+        $url = request()->url();
         $userId = $this->user["Id"];
         $button = db()->query("
         SELECT t1.Name,t1.EnglishName,t1.Icon FROM sys_button AS t1
