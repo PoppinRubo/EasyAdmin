@@ -83,3 +83,11 @@ table .icon {
 .layui-form .layui-form-switch {
     line-height: 20px;
 }
+
+/*表单必填标记*/
+.layui-form .icon-required::before {
+    content: "*";
+    color: #f92672;
+    margin-right: 5px;
+    font-size: 12px;
+}
