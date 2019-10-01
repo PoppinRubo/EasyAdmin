@@ -87,7 +87,20 @@ class RoleController extends BasicController
         try {
             $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
-            $data = db('sys_role')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->paginate($limit);
+            $sort = input("sort") ?: "Id";
+            $order = input("order") ?: "ASC";
+            //查询条件
+            $where = [['IsDel', '=', 0]];
+            if (!empty($key)) {
+                //编号查询
+                if (is_numeric($key)) {
+                    $where[] = ['Id', '=', $key];
+                } else {
+                    //名称查询
+                    $where[] = ['Name', 'like', '%' . $key . '%'];
+                }
+            }
+            $data = db('sys_role')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
