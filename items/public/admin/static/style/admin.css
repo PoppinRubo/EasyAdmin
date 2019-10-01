@@ -80,6 +80,10 @@ table .icon {
     width: 100px;
 }
 
+.layui-form .layui-input-block {
+    margin-left: 100px;
+}
+
 .layui-form .layui-form-switch {
     line-height: 20px;
 }
