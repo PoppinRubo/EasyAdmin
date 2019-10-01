@@ -6,11 +6,16 @@
  * @param null $data 输出数据
  * @return string
  */
-function jsonOut($code, $msg = "", $data = null)
+function jsonOut($code, $msg = "", $data = null, bool $convert = null)
 {
-    //是否驼峰小写输出
-    if (!empty(config('app.lower_hump'))) {
-        $data = convertLower($data);
+    //驼峰小写输出优先使用传入的条件
+    if ($convert !== null) {
+        $data = $convert ? convertLower($data) : $data;
+    } else {
+        //配置是否驼峰小写输出
+        if (!empty(config('app.lower_hump'))) {
+            $data = convertLower($data);
+        }
     }
     $result = array(
         "code" => $code,

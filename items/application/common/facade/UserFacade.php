@@ -13,7 +13,7 @@ class UserFacade
     //记录登录日志
     public static function signInLog(int $userId)
     {
-        if (!empty($user)) {
+        if (!empty($userId)) {
             // 启动事务
             db()->startTrans();
             try {
