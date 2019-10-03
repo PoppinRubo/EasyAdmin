@@ -24,7 +24,7 @@ function toEasyTable($array, $total = 0, $msg = "", bool $convert = null)
         "total" => $total,
         "rows" => $array,
         "msg" => $msg,
-        "serveTime" => date('Y-m-d H:m:s'),
+        "serveTime" => date('Y-m-d H:i:s'),
     );
     echo json_encode($result);
 }
