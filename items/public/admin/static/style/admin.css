@@ -81,6 +81,7 @@ table .icon {
 }
 
 .layui-form .layui-input-block {
+    width: 100px;
     margin-left: 100px;
 }
 
