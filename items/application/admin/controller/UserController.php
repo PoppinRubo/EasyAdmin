@@ -93,7 +93,20 @@ class UserController extends BasicController
         try {
             $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
-            $data = db('sys_user')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'UserName', 'like', '%' . $key . '%')->paginate($limit);
+            $sort = input("sort") ?: "Id";
+            $order = input("order") ?: "desc";
+            //查询条件
+            $where = [['IsDel', '=', 0]];
+            if (!empty($key)) {
+                //编号查询
+                if (is_numeric($key)) {
+                    $where[] = ['Id', '=', $key];
+                } else {
+                    //名称查询
+                    $where[] = ['UserName', 'like', '%' . $key . '%'];
+                }
+            }
+            $data = db('sys_user')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());

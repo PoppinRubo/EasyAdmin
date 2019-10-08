@@ -88,7 +88,18 @@ class ButtonController extends BasicController
             $key = input("key") ?: "";
             $sort = input("sort") ?: "Sort";
             $order = input("order") ?: "ASC";
-            $data = db('sys_button')->where(array("IsDel" => 0))->where(is_numeric($key) ? 'Id' : 'Name', 'like', '%' . $key . '%')->order($sort, $order)->paginate($limit);
+            //查询条件
+            $where = [['IsDel', '=', 0]];
+            if (!empty($key)) {
+                //编号查询
+                if (is_numeric($key)) {
+                    $where[] = ['Id', '=', $key];
+                } else {
+                    //名称查询
+                    $where[] = ['Name', 'like', '%' . $key . '%'];
+                }
+            }
+            $data = db('sys_button')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
             return toEasyTable([], false, $e->getMessage());
