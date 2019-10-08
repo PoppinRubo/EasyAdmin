@@ -15,7 +15,7 @@
                     width:'100%',
                     panelWidth:350,
                     labelPosition:'top',
-                    url:'/module/getModuleList?root=1',
+                    url: '/module/getModuleList?root=1',
                     idField:'id',
                     treeField:'name',
                     columns:[[
@@ -37,7 +37,7 @@
             //监听提交
             form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/module/move',
+                    url: '/module/move',
                     data: data.field,
                     success: function () {
                         //表格刷新

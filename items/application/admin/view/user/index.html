@@ -41,7 +41,7 @@
 <script type="text/javascript">
     //easyUi 表格
     $('#data-table').datagrid({
-        url: window.admin.ajaxUrl + '/user/getUserList', //数据接口
+        url: '/user/getUserList', //数据接口
         singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -122,7 +122,7 @@
             return;
         }
         askHelper.ajaxPost({
-            url: window.admin.ajaxUrl + '/user/resetPassword',
+            url: '/user/resetPassword',
             data: { userId: row.id },
             success: function () { }
         });
@@ -136,7 +136,7 @@
             return;
         }
         askHelper.ajaxConfirm({
-            url: window.admin.ajaxUrl + '/user/remove',
+            url: '/user/remove',
             data: { id: row.id },
             msg: "确认删除吗"
         });

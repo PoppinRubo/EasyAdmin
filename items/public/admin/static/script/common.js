@@ -40,11 +40,6 @@
     });
 });
 
-/**
- * 框架下的全局变量设置
- */
-window.admin = window.admin || parent.window.admin;
-
 /*
  * 请求助手
  */
@@ -325,7 +320,7 @@ $(document).ajaxSuccess(function (event, xhr, options) {
             $("#again-login").click(function () {
                 var form = $(this).parent();
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/index/signIn',
+                    url: '/index/signIn',
                     data: {
                         account: form.find("#account").val(),
                         password: form.find("#password").val()

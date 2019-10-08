@@ -61,7 +61,7 @@
             //提交
             form.on('submit(login-submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/index/signIn',
+                    url: '/index/signIn',
                     data: data.field,
                     success: function (result) {
                         window.location.href = result.data
@@ -73,9 +73,6 @@
                 return false;
             });
         });
-        //设置基础地址
-        window.admin = window.admin || {};
-        window.admin.ajaxUrl = "{$ajaxUrl}";
     </script>
 </body>
 

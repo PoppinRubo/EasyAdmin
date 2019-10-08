@@ -11,10 +11,7 @@ class IndexController extends BasicController
     {
         //检测登录状态,已登录不停留在登录页面
         if (empty($this->user)) {
-            $this->assign([
-                'year' => date('Y'),
-                'ajaxUrl' => config('app.admin_ajax_url') ?? '',
-            ]);
+            $this->assign(['year' => date('Y')]);
             return View();
         }
         $this->redirect('/home');

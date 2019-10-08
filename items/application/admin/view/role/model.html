@@ -41,7 +41,7 @@
     var roleId = '<?php echo $_GET["roleId"]?>';
     //easyUi 表格树
     $('#data-table').treegrid({
-        url: window.admin.ajaxUrl + '/role/getRoleModuleList?roleId=' + roleId, //数据接口
+        url: '/role/getRoleModuleList?roleId=' + roleId, //数据接口
         singleSelect: false, //行单选
         idField: 'id', //定义标识树节点的键字段
         treeField: 'name', //定义树节点字段
@@ -133,7 +133,7 @@
             ids.push(v.id);
         })
         askHelper.ajaxPost({
-            url: window.admin.ajaxUrl + '/role/relationdModel',
+            url: '/role/relationdModel',
             data: {
                 ids: JSON.stringify(ids),
                 roleId: roleId,

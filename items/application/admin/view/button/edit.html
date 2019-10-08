@@ -63,7 +63,7 @@
             //监听提交
             form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/button/edit',
+                    url: '/button/edit',
                     data: data.field
                 });
 

@@ -57,7 +57,7 @@
             //监听提交
             form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/user/add',
+                    url: '/user/add',
                     data: data.field
                 });
 

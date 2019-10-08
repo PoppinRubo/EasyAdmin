@@ -30,7 +30,7 @@
     var userId = '<?php echo $_GET["userId"]?>';
     //easyUi 表格
     $('#data-table').datagrid({
-        url: window.admin.ajaxUrl + '/user/getUserRoleList?userId=' + userId, //数据接口
+        url: '/user/getUserRoleList?userId=' + userId, //数据接口
         singleSelect: true, //行单选
         height: tableHelper.setHeight(),
         toolbar: '#toolbar', //表格工具条
@@ -77,7 +77,7 @@
     //添加关联
     function relation(row) {
         askHelper.ajaxPost({
-            url: window.admin.ajaxUrl + '/user/relationRole',
+            url: '/user/relationRole',
             data: { userId: row.userId, roleId: row.id },
             success: function () {
                 tableHelper.refresh('data-table');
@@ -88,7 +88,7 @@
     //删除关联
     function delRelation(row) {
         askHelper.ajaxPost({
-            url: window.admin.ajaxUrl + '/user/delRelationRole',
+            url: '/user/delRelationRole',
             data: { userId: row.userId, roleId: row.id },
             success: function () {
                 tableHelper.refresh('data-table');

@@ -57,7 +57,7 @@
             //监听提交
             form.on('submit(submit)', function (data) {
                 askHelper.ajaxPost({
-                    url: window.admin.ajaxUrl + '/module/edit',
+                    url: '/module/edit',
                     data: data.field,
                     success: function () {
                         //表格刷新
