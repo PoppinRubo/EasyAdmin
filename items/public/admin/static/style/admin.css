@@ -80,7 +80,7 @@ table .icon {
     width: 100px;
 }
 
-.layui-form .layui-input-block {
+.layui-form .layui-inline .layui-input-block {
     width: 120px;
     margin-left: 100px;
 }
