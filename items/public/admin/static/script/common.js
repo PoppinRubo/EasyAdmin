@@ -293,6 +293,41 @@ var pictureHelper = {
 }
 
 /**
+ * 数字助手
+ */
+var figuresHelper = {
+    //长数字转化中文缩略,如转化为100万
+    longConvert: function (curentNum) {
+        var strNumSize = function (tempNum) {
+            var stringNum = tempNum.toString();
+            var index = stringNum.indexOf(".");
+            var newNum = stringNum;
+            if (index != -1) {
+                newNum = stringNum.substring(0, index)
+            };
+            return newNum.length;
+        }
+        var units = ["", "万", "亿", "万亿"];
+        var dividend = 10000;
+        //转换数字
+        var curentUnit = units[0];
+        //转换单位 
+        for (var i = 0; i < 4; i++) {
+            curentUnit = units[i];
+            if (strNumSize(curentNum) < 5) {
+                break;
+            };
+            curentNum = curentNum / dividend;
+        };
+        var result = {
+            num: parseFloat(curentNum.toFixed(1).replace('.0', '')),
+            unit: curentUnit
+        };
+        return result;
+    }
+}
+
+/**
  * 监听登录过期
  */
 $(document).ajaxSuccess(function (event, xhr, options) {
