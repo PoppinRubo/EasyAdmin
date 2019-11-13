@@ -99,9 +99,9 @@ table .icon {
 
 /*清除easyuid对layui表单影响*/
 .layui-form .layui-form-checkbox * {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -o-box-sizing: border-box;
-    -ms-box-sizing: border-box;
+    -moz-box-sizing: unset;
+    -webkit-box-sizing: unset;
+    -o-box-sizing: unset;
+    -ms-box-sizing: unset;
     box-sizing: unset;
 }
