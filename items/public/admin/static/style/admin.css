@@ -96,3 +96,12 @@ table .icon {
     margin-right: 5px;
     font-size: 12px;
 }
+
+/*清除easyuid对layui表单影响*/
+.layui-form .layui-form-checkbox * {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: unset;
+}
