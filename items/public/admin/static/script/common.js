@@ -19,12 +19,20 @@
     $.each($('input[lay-skin="switch"]'), function (i, v) {
         $(v).attr('type', 'hidden').val(this.checked ? 1 : 0);
     });
+    //处理复选框未点击状态下的值设置为0或1
+    $.each($('.layui-input-block input[type="checkbox"]'), function (i, v) {
+        $(v).val(this.checked ? 1 : 0);
+    });
     //处理开关点击状态下的值设置为0或1
     layui.use(['form'], function () {
         var form = layui.form;
         //表单开关值处理
         form.on('switch', function (data) {
             $(data.elem).attr('type', 'hidden').val(this.checked ? 1 : 0);
+        });
+        //表单复选框值处理
+        form.on('checkbox', function (data) {
+            $(data.elem).val(this.checked ? 1 : 0);
         });
     });
     //处理easyui表格右边框超出隐藏问题

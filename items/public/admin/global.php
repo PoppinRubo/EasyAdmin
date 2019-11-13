@@ -17,4 +17,4 @@
     <script type="text/javascript" src="/admin/static/easyui/easyui-lang-zh_CN.js"></script>
     <script type="text/javascript" src="/admin/static/script/extend/datagrid.extend.js"></script>
     <script type="text/javascript" src="/admin/static/layui/layui.all.js"></script>
-    <script type="text/javascript" src="/admin/static/script/common.min.js"></script>
+    <script type="text/javascript" src="/admin/static/script/common.js"></script>
