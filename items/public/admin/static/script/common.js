@@ -268,7 +268,8 @@ var pictureHelper = {
         z = z || 1;
         //获取原图尺寸
         var image = new Image();
-        image.src = t.src.replace(/(\?|#)[^'"]*/, '');
+        //是否设置原图地址
+        image.src = t.getAttribute('original') || t.src;
         image.onload = function () {
             var width = parseInt(image.width * z);
             var height = parseInt(image.height * z);
