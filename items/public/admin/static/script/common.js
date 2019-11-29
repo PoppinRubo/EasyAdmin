@@ -266,30 +266,35 @@ var timeHelper = {
 var pictureHelper = {
     showBig: function (t, z) {
         z = z || 1;
-        var width = parseInt(t.naturalWidth * z);
-        var height = parseInt(t.naturalHeight * z);
-        var scale = width / height;
-        //超宽处理
-        if (width > $(window).width()) {
-            width = $(window).width() - 20;
+        //获取原图尺寸
+        var image = new Image();
+        image.src = t.src.replace(/(\?|#)[^'"]*/, '');
+        image.onload = function () {
+            var width = parseInt(image.width * z);
+            var height = parseInt(image.height * z);
+            var scale = width / height;
+            //超宽处理
+            if (width > $(window).width()) {
+                width = $(window).width() - 20;
+            }
+            //超高处理
+            if (height > $(window).height()) {
+                height = $(window).height() - 20;
+                width = height * scale;
+            }
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                area: width + 'px',
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content: '<img src="' + image.src + '" width="' + width + '" height="' + height + '"> '
+            });
+            $(".layui-layer-content img").click(function () {
+                $(".layui-layer-shade").click();
+            });
         }
-        //超高处理
-        if (height > $(window).height()) {
-            height = $(window).height() - 20;
-            width = height * scale;
-        }
-        layer.open({
-            type: 1,
-            title: false,
-            closeBtn: 0,
-            area: width + 'px',
-            skin: 'layui-layer-nobg', //没有背景色
-            shadeClose: true,
-            content: '<img src="' + t.src + '" width="' + width + '" height="' + height + '"> '
-        });
-        $(".layui-layer-content img").click(function () {
-            $(".layui-layer-shade").click();
-        });
     },
     error: function (t, s = false) {
         if (s) {
