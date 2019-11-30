@@ -257,6 +257,40 @@ var timeHelper = {
             }
         }
         return format;
+    },
+    //将秒转化为时、分、秒格式,如120秒转化为00:02:00
+    secondToTime: function (value) {
+        var second = parseInt(value); //秒
+        var minute = 0; //分
+        var hour = 0; //时
+        if (second > 60) {
+            minute = parseInt(second / 60);
+            second = parseInt(second % 60);
+            if (minute > 60) {
+                hour = parseInt(minute / 60);
+                minute = parseInt(minute % 60);
+            }
+        };
+        var varietySecond = parseInt(second);
+        if (varietySecond < 10) {
+            varietySecond = '0' + varietySecond
+        }
+        var results = "" + varietySecond;
+        if (minute > 0 || minute == 0) {
+            var varietyMinute = parseInt(minute);
+            if (varietyMinute < 10) {
+                varietyMinute = '0' + varietyMinute;
+            }
+            results = "" + varietyMinute + ":" + results;
+        }
+        if (hour > 0 || hour == 0) {
+            var varietyHour = parseInt(hour);
+            if (varietyHour < 10) {
+                varietyHour = '0' + varietyHour;
+            }
+            results = "" + varietyHour + ":" + results;
+        }
+        return results;
     }
 }
 
