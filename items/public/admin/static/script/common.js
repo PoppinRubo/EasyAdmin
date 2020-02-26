@@ -82,6 +82,7 @@ var askHelper = {
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
+        o.timeout = o.timeout || 6000;
         o.before = o.before || function () {
             msgIndex = layer.msg('处理中', {
                 icon: 16,
@@ -94,7 +95,7 @@ var askHelper = {
             url: o.url, //请求接口
             type: o.type, //GET、POST
             async: true, //或false,是否异步
-            timeout: 6000, //超时时间
+            timeout: o.timeout, //超时时间
             data: o.data, //请求对象
             dataType: o.dataType, //返回的数据格式：json/xml/html/script/jsonp/text
             beforeSend: function (xhr) {
