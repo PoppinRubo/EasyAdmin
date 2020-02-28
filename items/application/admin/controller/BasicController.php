@@ -80,9 +80,10 @@ class BasicController extends Controller
         $button = db()->query("
         SELECT t1.Name,t1.EnglishName,t1.Icon FROM sys_button AS t1
         JOIN sys_module AS t2 ON(t2.Link='{$url}' AND t2.IsValid=1 AND t2.IsDel=0)
-        JOIN sys_role_button AS t3 ON(t3.ModuleId=t2.Id AND t3.ButtonId=t1.Id AND t3.RoleId IN (
-        SELECT t4.RoleId FROM sys_user_role AS t4 WHERE t4.UserId={$userId} AND t4.IsValid=1 AND t4.IsDel=0
-        )) AND t3.IsValid=1 AND t3.IsDel=0 WHERE t1.IsValid=1 AND t1.IsDel=0 AND t1.Id=t3.ButtonId GROUP BY t1.Id ORDER BY t1.Sort ASC;");
+        JOIN sys_role_button AS t3 ON(t3.ModuleId=t2.Id AND t3.IsValid=1 AND t3.IsDel=0 AND t3.RoleId IN (
+        SELECT RoleId FROM sys_user_role WHERE UserId={$userId} AND IsValid=1 AND IsDel=0
+        )AND t3.ButtonId IN (SELECT ButtonId FROM sys_module_button WHERE ModuleId=t2.Id AND IsValid=1 AND IsDel=0)
+        )WHERE t1.IsValid=1 AND t1.IsDel=0 AND t1.Id=t3.ButtonId GROUP BY t1.Id ORDER BY t1.Sort ASC;");
         return $button;
     }
 }
