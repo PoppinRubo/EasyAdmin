@@ -29,7 +29,7 @@ class IndexController extends BasicController
                 return jsonOut(config('code.error'), "不被接受的请求");
             }
             //过期登录免验证码
-            if (empty(cookie('expire'))) {
+            if (!empty(cookie('expire'))) {
                 if (!$this->checkCaptcha(input('vercode'))) {
                     return jsonOut(config('code.error'), "登录失败,验证码错误或已过期");
                 }

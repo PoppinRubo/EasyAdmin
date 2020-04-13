@@ -14,6 +14,9 @@ class BasicController extends BaseController
     //访问标识
     protected $accessToken;
 
+    // 控制器中间件
+    protected $middleware = [];
+
     /**
      * 构造函数
      */
@@ -27,26 +30,12 @@ class BasicController extends BaseController
             $this->accessToken = strtoupper(md5(uniqid(microtime(true), true)));
             cookie("AdminAccessToken", $this->accessToken, 60 * 60 * 24 * 366);
         }
-
         //获取当前登录用户
         $this->user = $this->getUser();
-        //登录检测，
+        //登录检测
         if (empty($this->user)) {
-            //过滤登录页
-            if (request()->controller() != 'Index') {
-                if (request()->isPost()) {
-                    //Post请求返回登录过期信息
-                    echo json_encode(array(
-                        "rows" => 0,
-                        "code" => 403,
-                        "msg" => "当前登录账号已过期，请重新登录",
-                    ));
-                    exit();
-                } else {
-                    //其他请求跳登录页面
-                    $this->redirect("/");
-                }
-            }
+            //使用控制器中间件处理未登录
+            $this->middleware = ['no.auth'];
         }
     }
 
