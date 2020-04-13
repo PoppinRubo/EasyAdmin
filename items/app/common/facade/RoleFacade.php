@@ -21,7 +21,7 @@ class RoleFacade
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
-            $data = Db::name('sys_role_module')->whereIn('ModuleId', $id)->where(array("RoleId" => $a["roleId"]))->select();
+            $data = Db::name('sys_role_module')->whereIn('ModuleId', $id)->where(array("RoleId" => $a["roleId"]))->select()->toArray();
             //存在的记录模块编号
             $in = array();
             foreach ($data as $d) {
@@ -82,7 +82,7 @@ class RoleFacade
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
-            $data = Db::name('sys_role_button')->whereIn('ButtonId', $id)->where(array("RoleId" => $a["roleId"], "ModuleId" => $a["moduleId"]))->select();
+            $data = Db::name('sys_role_button')->whereIn('ButtonId', $id)->where(array("RoleId" => $a["roleId"], "ModuleId" => $a["moduleId"]))->select()->toArray();
             //存在的记录模块编号
             $in = array();
             foreach ($data as $d) {
