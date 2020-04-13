@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {include file="admin/global.php" title="街舞部落 - 系统登录"/}
+    <link rel="stylesheet" href="/admin/static/style/login.css" media="all">
+</head>
+
+<body layadmin-themealias="default">
+    <div class="user-login">
+        <div class="user-login-main">
+            <div class="user-login-box user-login-header">
+                <h2>系统登录</h2>
+            </div>
+            <form class="user-login-box user-login-body layui-form">
+                <div class="layui-form-item">
+                    <label class="user-login-icon layui-icon layui-icon-username" for="login-username"></label>
+                    <input type="text" name="account" lay-verify="required" placeholder="账号" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="user-login-icon layui-icon layui-icon-password" for="login-password"></label>
+                    <input type="password" name="password" lay-verify="required" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="user-login-icon layui-icon layui-icon-vercode" for="login-vercode"></label>
+                            <input type="text" name="vercode" lay-verify="required" placeholder="图形验证码"
+                                class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 10px;">
+                                <img src="/index/captcha" id="captcha" class="user-login-codeimg"
+                                    onclick="this.src='/index/captcha?t='+new Date().getTime();">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-bottom: 20px;">
+                    <input type="checkbox" name="remember" lay-skin="primary" title="记住登录">
+                    <div class="layui-unselect layui-form-checkbox layui-form-checked" lay-skin="primary">
+                        <span>记住登录</span>
+                        <i class="layui-icon layui-icon-ok"></i>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login-submit">登 录</button>
+                </div>
+            </form>
+        </div>
+        <div class="layui-trans user-login-footer">
+            <p>
+                © 2018-{$year}
+            </p>
+        </div>
+    </div>
+    <script>
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render();
+            //提交
+            form.on('submit(login-submit)', function (data) {
+                askHelper.ajaxPost({
+                    url: '/index/signIn',
+                    data: data.field,
+                    success: function (result) {
+                        window.location.href = result.data
+                    },
+                    fail: function (result) {
+                        $("#captcha").get(0).src = $("#captcha").get(0).src
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

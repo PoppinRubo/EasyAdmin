@@ -1,0 +1,87 @@
+html {
+  font-family: "微软雅黑";
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+html body {
+  width: 80%;
+  padding-top: 1%;
+  height: 99%;
+  float: left;
+  margin: 0 10%;
+}
+html body .url-route {
+  margin: 0 10px;
+  font-size: 14px;
+}
+html body .add,
+html body .refresh {
+  padding: 0 5px;
+  margin: 0 5px;
+  float: right;
+}
+html body .file {
+  text-align: center;
+  float: left;
+  width: 100%;
+  margin: 10px 0 0 0;
+  height: auto;
+}
+html body .file img,
+html body .file video,
+html body .file audio {
+  max-width: 150px;
+  height: auto;
+}
+html body .file .queue {
+  vertical-align: top;
+  display: inline-block;
+  margin: 10px;
+  max-width: 150px;
+  cursor: pointer;
+}
+html body .file .queue .folder,
+html body .file .queue .android,
+html body .file .queue .file {
+  margin: 30px 0 0 0;
+  display: block;
+  font-size: 40px;
+  color: #ffd659;
+  text-align: center;
+}
+html body .file .queue .android {
+  color: #a4c639;
+}
+html body .file .queue .file {
+  color: #FF9800;
+}
+html body .file .queue .name {
+  position: relative;
+  display: block;
+  margin: 5px auto;
+  width: 130px;
+  height: 25px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  line-height: 25px;
+}
+html body .file .queue[data-type="folder"] {
+  float: left;
+}
+html body .file .queue[data-type="mp3"] {
+  height: 100px;
+  margin: 10px;
+  padding-top: 20px;
+}
+html body .file .checked {
+  color: #ffffff;
+  background: #9E9E9E;
+}
+html body .file .queue:hover {
+  box-shadow: 0 0 1px #888888;
+}
