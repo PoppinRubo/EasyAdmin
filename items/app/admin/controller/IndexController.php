@@ -60,7 +60,8 @@ class IndexController extends BasicController
             UserFacade::signInLog($user['Id']);
             return jsonOut(config('code.success'), "登录成功", "/home");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -86,7 +87,8 @@ class IndexController extends BasicController
             }
             return jsonOut(config('code.success'), "退出成功", "/");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 }

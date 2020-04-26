@@ -31,7 +31,8 @@ class ButtonController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -54,7 +55,8 @@ class ButtonController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -79,7 +81,8 @@ class ButtonController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -105,6 +108,7 @@ class ButtonController extends BasicController
             $data = Db::name('sys_button')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -131,7 +135,8 @@ class ButtonController extends BasicController
             $model->saveAll($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 }

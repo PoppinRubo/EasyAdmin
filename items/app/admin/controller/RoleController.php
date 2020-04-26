@@ -32,7 +32,8 @@ class RoleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -55,7 +56,8 @@ class RoleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -80,7 +82,8 @@ class RoleController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -106,6 +109,7 @@ class RoleController extends BasicController
             $data = Db::name('sys_role')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -132,7 +136,8 @@ class RoleController extends BasicController
             $model->saveAll($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -167,6 +172,7 @@ class RoleController extends BasicController
             }
             return toEasyTable($tree, false);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -186,6 +192,7 @@ class RoleController extends BasicController
             }
             return $data;
         } catch (\Exception $e) {
+            error($e->getMessage());
             return [];
         }
     }
@@ -206,7 +213,8 @@ class RoleController extends BasicController
             }
             return jsonOut(config('code.error'), $result->msg);
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -232,6 +240,7 @@ class RoleController extends BasicController
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -253,7 +262,8 @@ class RoleController extends BasicController
             }
             return jsonOut(config('code.error'), $result->msg);
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 

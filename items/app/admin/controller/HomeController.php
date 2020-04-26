@@ -40,6 +40,7 @@ class HomeController extends BasicController
             }
             echo json_encode($tree);
         } catch (\Exception $e) {
+            error($e->getMessage());
             echo json_encode($e->getMessage());
         }
     }

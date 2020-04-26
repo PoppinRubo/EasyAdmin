@@ -32,7 +32,8 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -57,7 +58,8 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -83,7 +85,8 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                return jsonOut(config('code.error'), $e->getMessage());
+                error($e->getMessage());
+                return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
@@ -107,7 +110,8 @@ class ModuleController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -133,6 +137,7 @@ class ModuleController extends BasicController
             $data = (bool) input("root") ? array(array('id' => 0, 'name' => '根目录', 'children' => $tree)) : $tree;
             return toEasyTable($data, false);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false);
         }
     }
@@ -152,6 +157,7 @@ class ModuleController extends BasicController
             }
             return $data;
         } catch (\Exception $e) {
+            error($e->getMessage());
             return [];
         }
     }
@@ -176,6 +182,7 @@ class ModuleController extends BasicController
             WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
+            error($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -196,7 +203,8 @@ class ModuleController extends BasicController
             }
             return jsonOut(config('code.error'), $result->msg);
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 
@@ -224,7 +232,8 @@ class ModuleController extends BasicController
             $model->saveAll($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            return jsonOut(config('code.error'), $e->getMessage());
+            error($e->getMessage());
+            return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
 }
