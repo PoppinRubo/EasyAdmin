@@ -174,10 +174,11 @@ var datagridExtend = {
             for (var i = 0; i < fields.length; i++) {
                 var field = fields[i];
                 var col = $(target).datagrid('getColumnOption', field);
+                var iconCls = col.hidden ? 'icon-checkbox-unchecked' : 'icon-checkbox-checked';
                 state.columnMenu.menu('appendItem', {
                     text: col.title,
                     name: field,
-                    iconCls: 'icon-checkbox-checked'
+                    iconCls: iconCls
                 });
             }
         }
