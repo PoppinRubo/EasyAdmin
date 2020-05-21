@@ -13,11 +13,11 @@ function toEasyTable($array, $total = 0, $msg = "", bool $convert = null)
     $total = is_object($array) ? $array->total() : $total;
     //驼峰小写输出优先使用传入的条件
     if ($convert !== null) {
-        $array = $convert ? convertLower($array) : $array;
+        $array = $convert ? convertCamelize($array) : $array;
     } else {
         //配置是否驼峰小写输出
-        if (!empty(config('app.lower_hump'))) {
-            $array = convertLower($array);
+        if (!empty(config('app.camelize'))) {
+            $array = convertCamelize($array);
         }
     }
     $result = array(
