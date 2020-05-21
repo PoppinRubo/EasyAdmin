@@ -9,7 +9,7 @@ class UserFacade
     //检测账号是否存在
     public static function isExist($account)
     {
-        return !empty(Db::name('sys_user')->where(array("IsDel" => 0, "Account" => $account))->find());
+        return !empty(Db::name('sys_user')->where(array("is_del" => 0, "Account" => $account))->find());
     }
 
     //记录登录日志
@@ -22,13 +22,13 @@ class UserFacade
                 $now = date("Y-m-d H:i:s");
                 //创建登录记录
                 Db::name('sys_user_login_log')->insert(array(
-                    "UserId" => $userId,
-                    "CreateTime" => $now,
-                    "Ip" => Request()->ip(),
-                    "IsDel" => 0,
+                    "user_id" => $userId,
+                    "create_time" => $now,
+                    "ip" => Request()->ip(),
+                    "is_del" => 0,
                 ));
                 //更新用户表
-                Db::execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.Id) FROM `sys_user_login_log` AS t2 WHERE t2.UserId IN ({$userId}) AND t2.IsDel=0),LastLoginTime='{$now}' WHERE Id={$userId}");
+                Db::execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.id) FROM `sys_user_login_log` AS t2 WHERE t2.user_id IN ({$userId}) AND t2.is_del=0),LastLoginTime='{$now}' WHERE id={$userId}");
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {

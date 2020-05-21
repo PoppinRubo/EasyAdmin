@@ -1,4 +1,5 @@
 <?php
+
 namespace app\common\facade;
 
 use app\common\facade\ResultFacade;
@@ -21,40 +22,40 @@ class ModuleFacade
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
-            $data = Db::name('sys_module_button')->whereIn('ButtonId', $id)->where(array("ModuleId" => $a["moduleId"]))->select();
+            $data = Db::name('sys_module_button')->whereIn('button_id', $id)->where(array("module_id" => $a["moduleId"]))->select()->toArray();
             //存在的记录模块编号
             $in = array();
             foreach ($data as $d) {
                 foreach ($ids as $i) {
-                    if ($i == $d["ButtonId"]) {
-                        $in["Id"][] = $d["Id"];
-                        $in["ButtonId"][] = $d["ButtonId"];
+                    if ($i == $d["button_id"]) {
+                        $in["id"][] = $d["id"];
+                        $in["button_id"][] = $d["button_id"];
                     }
                 }
             }
             //操作的数据
             $data = array();
             foreach ($ids as $i) {
-                $inId = count($in) < 1 ? false : array_search($i, $in["ButtonId"]);
+                $inId = count($in) < 1 ? false : array_search($i, $in["button_id"]);
                 if ($inId !== false) {
                     //更新可用状态，数据复活
                     $update = array(
-                        'Id' => $in["Id"][$inId],
-                        'IsValid' => $a["isRelation"] ? 1 : 0,
-                        'IsDel' => $a["isRelation"] ? 0 : 1,
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        'id' => $in["id"][$inId],
+                        'is_valid' => $a["isRelation"] ? 1 : 0,
+                        'is_del' => $a["isRelation"] ? 0 : 1,
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $update);
                 } else if ($a["isRelation"]) {
                     //插入数据
                     $insert = array(
-                        "ButtonId" => $i,
-                        "ModuleId" => $a["moduleId"],
-                        "CreateTime" => date("Y-m-d H:i:s"),
-                        "CreateUser" => $a["operaterId"],
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        "button_id" => $i,
+                        "module_id" => $a["moduleId"],
+                        "create_time" => date("Y-m-d H:i:s"),
+                        "create_user" => $a["operaterId"],
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $insert);
                 }
@@ -68,5 +69,4 @@ class ModuleFacade
         }
         return $result;
     }
-
 }

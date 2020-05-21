@@ -21,40 +21,40 @@ class RoleFacade
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
-            $data = Db::name('sys_role_module')->whereIn('ModuleId', $id)->where(array("RoleId" => $a["roleId"]))->select()->toArray();
+            $data = Db::name('sys_role_module')->whereIn('module_id', $id)->where(array("role_id" => $a["roleId"]))->select()->toArray();
             //存在的记录模块编号
             $in = array();
             foreach ($data as $d) {
                 foreach ($ids as $i) {
-                    if ($i == $d["ModuleId"]) {
-                        $in["Id"][] = $d["Id"];
-                        $in["ModuleId"][] = $d["ModuleId"];
+                    if ($i == $d["module_id"]) {
+                        $in["id"][] = $d["id"];
+                        $in["module_id"][] = $d["module_id"];
                     }
                 }
             }
             //操作的数据
             $data = array();
             foreach ($ids as $i) {
-                $inId = count($in) < 1 ? false : array_search($i, $in["ModuleId"]);
+                $inId = count($in) < 1 ? false : array_search($i, $in["module_id"]);
                 if ($inId !== false) {
                     //更新可用状态，数据复活
                     $update = array(
-                        'Id' => $in["Id"][$inId],
-                        'IsValid' => $a["isRelation"] ? 1 : 0,
-                        'IsDel' => $a["isRelation"] ? 0 : 1,
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        'id' => $in["id"][$inId],
+                        'is_valid' => $a["isRelation"] ? 1 : 0,
+                        'is_del' => $a["isRelation"] ? 0 : 1,
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $update);
                 } else if ($a["isRelation"]) {
                     //插入数据
                     $insert = array(
-                        "ModuleId" => $i,
-                        "RoleId" => $a["roleId"],
-                        "CreateTime" => date("Y-m-d H:i:s"),
-                        "CreateUser" => $a["operaterId"],
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        "module_id" => $i,
+                        "role_id" => $a["roleId"],
+                        "create_time" => date("Y-m-d H:i:s"),
+                        "create_user" => $a["operaterId"],
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $insert);
                 }
@@ -82,41 +82,41 @@ class RoleFacade
             }
             $id = trim(trim($a["ids"], "]"), "[");
             $ids = json_decode($a["ids"]);
-            $data = Db::name('sys_role_button')->whereIn('ButtonId', $id)->where(array("RoleId" => $a["roleId"], "ModuleId" => $a["moduleId"]))->select()->toArray();
+            $data = Db::name('sys_role_button')->whereIn('button_id', $id)->where(array("role_id" => $a["roleId"], "module_id" => $a["moduleId"]))->select()->toArray();
             //存在的记录模块编号
             $in = array();
             foreach ($data as $d) {
                 foreach ($ids as $i) {
-                    if ($i == $d["ButtonId"]) {
-                        $in["Id"][] = $d["Id"];
-                        $in["ButtonId"][] = $d["ButtonId"];
+                    if ($i == $d["button_id"]) {
+                        $in["id"][] = $d["id"];
+                        $in["button_id"][] = $d["button_id"];
                     }
                 }
             }
             //操作的数据
             $data = array();
             foreach ($ids as $i) {
-                $inId = count($in) < 1 ? false : array_search($i, $in["ButtonId"]);
+                $inId = count($in) < 1 ? false : array_search($i, $in["button_id"]);
                 if ($inId !== false) {
                     //更新可用状态，数据复活
                     $update = array(
-                        'Id' => $in["Id"][$inId],
-                        'IsValid' => $a["isRelation"] ? 1 : 0,
-                        'IsDel' => $a["isRelation"] ? 0 : 1,
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        'id' => $in["id"][$inId],
+                        'is_valid' => $a["isRelation"] ? 1 : 0,
+                        'is_del' => $a["isRelation"] ? 0 : 1,
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $update);
                 } else if ($a["isRelation"]) {
                     //插入数据
                     $insert = array(
-                        "ButtonId" => $i,
-                        "ModuleId" => $a["moduleId"],
-                        "RoleId" => $a["roleId"],
-                        "CreateTime" => date("Y-m-d H:i:s"),
-                        "CreateUser" => $a["operaterId"],
-                        "ModifyTime" => date("Y-m-d H:i:s"),
-                        "ModifyUser" => $a["operaterId"],
+                        "button_id" => $i,
+                        "module_id" => $a["moduleId"],
+                        "role_id" => $a["roleId"],
+                        "create_time" => date("Y-m-d H:i:s"),
+                        "create_user" => $a["operaterId"],
+                        "modify_time" => date("Y-m-d H:i:s"),
+                        "modify_user" => $a["operaterId"],
                     );
                     array_push($data, $insert);
                 }
