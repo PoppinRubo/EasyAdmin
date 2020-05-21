@@ -25,12 +25,12 @@ class UserController extends BasicController
             try {
                 $data = input();
                 //密码md5加密
-                $data["Password"] = md5($data["Password"]);
+                $data["password"] = md5($data["password"]);
                 $data["create_time"] = date("Y-m-d H:i:s");
                 $data["create_user"] = $this->user["id"];
                 $data["modify_time"] = $data["create_time"];
                 $data["modify_user"] = $data["create_user"];
-                if (UserFacade::isExist($data["Account"])) {
+                if (UserFacade::isExist($data["account"])) {
                     return jsonOut(config('code.error'), "账号已存在");
                 }
                 $model = new SysUserModel();
@@ -133,14 +133,14 @@ class UserController extends BasicController
                 if (empty($model->id)) {
                     return jsonOut(config('code.error'), "获取当前登录用户失败");
                 }
-                if (md5($data["OldPassword"]) != $model->Password) {
+                if (md5($data["OldPassword"]) != $model->password) {
                     return jsonOut(config('code.error'), "旧密码不正确");
                 }
-                if ($data["NewPassword"] != $data["Password"]) {
+                if ($data["NewPassword"] != $data["password"]) {
                     return jsonOut(config('code.error'), "新密码与确认密码不一致");
                 }
                 //密码md5加密
-                $data["Password"] = md5($data["Password"]);
+                $data["password"] = md5($data["password"]);
                 //更新数据
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
@@ -164,7 +164,7 @@ class UserController extends BasicController
                 }
                 $data = array(
                     "id" => $userId,
-                    "Password" => md5("666666"),
+                    "password" => md5("666666"),
                     "modify_time" => date("Y-m-d H:i:s"),
                     "modify_user" => $this->user["id"],
                 );

@@ -37,7 +37,7 @@ class IndexController extends BasicController
             cookie('expire', null);
             //明文密码加密比对
             $password = md5(input("password"));
-            $user = Db::name('sys_user')->where(["Account" => input("account"), "Password" => $password])->find();
+            $user = Db::name('sys_user')->where(["account" => input("account"), "password" => $password])->find();
             if (empty($user)) {
                 return jsonOut(config('code.error'), "登录失败,账号或密码错误");
             }

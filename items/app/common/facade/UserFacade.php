@@ -9,7 +9,7 @@ class UserFacade
     //检测账号是否存在
     public static function isExist($account)
     {
-        return !empty(Db::name('sys_user')->where(array("is_del" => 0, "Account" => $account))->find());
+        return !empty(Db::name('sys_user')->where(array("is_del" => 0, "account" => $account))->find());
     }
 
     //记录登录日志
