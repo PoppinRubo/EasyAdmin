@@ -7,39 +7,39 @@
 
 <body class="form-body">
     <form class="layui-form" lay-filter="form">
-        <input type="hidden" name="Id" value="{$model.Id}" class="layui-input">
+        <input type="hidden" name="id" value="{$model.id}" class="layui-input">
         <div class="layui-form-item">
             <label class="layui-form-label">账号</label>
             <div class="layui-input-block">
-                <input type="text" name="Account" value="{$model.Account}" data-auto="true" lay-verify="required"
+                <input type="text" name="account" value="{$model.account}" data-auto="true" lay-verify="required"
                     autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">密码</label>
             <div class="layui-input-block">
-                <input type="text" name="Password" value="{$model.Password}" data-auto="true" lay-verify="required"
+                <input type="text" name="password" value="{$model.password}" data-auto="true" lay-verify="required"
                     autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
-                <input type="text" name="Username" value="{$model.Username}" data-auto="true" lay-verify="required"
+                <input type="text" name="username" value="{$model.username}" data-auto="true" lay-verify="required"
                     autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
-                <input type="radio" name="Gender" value="1" title="男" {$model.Gender==1?"checked":""}>
-                <input type="radio" name="Gender" value="0" title="女" {$model.Gender==0?"checked":""}>
+                <input type="radio" name="gender" value="1" title="男" {$model.gender==1?"checked":""}>
+                <input type="radio" name="gender" value="0" title="女" {$model.gender==0?"checked":""}>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">是否有效</label>
             <div class="layui-input-block">
-                <input type="checkbox" name="IsValid" lay-skin="switch" lay-text="是|否" {$model.IsValid?"checked":""}>
+                <input type="checkbox" name="isValid" lay-skin="switch" lay-text="是|否" {$model.isValid?"checked":""}>
             </div>
         </div>
         <div class="layui-form-item">

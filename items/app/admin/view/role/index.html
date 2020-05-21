@@ -30,8 +30,8 @@
     <div class="easyui-table-tool" id="toolbar">
         <div class="layui-btn-container">
             {foreach $button as $b }
-            <button class="layui-btn layui-btn-sm" onclick="eval('{$b.EnglishName}()')">
-                <i class="layui-icon {$b.Icon}"></i> {$b.Name}
+            <button class="layui-btn layui-btn-sm" onclick="eval('{$b.englishName}()')">
+                <i class="layui-icon {$b.icon}"></i> {$b.name}
             </button>
             {/foreach}
         </div>
