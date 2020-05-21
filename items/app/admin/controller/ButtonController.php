@@ -22,10 +22,10 @@ class ButtonController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["CreateTime"] = date("Y-m-d H:i:s");
-                $data["CreateUser"] = $this->user["Id"];
-                $data["ModifyTime"] = $data["CreateTime"];
-                $data["ModifyUser"] = $data["CreateUser"];
+                $data["create_time"] = date("Y-m-d H:i:s");
+                $data["create_user"] = $this->user["id"];
+                $data["modify_time"] = $data["create_time"];
+                $data["modify_user"] = $data["create_user"];
                 $model = new SysButtonModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->save($data);
@@ -37,7 +37,7 @@ class ButtonController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysButton');
-        View::assign(['model' => $model]);
+         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -48,10 +48,10 @@ class ButtonController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $this->user["Id"];
+                $data["modify_time"] = date("Y-m-d H:i:s");
+                $data["modify_user"] = $this->user["id"];
                 //更新数据
-                $model = SysButtonModel::find($data["Id"]);
+                $model = SysButtonModel::find($data["id"]);
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
@@ -62,7 +62,7 @@ class ButtonController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysButtonModel::find($id)->getData();
-        View::assign(['model' => $model]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -72,9 +72,9 @@ class ButtonController extends BasicController
         try {
             $id = input("id") ?: 0;
             $data = array(
-                "IsDel" => 1,
-                "ModifyTime" => date("Y-m-d H:i:s"),
-                "ModifyUser" => $this->user["Id"],
+                "is_del" => 1,
+                "modify_time" => date("Y-m-d H:i:s"),
+                "modify_user" => $this->user["id"],
             );
             //更新数据
             $model = SysButtonModel::find($id);
@@ -95,11 +95,11 @@ class ButtonController extends BasicController
             $sort = input("sort") ?: "Sort";
             $order = input("order") ?: "ASC";
             //查询条件
-            $where = [['IsDel', '=', 0]];
+            $where = [['is_del', '=', 0]];
             if (!empty($key)) {
                 //编号查询
                 if (is_numeric($key)) {
-                    $where[] = ['Id', '=', $key];
+                    $where[] = ['id', '=', $key];
                 } else {
                     //名称查询
                     $where[] = ['Name', 'like', '%' . $key . '%'];
@@ -118,7 +118,7 @@ class ButtonController extends BasicController
     {
         //为方便调整顺序将按钮按顺序大小自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_button')->where(array("IsDel" => 0))->order("Sort", "ASC")->select()->toArray();
+            $list = Db::name('sys_button')->where(array("is_del" => 0))->order("Sort", "ASC")->select()->toArray();
             if ($list == null) {
                 return jsonOut(config('code.error'), "操作失败,没有按钮");
             }

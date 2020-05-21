@@ -23,10 +23,10 @@ class RoleController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["CreateTime"] = date("Y-m-d H:i:s");
-                $data["CreateUser"] = $this->user["Id"];
-                $data["ModifyTime"] = $data["CreateTime"];
-                $data["ModifyUser"] = $data["CreateUser"];
+                $data["create_time"] = date("Y-m-d H:i:s");
+                $data["create_user"] = $this->user["id"];
+                $data["modify_time"] = $data["create_time"];
+                $data["modify_user"] = $data["create_user"];
                 $model = new SysRoleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->save($data);
@@ -38,7 +38,7 @@ class RoleController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysRole');
-        View::assign(['model' => $model]);
+         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -49,10 +49,10 @@ class RoleController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $this->user["Id"];
+                $data["modify_time"] = date("Y-m-d H:i:s");
+                $data["modify_user"] = $this->user["id"];
                 //更新数据
-                $model = SysRoleModel::find($data["Id"]);
+                $model = SysRoleModel::find($data["id"]);
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
@@ -63,7 +63,7 @@ class RoleController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysRoleModel::find($id)->getData();
-        View::assign(['model' => $model]);
+         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -73,9 +73,9 @@ class RoleController extends BasicController
         try {
             $id = input("id") ?: 0;
             $data = array(
-                "IsDel" => 1,
-                "ModifyTime" => date("Y-m-d H:i:s"),
-                "ModifyUser" => $this->user["Id"],
+                "is_del" => 1,
+                "modify_time" => date("Y-m-d H:i:s"),
+                "modify_user" => $this->user["id"],
             );
             //更新数据
             $model = SysRoleModel::find($id);
@@ -93,14 +93,14 @@ class RoleController extends BasicController
         try {
             $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
-            $sort = input("sort") ?: "Id";
+            $sort = input("sort") ?: "id";
             $order = input("order") ?: "ASC";
             //查询条件
-            $where = [['IsDel', '=', 0]];
+            $where = [['is_del', '=', 0]];
             if (!empty($key)) {
                 //编号查询
                 if (is_numeric($key)) {
-                    $where[] = ['Id', '=', $key];
+                    $where[] = ['id', '=', $key];
                 } else {
                     //名称查询
                     $where[] = ['Name', 'like', '%' . $key . '%'];
@@ -119,7 +119,7 @@ class RoleController extends BasicController
     {
         //为方便调整顺序将按钮按顺序大小自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_role')->where(["IsDel" => 0])->order("Sort", "ASC")->select()->toArray();
+            $list = Db::name('sys_role')->where(["is_del" => 0])->order("Sort", "ASC")->select()->toArray();
             if ($list == null) {
                 return jsonOut(config('code.error'), "操作失败,没有角色");
             }
@@ -154,20 +154,20 @@ class RoleController extends BasicController
             $key = input("key") ?: "";
             $roleId = input("roleId") ?: 0;
             //搜索
-            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = Db::query("
-            SELECT t1.Id,t1.Pid,t1.Name,t2.RoleId AS RoleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
-            (SELECT COUNT(t3.Id) FROM sys_module AS t3 WHERE t3.Pid=t1.Id AND t3.IsDel=0 AND t3.IsValid=1) AS Son,t1.Level,
-            (SELECT COUNT(t4.Id) FROM sys_module_button AS t4 WHERE t4.IsDel=0 AND t4.IsValid=1 AND t4.ModuleId=t2.ModuleId) AS Button
-            FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.RoleId={$roleId} AND t2.ModuleId=t1.Id AND t2.IsDel=0)
-            WHERE t1.IsDel=0 AND t1.IsValid=1 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END),t1.Pid,t1.Sort ASC;");
+            SELECT t1.id,t1.pid,t1.Name,t2.role_id AS role_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
+            (SELECT COUNT(t3.id) FROM sys_module AS t3 WHERE t3.pid=t1.id AND t3.is_del=0 AND t3.is_valid=1) AS Son,t1.Level,
+            (SELECT COUNT(t4.id) FROM sys_module_button AS t4 WHERE t4.is_del=0 AND t4.is_valid=1 AND t4.module_id=t2.module_id) AS Button
+            FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.role_id={$roleId} AND t2.module_id=t1.id AND t2.is_del=0)
+            WHERE t1.is_del=0 AND t1.is_valid=1 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END),t1.pid,t1.Sort ASC;");
             $tree = array();
             foreach ($module as $m) {
                 //获取一级
-                if ($m["Pid"] == 0) {
+                if ($m["pid"] == 0) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
-                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["Id"]) : [];
-                    $tree[] = convertLower($m);
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["id"]) : [];
+                    $tree[] = convertCamelize($m);
                 }
             }
             return toEasyTable($tree, false);
@@ -184,10 +184,10 @@ class RoleController extends BasicController
             $data = array();
             foreach ($array as $m) {
                 //递归子级
-                if ($m["Pid"] == $pid) {
+                if ($m["pid"] == $pid) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
-                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["Id"]) : [];
-                    $data[] = convertLower($m);
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["id"]) : [];
+                    $data[] = convertCamelize($m);
                 }
             }
             return $data;
@@ -205,7 +205,7 @@ class RoleController extends BasicController
                 "isRelation" => (bool) json_decode(input("isRelation")),
                 "ids" => input("ids"),
                 "roleId" => input("roleId"),
-                "operaterId" => $this->user["Id"],
+                "operaterId" => $this->user["id"],
             );
             $result = RoleFacade::relationModule($array);
             if ($result->code) {
@@ -232,12 +232,12 @@ class RoleController extends BasicController
             $moduleId = input("moduleId") ?: 0;
             $roleId = input("roleId") ?: 0;
             //搜索
-            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = Db::query("
-            SELECT t1.Id,t1.Name,t1.EnglishName,t2.ModuleId,{$roleId} AS RoleId,CASE WHEN t3.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
-            FROM sys_button AS t1 JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
-            LEFT JOIN sys_role_button AS t3 ON(t3.RoleId={$roleId} AND t3.ModuleId=t2.ModuleId AND t3.ButtonId=t2.ButtonId AND t3.IsDel=0)
-            WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            SELECT t1.id,t1.Name,t1.english_name,t2.module_id,{$roleId} AS role_id,CASE WHEN t3.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            FROM sys_button AS t1 JOIN sys_module_button AS t2 ON(t2.module_id={$moduleId} AND t2.button_id=t1.id AND t2.is_del=0)
+            LEFT JOIN sys_role_button AS t3 ON(t3.role_id={$roleId} AND t3.module_id=t2.module_id AND t3.button_id=t2.button_id AND t3.is_del=0)
+            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
             error($e->getMessage());
@@ -254,7 +254,7 @@ class RoleController extends BasicController
                 "ids" => input("ids"),
                 "roleId" => input("roleId"),
                 "moduleId" => input("moduleId"),
-                "operaterId" => $this->user["Id"],
+                "operaterId" => $this->user["id"],
             );
             $result = RoleFacade::relationButton($array);
             if ($result->code) {

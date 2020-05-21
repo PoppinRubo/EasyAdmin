@@ -23,10 +23,10 @@ class ModuleController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["CreateTime"] = date("Y-m-d H:i:s");
-                $data["CreateUser"] = $this->user["Id"];
-                $data["ModifyTime"] = $data["CreateTime"];
-                $data["ModifyUser"] = $data["CreateUser"];
+                $data["create_time"] = date("Y-m-d H:i:s");
+                $data["create_user"] = $this->user["id"];
+                $data["modify_time"] = $data["create_time"];
+                $data["modify_user"] = $data["create_user"];
                 $model = new SysModuleModel();
                 // 过滤表单数组中的非数据表字段数据
                 $model->save($data);
@@ -38,9 +38,9 @@ class ModuleController extends BasicController
         }
         //输出页面
         $model = getEmptyModel('SysModule');
-        $model["Pid"] = input("pid") ?: 0;
+        $model["pid"] = input("pid") ?: 0;
         $model["Level"] = (input("level") ?: 0) + 1;
-        View::assign(['model' => $model]);
+         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -51,10 +51,10 @@ class ModuleController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $this->user["Id"];
+                $data["modify_time"] = date("Y-m-d H:i:s");
+                $data["modify_user"] = $this->user["id"];
                 //更新数据
-                $model = SysModuleModel::find($data["Id"]);
+                $model = SysModuleModel::find($data["id"]);
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
@@ -65,7 +65,7 @@ class ModuleController extends BasicController
         //输出页面
         $id = input("id") ?: 0;
         $model = SysModuleModel::find($id)->getData();
-        View::assign(['model' => $model]);
+         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -76,12 +76,12 @@ class ModuleController extends BasicController
         if (request()->isPost()) {
             try {
                 $data = input();
-                $data["ModifyTime"] = date("Y-m-d H:i:s");
-                $data["ModifyUser"] = $this->user["Id"];
-                $data['Pid'] = (int) $data['Pid'];
-                $data["Level"] = ((int) Db::name('sys_module')->where('Id', $data['Pid'])->value('Level')) + 1;
+                $data["modify_time"] = date("Y-m-d H:i:s");
+                $data["modify_user"] = $this->user["id"];
+                $data['pid'] = (int) $data['pid'];
+                $data["Level"] = ((int) Db::name('sys_module')->where('id', $data['pid'])->value('Level')) + 1;
                 //更新数据
-                $model = SysModuleModel::find($data["Id"]);
+                $model = SysModuleModel::find($data["id"]);
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
@@ -101,9 +101,9 @@ class ModuleController extends BasicController
         try {
             $id = input("id") ?: 0;
             $data = array(
-                "IsDel" => 1,
-                "ModifyTime" => date("Y-m-d H:i:s"),
-                "ModifyUser" => $this->user["Id"],
+                "is_del" => 1,
+                "modify_time" => date("Y-m-d H:i:s"),
+                "modify_user" => $this->user["id"],
             );
             //更新数据
             $model = SysModuleModel::find($id);
@@ -121,17 +121,17 @@ class ModuleController extends BasicController
         try {
             $key = input("key") ?: "";
             //搜索
-            $search = is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $search = is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = Db::query("
-            SELECT t1.*,(SELECT COUNT(t2.Id) FROM sys_module AS t2 WHERE t2.Pid=t1.Id AND t2.IsDel=0) AS Son
-            FROM sys_module AS t1 WHERE t1.IsDel=0 {$search} ORDER BY t1.Sort ASC");
+            SELECT t1.*,(SELECT COUNT(t2.id) FROM sys_module AS t2 WHERE t2.pid=t1.id AND t2.is_del=0) AS Son
+            FROM sys_module AS t1 WHERE t1.is_del=0 {$search} ORDER BY t1.Sort ASC");
             $tree = array();
             foreach ($module as $m) {
                 //获取一级
-                if ($m["Pid"] == 0) {
+                if ($m["pid"] == 0) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
-                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["Id"]) : [];
-                    $tree[] = convertLower($m);
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($module, $m["id"]) : [];
+                    $tree[] = convertCamelize($m);
                 }
             }
             $data = (bool) input("root") ? array(array('id' => 0, 'name' => '根目录', 'children' => $tree)) : $tree;
@@ -149,10 +149,10 @@ class ModuleController extends BasicController
             $data = array();
             foreach ($array as $m) {
                 //递归子级
-                if ($m["Pid"] == $pid) {
+                if ($m["pid"] == $pid) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
-                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["Id"]) : [];
-                    $data[] = convertLower($m);
+                    $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["id"]) : [];
+                    $data[] = convertCamelize($m);
                 }
             }
             return $data;
@@ -175,11 +175,11 @@ class ModuleController extends BasicController
             $key = input("key") ?: "";
             $moduleId = input("moduleId") ?: 0;
             //搜索
-            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.Id={$key}" : "AND t1.Name like '%{$key}%'";
+            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = Db::query("
-            SELECT t1.Id,t1.Name,t1.EnglishName,{$moduleId} AS ModuleId,CASE WHEN t2.Id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
-            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.ModuleId={$moduleId} AND t2.ButtonId=t1.Id AND t2.IsDel=0)
-            WHERE t1.IsDel=0 {$search} ORDER BY (CASE WHEN t2.Id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            SELECT t1.id,t1.Name,t1.english_name,{$moduleId} AS module_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.module_id={$moduleId} AND t2.button_id=t1.id AND t2.is_del=0)
+            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
             error($e->getMessage());
@@ -195,7 +195,7 @@ class ModuleController extends BasicController
                 "isRelation" => (bool) json_decode(input("isRelation")),
                 "ids" => input("ids"),
                 "moduleId" => input("moduleId"),
-                "operaterId" => $this->user["Id"],
+                "operaterId" => $this->user["id"],
             );
             $result = ModuleFacade::relationButton($array);
             if ($result->code) {
@@ -213,7 +213,7 @@ class ModuleController extends BasicController
     {
         //为方便调整顺序将模块按顺序大小和层级自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_module')->where(array("IsDel" => 0))->order("Sort", "ASC")->select()->toArray();
+            $list = Db::name('sys_module')->where(array("is_del" => 0))->order("Sort", "ASC")->select()->toArray();
             if ($list == null) {
                 return jsonOut(config('code.error'), "操作失败,没有按模块");
             }
@@ -221,7 +221,7 @@ class ModuleController extends BasicController
             $sort = array();
             foreach ($list as $l) {
                 $level = $l['Level'];
-                $pid = $l['Pid'];
+                $pid = $l['pid'];
                 $key = $level . '-' . $pid;
                 $sort[$key] = (isset($sort[$key]) ? $sort[$key] : 0) + 10;
                 $l['Sort'] = $sort[$key];

@@ -41,10 +41,10 @@ class IndexController extends BasicController
             if (empty($user)) {
                 return jsonOut(config('code.error'), "登录失败,账号或密码错误");
             }
-            if ($user['IsDel']) {
+            if ($user['is_del']) {
                 return jsonOut(config('code.error'), "账号已删除,请联系管理员");
             }
-            if (!$user['IsValid']) {
+            if (!$user['is_valid']) {
                 return jsonOut(config('code.error'), "账号无效,请联系管理员");
             }
             //登录过期时间默认3天
@@ -57,7 +57,7 @@ class IndexController extends BasicController
             //记录登录信息
             $this->setUser($user, $day);
             //登录日志
-            UserFacade::signInLog($user['Id']);
+            UserFacade::signInLog($user['id']);
             return jsonOut(config('code.success'), "登录成功", "/home");
         } catch (\Exception $e) {
             error($e->getMessage());

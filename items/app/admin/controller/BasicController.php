@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use app\BaseController;
@@ -66,14 +67,14 @@ class BasicController extends BaseController
     {
         //获取模块页面按钮是根据该模块请求路径查询数据库配置路径获取,请务必将数据库路径与其模块路径对应
         $url = request()->url();
-        $userId = $this->user["Id"];
+        $userId = $this->user["id"];
         $button = Db::query("
-        SELECT t1.Name,t1.EnglishName,t1.Icon FROM sys_button AS t1
-        JOIN sys_module AS t2 ON(t2.Link='{$url}' AND t2.IsValid=1 AND t2.IsDel=0)
-        JOIN sys_role_button AS t3 ON(t3.ModuleId=t2.Id AND t3.IsValid=1 AND t3.IsDel=0 AND t3.RoleId IN (
-        SELECT RoleId FROM sys_user_role WHERE UserId={$userId} AND IsValid=1 AND IsDel=0
-        )AND t3.ButtonId IN (SELECT ButtonId FROM sys_module_button WHERE ModuleId=t2.Id AND IsValid=1 AND IsDel=0)
-        )WHERE t1.IsValid=1 AND t1.IsDel=0 AND t1.Id=t3.ButtonId GROUP BY t1.Id ORDER BY t1.Sort ASC;");
-        return $button;
+        SELECT t1.Name,t1.english_name,t1.icon FROM sys_button AS t1
+        JOIN sys_module AS t2 ON(t2.Link='{$url}' AND t2.is_valid=1 AND t2.is_del=0)
+        JOIN sys_role_button AS t3 ON(t3.module_id=t2.id AND t3.is_valid=1 AND t3.is_del=0 AND t3.role_id IN (
+        SELECT role_id FROM sys_user_role WHERE user_id={$userId} AND is_valid=1 AND is_del=0
+        )AND t3.button_id IN (SELECT button_id FROM sys_module_button WHERE module_id=t2.id AND is_valid=1 AND is_del=0)
+        )WHERE t1.is_valid=1 AND t1.is_del=0 AND t1.id=t3.button_id GROUP BY t1.id ORDER BY t1.Sort ASC;");
+        return convertCamelize($button);
     }
 }
