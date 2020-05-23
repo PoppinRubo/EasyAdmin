@@ -36,7 +36,7 @@ class BasicController extends BaseController
         //登录检测
         if (empty($this->user)) {
             //使用控制器中间件处理未登录
-            $this->middleware = ['no.auth'];
+            $this->middleware[] = 'no.auth';
         }
     }
 
