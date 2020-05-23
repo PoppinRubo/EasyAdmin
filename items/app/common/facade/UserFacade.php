@@ -1,4 +1,5 @@
 <?php
+
 namespace app\common\facade;
 
 use think\facade\Db;
@@ -28,10 +29,11 @@ class UserFacade
                     "is_del" => 0,
                 ));
                 //更新用户表
-                Db::execute("UPDATE `sys_user` SET LoginTimes=(SELECT COUNT(t2.id) FROM `sys_user_login_log` AS t2 WHERE t2.user_id IN ({$userId}) AND t2.is_del=0),LastLoginTime='{$now}' WHERE id={$userId}");
+                Db::execute("UPDATE `sys_user` SET login_times=(SELECT COUNT(t2.id) FROM `sys_user_login_log` AS t2 WHERE t2.user_id IN ({$userId}) AND t2.is_del=0),last_login_time='{$now}' WHERE id={$userId}");
                 // 提交事务
                 Db::commit();
             } catch (\Exception $e) {
+                errorJournal($e->getMessage());
                 // 回滚事务
                 Db::rollback();
             }

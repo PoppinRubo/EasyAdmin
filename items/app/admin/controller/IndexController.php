@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use app\common\facade\UserFacade;
@@ -60,7 +61,7 @@ class IndexController extends BasicController
             UserFacade::signInLog($user['id']);
             return jsonOut(config('code.success'), "登录成功", "/home");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -87,7 +88,7 @@ class IndexController extends BasicController
             }
             return jsonOut(config('code.success'), "退出成功", "/");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }

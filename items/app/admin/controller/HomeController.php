@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use think\facade\Db;
@@ -40,7 +41,7 @@ class HomeController extends BasicController
             }
             echo json_encode($tree);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             echo json_encode($e->getMessage());
         }
     }

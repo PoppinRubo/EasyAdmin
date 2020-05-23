@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use app\common\model\SysButtonModel;
@@ -31,13 +32,13 @@ class ButtonController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
         $model = getEmptyModel('SysButton');
-         View::assign(['model' => convertCamelize($model)]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -55,7 +56,7 @@ class ButtonController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
@@ -81,7 +82,7 @@ class ButtonController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -108,7 +109,7 @@ class ButtonController extends BasicController
             $data = Db::name('sys_button')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -118,8 +119,8 @@ class ButtonController extends BasicController
     {
         //为方便调整顺序将按钮按顺序大小自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_button')->where(array("is_del" => 0))->order("Sort", "ASC")->select()->toArray();
-            if ($list == null) {
+            $list = Db::name('sys_button')->where(["is_del" => 0])->order("Sort", "ASC")->select()->toArray();
+            if (empty($list)) {
                 return jsonOut(config('code.error'), "操作失败,没有按钮");
             }
             $sort = 10;
@@ -135,7 +136,7 @@ class ButtonController extends BasicController
             $model->saveAll($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }

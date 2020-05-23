@@ -97,9 +97,10 @@ function getEmptyModel(String $tableName)
  * 写入错误日志
  * @param $message 错误信息
  */
-function error(String $message)
+function errorJournal(String $message)
 {
     $param = json_encode(input(), JSON_UNESCAPED_UNICODE);
+    //记录参数及请求路径便于发现排查问题
     $error = $message . '[请求路径：' . request()->url() . ',请求参数：' . $param . ']';
     trace($error, 'error');
 }

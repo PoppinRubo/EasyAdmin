@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use app\common\facade\ModuleFacade;
@@ -32,7 +33,7 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
@@ -40,7 +41,7 @@ class ModuleController extends BasicController
         $model = getEmptyModel('SysModule');
         $model["pid"] = input("pid") ?: 0;
         $model["Level"] = (input("level") ?: 0) + 1;
-         View::assign(['model' => convertCamelize($model)]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -58,14 +59,14 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
         $id = input("id") ?: 0;
         $model = SysModuleModel::find($id)->getData();
-         View::assign(['model' => convertCamelize($model)]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -85,7 +86,7 @@ class ModuleController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
@@ -110,7 +111,7 @@ class ModuleController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -137,7 +138,7 @@ class ModuleController extends BasicController
             $data = (bool) input("root") ? array(array('id' => 0, 'name' => '根目录', 'children' => $tree)) : $tree;
             return toEasyTable($data, false);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return toEasyTable([], false);
         }
     }
@@ -157,7 +158,7 @@ class ModuleController extends BasicController
             }
             return $data;
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return [];
         }
     }
@@ -182,7 +183,7 @@ class ModuleController extends BasicController
             WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -203,7 +204,7 @@ class ModuleController extends BasicController
             }
             return jsonOut(config('code.error'), $result->msg);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -232,7 +233,7 @@ class ModuleController extends BasicController
             $model->saveAll($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace app\admin\controller;
 
 use app\common\facade\UserFacade;
@@ -38,13 +39,13 @@ class UserController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
         $model = getEmptyModel('SysUser');
-         View::assign(['model' => convertCamelize($model)]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -62,14 +63,14 @@ class UserController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
         //输出页面
         $id = input("id") ?: 0;
         $model = SysUserModel::find($id)->getData();
-         View::assign(['model' => convertCamelize($model)]);
+        View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
 
@@ -88,7 +89,7 @@ class UserController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -115,7 +116,7 @@ class UserController extends BasicController
             $data = Db::name('sys_user')->where($where)->order($sort, $order)->paginate($limit);
             return toEasyTable($data);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -145,7 +146,7 @@ class UserController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "操作成功");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
@@ -173,7 +174,7 @@ class UserController extends BasicController
                 $model->save($data);
                 return jsonOut(config('code.success'), "密码已重置为 666666");
             } catch (\Exception $e) {
-                error($e->getMessage());
+                errorJournal($e->getMessage());
                 return jsonOut(config('code.error'), '出现错误,请联系管理员');
             }
         }
@@ -200,7 +201,7 @@ class UserController extends BasicController
             WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
         }
     }
@@ -219,13 +220,15 @@ class UserController extends BasicController
                 $model = new SysUserRoleModel();
                 //新增关联插入记录
                 $model->save(
-                    ["user_id" => $userId,
+                    [
+                        "user_id" => $userId,
                         "role_id" => $roleId,
                         "create_time" => date("Y-m-d H:i:s"),
                         "create_user" => $this->user["id"],
                         "modify_time" => date("Y-m-d H:i:s"),
                         "modify_user" => $this->user["id"],
-                    ]);
+                    ]
+                );
                 return jsonOut(config('code.success'), "操作成功");
             }
             //更新可用状态
@@ -239,7 +242,7 @@ class UserController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
@@ -267,7 +270,7 @@ class UserController extends BasicController
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {
-            error($e->getMessage());
+            errorJournal($e->getMessage());
             return jsonOut(config('code.error'), '出现错误,请联系管理员');
         }
     }
