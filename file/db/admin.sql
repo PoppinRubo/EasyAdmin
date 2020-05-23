@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 23/05/2020 18:19:27
+ Date: 23/05/2020 18:22:45
 */
 
 SET NAMES utf8mb4;
@@ -243,28 +243,20 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'admin', 'f379eaf3c831b04de153469d1bec345e', '超级管理员', 1, 0, '2020-05-20 20:00:00', '2020-05-20 20:00:00', 1, '2020-05-20 20:00:00', 1, 1, 0);
+INSERT INTO `sys_user` VALUES (1, 'admin', 'f379eaf3c831b04de153469d1bec345e', '超级管理员', 1, 5, '2020-05-23 18:21:15', '2020-05-20 20:00:00', 1, '2020-05-20 20:00:00', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for sys_user_login_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_login_log`;
 CREATE TABLE `sys_user_login_log`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键,编号',
   `ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '登录IP地址',
-  `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '用户编号',
+  `user_id` int(11) NOT NULL COMMENT '用户编号',
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户登录日志表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_user_login_log
--- ----------------------------
-INSERT INTO `sys_user_login_log` VALUES (1, '127.0.0.1', '1', '2020-05-21 16:06:40', 0);
-INSERT INTO `sys_user_login_log` VALUES (2, '::1', '1', '2020-05-21 18:31:22', 0);
-INSERT INTO `sys_user_login_log` VALUES (3, '::1', '1', '2020-05-21 18:32:31', 0);
-INSERT INTO `sys_user_login_log` VALUES (4, '::1', '1', '2020-05-21 18:33:22', 0);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户登录日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_user_role
