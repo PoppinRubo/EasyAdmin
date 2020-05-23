@@ -11,7 +11,7 @@
  Target Server Version : 100410
  File Encoding         : 65001
 
- Date: 21/05/2020 18:44:11
+ Date: 23/05/2020 18:19:27
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +35,7 @@ CREATE TABLE `sys_button`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '按钮表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '按钮表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_button
@@ -71,7 +71,7 @@ CREATE TABLE `sys_module`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统模块表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统模块表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_module
@@ -98,7 +98,7 @@ CREATE TABLE `sys_module_button`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统模块、按钮关系表' ROW_FORMAT = Fixed;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '系统模块、按钮关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_module_button
@@ -141,7 +141,7 @@ CREATE TABLE `sys_role`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
@@ -165,7 +165,7 @@ CREATE TABLE `sys_role_button`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色、按钮、模块关系表/按钮权限控制表' ROW_FORMAT = Fixed;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色、按钮、模块关系表/按钮权限控制表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_button
@@ -207,7 +207,7 @@ CREATE TABLE `sys_role_module`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色模块关系表/模块权限控制表' ROW_FORMAT = Fixed;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色模块关系表/模块权限控制表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_module
@@ -238,7 +238,7 @@ CREATE TABLE `sys_user`  (
   `is_valid` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否有效',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
@@ -256,7 +256,7 @@ CREATE TABLE `sys_user_login_log`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户登录日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户登录日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_login_log
@@ -282,7 +282,7 @@ CREATE TABLE `sys_user_role`  (
   `is_del` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `FK_UserRole_User`(`user_id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户、角色关系表' ROW_FORMAT = Fixed;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户、角色关系表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_role
