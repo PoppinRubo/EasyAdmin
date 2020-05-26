@@ -40,7 +40,7 @@ class ModuleController extends BasicController
         //输出页面
         $model = getEmptyModel('SysModule');
         $model["pid"] = input("pid") ?: 0;
-        $model["Level"] = (input("level") ?: 0) + 1;
+        $model["level"] = (input("level") ?: 0) + 1;
         View::assign(['model' => convertCamelize($model)]);
         return View::fetch();
     }
@@ -80,7 +80,7 @@ class ModuleController extends BasicController
                 $data["modify_time"] = date("Y-m-d H:i:s");
                 $data["modify_user"] = $this->user["id"];
                 $data['pid'] = (int) $data['pid'];
-                $data["Level"] = ((int) Db::name('sys_module')->where('id', $data['pid'])->value('Level')) + 1;
+                $data["level"] = ((int) Db::name('sys_module')->where('id', $data['pid'])->value('level')) + 1;
                 //更新数据
                 $model = SysModuleModel::find($data["id"]);
                 $model->save($data);
@@ -125,7 +125,7 @@ class ModuleController extends BasicController
             $search = is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = Db::query("
             SELECT t1.*,(SELECT COUNT(t2.id) FROM sys_module AS t2 WHERE t2.pid=t1.id AND t2.is_del=0) AS Son
-            FROM sys_module AS t1 WHERE t1.is_del=0 {$search} ORDER BY t1.Sort ASC");
+            FROM sys_module AS t1 WHERE t1.is_del=0 {$search} ORDER BY t1.sort ASC");
             $tree = array();
             foreach ($module as $m) {
                 //获取一级
@@ -180,7 +180,7 @@ class ModuleController extends BasicController
             $data = Db::query("
             SELECT t1.id,t1.Name,t1.english_name,{$moduleId} AS module_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
             FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.module_id={$moduleId} AND t2.button_id=t1.id AND t2.is_del=0)
-            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
             errorJournal($e->getMessage());
@@ -214,18 +214,18 @@ class ModuleController extends BasicController
     {
         //为方便调整顺序将模块按顺序大小和层级自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_module')->where(array("is_del" => 0))->order("Sort", "ASC")->select()->toArray();
+            $list = Db::name('sys_module')->where(array("is_del" => 0))->order("sort", "ASC")->select()->toArray();
             if ($list == null) {
                 return jsonOut(config('code.error'), "操作失败,没有按模块");
             }
             $data = array();
             $sort = array();
             foreach ($list as $l) {
-                $level = $l['Level'];
+                $level = $l['level'];
                 $pid = $l['pid'];
                 $key = $level . '-' . $pid;
                 $sort[$key] = (isset($sort[$key]) ? $sort[$key] : 0) + 10;
-                $l['Sort'] = $sort[$key];
+                $l['sort'] = $sort[$key];
                 $data[] = $l;
             }
             //批量更新数据

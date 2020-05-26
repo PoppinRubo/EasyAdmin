@@ -198,7 +198,7 @@ class UserController extends BasicController
             $data = Db::query("
             SELECT t1.id,t1.Name,{$userId} AS user_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
             FROM sys_role AS t1 LEFT JOIN sys_user_role AS t2 ON(t2.user_id={$userId} AND t2.role_id=t1.id AND t2.is_del=0)
-            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.Sort ASC;");
+            WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.sort ASC;");
             return toEasyTable($data);
         } catch (\Exception $e) {
             errorJournal($e->getMessage());

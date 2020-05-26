@@ -74,7 +74,7 @@ class BasicController extends BaseController
         JOIN sys_role_button AS t3 ON(t3.module_id=t2.id AND t3.is_valid=1 AND t3.is_del=0 AND t3.role_id IN (
         SELECT role_id FROM sys_user_role WHERE user_id={$userId} AND is_valid=1 AND is_del=0
         )AND t3.button_id IN (SELECT button_id FROM sys_module_button WHERE module_id=t2.id AND is_valid=1 AND is_del=0)
-        )WHERE t1.is_valid=1 AND t1.is_del=0 AND t1.id=t3.button_id GROUP BY t1.id ORDER BY t1.Sort ASC;");
+        )WHERE t1.is_valid=1 AND t1.is_del=0 AND t1.id=t3.button_id GROUP BY t1.id ORDER BY t1.sort ASC;");
         return convertCamelize($button);
     }
 }

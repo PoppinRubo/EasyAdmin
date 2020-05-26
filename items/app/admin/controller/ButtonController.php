@@ -93,7 +93,7 @@ class ButtonController extends BasicController
         try {
             $limit = input("rows") ?: 10;
             $key = input("key") ?: "";
-            $sort = input("sort") ?: "Sort";
+            $sort = input("sort") ?: "sort";
             $order = input("order") ?: "ASC";
             //查询条件
             $where = [['is_del', '=', 0]];
@@ -119,14 +119,14 @@ class ButtonController extends BasicController
     {
         //为方便调整顺序将按钮按顺序大小自动排序为间隔为10的顺序
         try {
-            $list = Db::name('sys_button')->where(["is_del" => 0])->order("Sort", "ASC")->select()->toArray();
+            $list = Db::name('sys_button')->where(["is_del" => 0])->order("sort", "ASC")->select()->toArray();
             if (empty($list)) {
                 return jsonOut(config('code.error'), "操作失败,没有按钮");
             }
             $sort = 10;
             $data = array();
             foreach ($list as $l) {
-                $l['Sort'] = $sort;
+                $l['sort'] = $sort;
                 $data[] = $l;
                 //以间隔为10递增
                 $sort += 10;
