@@ -178,7 +178,7 @@ class ModuleController extends BasicController
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = Db::query("
-            SELECT t1.id,t1.Name,t1.english_name,{$moduleId} AS module_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            SELECT t1.id,t1.Name,t1.english_name,{$moduleId} AS module_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS is_relation
             FROM sys_button AS t1 LEFT JOIN sys_module_button AS t2 ON(t2.module_id={$moduleId} AND t2.button_id=t1.id AND t2.is_del=0)
             WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.sort ASC;");
             return toEasyTable($data);
