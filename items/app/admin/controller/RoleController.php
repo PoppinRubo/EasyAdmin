@@ -188,7 +188,7 @@ class RoleController extends BasicController
                 if ($m["pid"] == $pid) {
                     $m["state"] = ($m["Son"] > 0) ? "open" : "";
                     $m["children"] = ($m["Son"] > 0) ? $this->getSonModule($array, $m["id"]) : [];
-                    $data[] = convertCamelize($m);
+                    $data[] = $m;
                 }
             }
             return $data;
