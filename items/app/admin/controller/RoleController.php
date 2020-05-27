@@ -157,7 +157,7 @@ class RoleController extends BasicController
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $module = Db::query("
-            SELECT t1.id,t1.pid,t1.Name,t2.role_id AS role_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation,
+            SELECT t1.id,t1.pid,t1.Name,t2.role_id AS role_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS is_relation,
             (SELECT COUNT(t3.id) FROM sys_module AS t3 WHERE t3.pid=t1.id AND t3.is_del=0 AND t3.is_valid=1) AS Son,t1.level,
             (SELECT COUNT(t4.id) FROM sys_module_button AS t4 WHERE t4.is_del=0 AND t4.is_valid=1 AND t4.module_id=t2.module_id) AS Button
             FROM sys_module AS t1 LEFT JOIN sys_role_module AS t2 ON(t2.role_id={$roleId} AND t2.module_id=t1.id AND t2.is_del=0)
@@ -171,7 +171,7 @@ class RoleController extends BasicController
                     $tree[] = convertCamelize($m);
                 }
             }
-            return toEasyTable($tree, false);
+            return toEasyTable($tree, false, '', false);
         } catch (\Exception $e) {
             errorJournal($e->getMessage());
             return toEasyTable([], false, $e->getMessage());
@@ -235,7 +235,7 @@ class RoleController extends BasicController
             //搜索
             $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
             $data = Db::query("
-            SELECT t1.id,t1.Name,t1.english_name,t2.module_id,{$roleId} AS role_id,CASE WHEN t3.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
+            SELECT t1.id,t1.Name,t1.english_name,t2.module_id,{$roleId} AS role_id,CASE WHEN t3.id IS NULL THEN FALSE ELSE TRUE END AS is_relation
             FROM sys_button AS t1 JOIN sys_module_button AS t2 ON(t2.module_id={$moduleId} AND t2.button_id=t1.id AND t2.is_del=0)
             LEFT JOIN sys_role_button AS t3 ON(t3.role_id={$roleId} AND t3.module_id=t2.module_id AND t3.button_id=t2.button_id AND t3.is_del=0)
             WHERE t1.is_del=0 {$search} ORDER BY (CASE WHEN t2.id IS NULL THEN 1 ELSE 0 END) ASC,t1.sort ASC;");
