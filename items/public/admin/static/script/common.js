@@ -7,7 +7,8 @@
             $(this).attr('placeholder', "请输入" + $(this).parent().prev().html());
         }
         //必填表单显示必填标志
-        if ($(this).attr('lay-verify') == 'required') {
+        var verify = $(this).attr('lay-verify');
+        if (verify && verify.indexOf("required") > -1) {
             var item = $(this).parents('.layui-form-item');
             var label = item.find('.layui-form-label');
             //设置必填class
