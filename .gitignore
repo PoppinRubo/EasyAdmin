@@ -1,3 +1,5 @@
-/items/runtime
-/items/.vscode
+/.idea
 /.vscode
+*.log
+.env
+/runtime
