@@ -137,11 +137,11 @@ class UserController extends BasicController
                 if (empty($model->id)) {
                     return jsonOut(config('code.error'), "获取当前登录用户失败");
                 }
-                if (md5($data["OldPassword"]) != $model->password) {
-                    return jsonOut(config('code.error'), "旧密码不正确");
-                }
-                if ($data["NewPassword"] != $data["password"]) {
+                if ($data["newPassword"] != $data["password"]) {
                     return jsonOut(config('code.error'), "新密码与确认密码不一致");
+                }
+                if (md5($data["oldPassword"]) != $model->password) {
+                    return jsonOut(config('code.error'), "旧密码不正确");
                 }
                 //密码md5加密
                 $data["password"] = md5($data["password"]);
