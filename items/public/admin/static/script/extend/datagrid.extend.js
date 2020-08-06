@@ -6,7 +6,10 @@
 $.extend($.fn.datagrid.defaults.view, {
     //表格渲染后
     onAfterRender: function (target) {
+        //美化
         datagridExtend.beautify(target, "datagrid");
+        //合并相同行
+        datagridExtend.mergeCells(target);
     }
 });
 
@@ -14,20 +17,24 @@ $.extend($.fn.datagrid.defaults.view, {
 $.extend($.fn.treegrid.defaults.view, {
     //表格树渲染后
     onAfterRender: function (target) {
+        //美化
         datagridExtend.beautify(target, "treegrid");
     }
 });
 
-//方法扩展
+//表格扩展
 $.extend($.fn.datagrid.methods, {
     //右键菜单
     columnMenu: function (t) {
         return datagridExtend.buildMenu(t.get(0));
     },
     //自动合并相同数据行
-    mergeSameCells: function (jq, fields) {
-        return jq.each(function () {
+    mergeSameCells: function (table, fields) {
+        return table.each(function () {
             var target = $(this);
+            if (typeof (fields) == 'string') {
+                fields = [fields];
+            }
             if (!fields) {
                 fields = target.datagrid("getColumnFields");
             }
@@ -228,6 +235,8 @@ var datagridExtend = {
                             target: item.target,
                             iconCls: 'icon-checkbox-checked'
                         });
+                        //合并相同行
+                        datagridExtend.mergeCells(target);
                     }
                     //保持显示菜单
                     $(this).menu("show");
@@ -246,5 +255,13 @@ var datagridExtend = {
             }
         }
         return state.columnMenu;
+    },
+    //根据字段合并一样的行
+    mergeCells: function (target) {
+        //获取配置
+        var options = $(target).datagrid('options');
+        if (options.mergeSameCells) {
+            $(target).datagrid("mergeSameCells", options.mergeSameCells);
+        }
     }
 }
