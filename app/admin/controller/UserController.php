@@ -196,8 +196,17 @@ class UserController extends BasicController
         try {
             $key = input("key") ?: "";
             $userId = input("userId") ?: 0;
-            //搜索
-            $search = $key == "" ? "" : is_numeric($key) ? "AND t1.id={$key}" : "AND t1.Name like '%{$key}%'";
+            //查询条件
+            $search = "";
+            if (!empty($key)) {
+                //编号查询
+                if (is_numeric($key)) {
+                    $search = "AND t1.id={$key}";
+                } else {
+                    //名称查询
+                    $search = "AND t1.Name like '%{$key}%'";
+                }
+            }
             $data = Db::query("
             SELECT t1.id,t1.Name,{$userId} AS user_id,CASE WHEN t2.id IS NULL THEN FALSE ELSE TRUE END AS IsRelation
             FROM sys_role AS t1 LEFT JOIN sys_user_role AS t2 ON(t2.user_id={$userId} AND t2.role_id=t1.id AND t2.is_del=0)
