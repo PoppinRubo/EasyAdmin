@@ -86,6 +86,9 @@ class UserController extends BasicController
             );
             //更新数据
             $model = SysUserModel::find($id);
+            if ($model['account'] == 'admin') {
+                return jsonOut(config('code.error'), "该账号不允许删除");
+            }
             $model->save($data);
             return jsonOut(config('code.success'), "操作成功");
         } catch (\Exception $e) {

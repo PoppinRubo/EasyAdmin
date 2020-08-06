@@ -13,7 +13,7 @@ class WorkbenchController extends BasicController
         $day = 14;
         $income = [];
         for ($i = $day; $i >= 0; $i--) {
-            $date =  date('Y-m-d', strtotime(-$i . "day"));
+            $date = date('Y-m-d', strtotime(-$i . "day"));
             $income[] = ['time' => $date, 'total' => mt_rand(50, 200)];
         };
         $overview = [

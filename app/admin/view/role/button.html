@@ -52,11 +52,31 @@
         pagination: true, // 分页工具栏
         pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
         columns: [
-            [
-                { field: 'checkbox', checkbox: true, align: 'center' },
-                { field: 'id', title: '编号', width: 50, sort: true, hidden: false, align: 'center' },
-                { field: 'name', title: '按钮名', width: 120, align: 'center' },
-                { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
+            [{
+                    field: 'checkbox',
+                    checkbox: true,
+                    align: 'center'
+                },
+                {
+                    field: 'id',
+                    title: '编号',
+                    width: 50,
+                    sort: true,
+                    hidden: false,
+                    align: 'center'
+                },
+                {
+                    field: 'name',
+                    title: '按钮名',
+                    width: 120,
+                    align: 'center'
+                },
+                {
+                    field: 'englishName',
+                    title: '按钮英文名',
+                    width: 120,
+                    align: 'center'
+                },
                 {
                     field: 'isRelation',
                     title: '按钮权限',
@@ -76,7 +96,10 @@
     function relation(isRelation) {
         var rows = $('#data-table').treegrid('getSelections');
         if (rows.length < 1) {
-            layer.msg("至少选中一行", { time: 2000, icon: 5 });
+            layer.msg("至少选中一行", {
+                time: 2000,
+                icon: 5
+            });
             return;
         }
         var ids = [];
@@ -85,7 +108,12 @@
         })
         askHelper.ajaxPost({
             url: '/role/relationButton',
-            data: { ids: JSON.stringify(ids), roleId: roleId, moduleId: moduleId, isRelation: isRelation },
+            data: {
+                ids: JSON.stringify(ids),
+                roleId: roleId,
+                moduleId: moduleId,
+                isRelation: isRelation
+            },
             success: function () {
                 //清除选中项
                 $('#data-table').treegrid('clearSelections');

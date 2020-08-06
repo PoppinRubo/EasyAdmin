@@ -41,10 +41,23 @@
         pagination: true, // 分页工具栏
         pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
         columns: [
-            [
-                { field: 'checkbox', checkbox: true, align: 'center' },
-                { field: 'id', title: '编号', width: 80, align: 'center' },
-                { field: 'name', title: '角色名', width: 120, align: 'center' },
+            [{
+                    field: 'checkbox',
+                    checkbox: true,
+                    align: 'center'
+                },
+                {
+                    field: 'id',
+                    title: '编号',
+                    width: 80,
+                    align: 'center'
+                },
+                {
+                    field: 'name',
+                    title: '角色名',
+                    width: 120,
+                    align: 'center'
+                },
                 {
                     field: 'isRelation',
                     title: '是否设置角色',
@@ -61,9 +74,13 @@
                     align: 'center',
                     formatter: function (value, row) {
                         //创建按钮,传入按钮名与对应方法，及颜色样式{0原始,1默认,2百搭,3暖色,4警告,5禁用},不设置为默认颜色
-                        var button = { relation: ['设置角色', 1] };
+                        var button = {
+                            relation: ['设置角色', 1]
+                        };
                         if (row.isRelation) {
-                            button = { delRelation: ['删除角色', 4] };
+                            button = {
+                                delRelation: ['删除角色', 4]
+                            };
                         }
                         return tableHelper.createButton(button, row);
                     }
@@ -78,7 +95,10 @@
     function relation(row) {
         askHelper.ajaxPost({
             url: '/user/relationRole',
-            data: { userId: row.userId, roleId: row.id },
+            data: {
+                userId: row.userId,
+                roleId: row.id
+            },
             success: function () {
                 tableHelper.refresh('data-table');
             }
@@ -89,7 +109,10 @@
     function delRelation(row) {
         askHelper.ajaxPost({
             url: '/user/delRelationRole',
-            data: { userId: row.userId, roleId: row.id },
+            data: {
+                userId: row.userId,
+                roleId: row.id
+            },
             success: function () {
                 tableHelper.refresh('data-table');
             }

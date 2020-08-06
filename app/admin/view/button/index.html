@@ -51,11 +51,30 @@
             pagination: true, // 分页工具栏
             pageList: tableHelper.setPage([10, 15, 20, 30, 40, 50, 100]), // 每页记录条数的列表
             columns: [
-                [
-                    { field: 'checkbox', checkbox: true, align: 'center' },
-                    { field: 'id', title: '编号', width: 60, sort: true, align: 'center' },
-                    { field: 'name', title: '按钮名', width: 120, align: 'center' },
-                    { field: 'englishName', title: '按钮英文名', width: 120, align: 'center' },
+                [{
+                        field: 'checkbox',
+                        checkbox: true,
+                        align: 'center'
+                    },
+                    {
+                        field: 'id',
+                        title: '编号',
+                        width: 60,
+                        sort: true,
+                        align: 'center'
+                    },
+                    {
+                        field: 'name',
+                        title: '按钮名',
+                        width: 120,
+                        align: 'center'
+                    },
+                    {
+                        field: 'englishName',
+                        title: '按钮英文名',
+                        width: 120,
+                        align: 'center'
+                    },
                     {
                         field: 'showIcon',
                         title: '图标',
@@ -65,7 +84,12 @@
                             return row.icon ? '<i class="layui-icon ' + row.icon + '"></i>' : '无图标';
                         }
                     },
-                    { field: 'icon', title: '图标名', width: 180, align: 'center' },
+                    {
+                        field: 'icon',
+                        title: '图标名',
+                        width: 180,
+                        align: 'center'
+                    },
                     {
                         field: 'isValid',
                         title: '是否有效',
@@ -75,8 +99,20 @@
                             return value ? '<i class="icon icon-true"></i>' : '<i class="icon icon-false"></i>';
                         }
                     },
-                    { field: 'sort', title: '排序', width: 80, sort: true, align: 'center', sortable: true },
-                    { field: 'remark', title: '备注', width: 170, align: 'center' }
+                    {
+                        field: 'sort',
+                        title: '排序',
+                        width: 80,
+                        sort: true,
+                        align: 'center',
+                        sortable: true
+                    },
+                    {
+                        field: 'remark',
+                        title: '备注',
+                        width: 170,
+                        align: 'center'
+                    }
                 ]
             ]
         });
@@ -100,7 +136,10 @@
         function edit() {
             var row = $('#data-table').datagrid('getSelected');
             if (!row) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
+                layer.msg("请选中一行", {
+                    time: 1500,
+                    icon: 5
+                });
                 return;
             }
             layer.open({
@@ -118,12 +157,17 @@
         function remove() {
             var row = $('#data-table').datagrid('getSelected');
             if (!row) {
-                layer.msg("请选中一行", { time: 1500, icon: 5 });
+                layer.msg("请选中一行", {
+                    time: 1500,
+                    icon: 5
+                });
                 return;
             }
             askHelper.ajaxConfirm({
                 url: '/button/remove',
-                data: { id: row.id },
+                data: {
+                    id: row.id
+                },
                 msg: "确认删除吗"
             });
         }
