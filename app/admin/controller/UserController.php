@@ -113,7 +113,7 @@ class UserController extends BasicController
                     $where[] = ['id', '=', $key];
                 } else {
                     //名称查询
-                    $where[] = ['UserName', 'like', '%' . $key . '%'];
+                    $where[] = ['username', 'like', '%' . $key . '%'];
                 }
             }
             $data = Db::name('sys_user')->where($where)->order($sort, $order)->paginate($limit);
