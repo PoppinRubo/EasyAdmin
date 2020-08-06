@@ -1,7 +1,7 @@
 EasyAdmin 后台管理系统
 ===============
 EasyAdmin后端使用ThinkPHP6运行环境要求PHP7.1+，前端整合了Layui及Easyui。 
-> [查看DEMO](https://easyadmin.showdoing.cn/ "EasyAdmin 后台管理系统") 
+> [查看DEMO](https://easyadmin.showdoing.cn/ "EasyAdmin 后台管理系统") 账号 admin 密码 666666
 
 ### 框架版本信息
 <table>
