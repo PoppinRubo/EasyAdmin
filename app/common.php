@@ -65,8 +65,11 @@ function convertCamelize($array)
  */
 function camelize($words, $separator = '_')
 {
-    $words = $separator . str_replace($separator, " ", strtolower($words));
-    return ltrim(str_replace(" ", "", ucwords($words)), $separator);
+    if (strpos($words, $separator) !== false) {
+        $words = $separator . str_replace($separator, " ", strtolower($words));
+        return ltrim(str_replace(" ", "", ucwords($words)), $separator);
+    }
+    return lcfirst($words);
 }
 
 /**
