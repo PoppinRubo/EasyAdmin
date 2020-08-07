@@ -69,7 +69,7 @@ class BasicController extends BaseController
         $url = request()->url();
         $userId = $this->user["id"];
         $button = Db::query("
-        SELECT t1.Name,t1.english_name,t1.icon FROM sys_button AS t1
+        SELECT t1.name,t1.english_name,t1.icon FROM sys_button AS t1
         JOIN sys_module AS t2 ON(t2.Link='{$url}' AND t2.is_valid=1 AND t2.is_del=0)
         JOIN sys_role_button AS t3 ON(t3.module_id=t2.id AND t3.is_valid=1 AND t3.is_del=0 AND t3.role_id IN (
         SELECT role_id FROM sys_user_role WHERE user_id={$userId} AND is_valid=1 AND is_del=0
