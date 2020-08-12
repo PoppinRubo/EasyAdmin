@@ -378,6 +378,22 @@ var figuresHelper = {
 }
 
 /**
+ * html助手
+ */
+var htmlHelper = {
+    //使用此方式获取html标签为文本,避免执行脚本，防止xxs攻击
+    innerHTML: function (value) {
+        var div = document.createElement('div');
+        if (div.innerText) {
+            div.innerText = value;
+        } else {
+            div.textContent = value;
+        }
+        return div.innerHTML;
+    }
+}
+
+/**
  * 监听登录过期
  */
 $(document).ajaxSuccess(function (event, xhr, options) {
