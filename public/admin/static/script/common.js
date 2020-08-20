@@ -417,7 +417,6 @@ $(document).ajaxSuccess(function (event, xhr, options) {
                 area: ['380px', '240px'],
                 content: html
             });
-            $.cookie('expire', true);
             $("#again-login").click(function () {
                 var form = $(this).parent();
                 askHelper.ajaxPost({
