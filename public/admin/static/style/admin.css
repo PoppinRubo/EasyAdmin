@@ -75,8 +75,11 @@ table .icon {
 }
 
 /*表格工具栏按钮*/
-
 .layui-form .layui-form-label {
+    width: 100px;
+}
+
+.form-body .layui-form .layui-form-label {
     width: 110px;
 }
 
