@@ -189,7 +189,7 @@ var tableHelper = {
     refresh: function (tableId) {
         var table = $("#" + tableId);
         //树形表格
-        if (table.closest(".datagrid-view").find(".treegrid-tr-tree").length > 0) {
+        if (table.closest(".datagrid-view").find(".tree-node").length > 0) {
             table.treegrid('reload');
             return;
         }
