@@ -179,10 +179,10 @@
                 iframe.each(function (index) {
                     if ($(this).data("id") == id) {
                         $(this).parent().remove();
-                        //关闭当前为选中则选择第一个
+                        //关闭当前为选中则选择前一个
                         if (index === selectPageIndex) {
                             //显示前一个iframe
-                            t.tabChange($(iframe[0]).data("id"));
+                            t.tabChange($(iframe[index - 1]).data("id"));
                         }
                     }
                 });
