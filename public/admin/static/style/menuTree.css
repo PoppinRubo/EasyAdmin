@@ -1,6 +1,6 @@
 /*菜单树*/
 #menu-tree .tree-title {
-    font-size: 12px;
+    font-size: 14px;
     height: 18px;
     line-height: 20px;
 }
@@ -21,9 +21,9 @@
 #menu-tree .tree-folder,
 #menu-tree .tree-file {
     display: inline-block;
-    height: 22px;
-    width: 22px;
-    line-height: 22px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
     margin: 4px;
     vertical-align: middle;
     overflow: hidden;
