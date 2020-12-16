@@ -55,7 +55,7 @@
 var askHelper = {
     //ajax 误处理
     ajaxError: function (xhr, textStatus, error) {
-        error = error || function () {};
+        error = error || function () { };
         var msg = "请求出现错误,状态码:" + xhr.status + ",描述:" + textStatus;
         layer.msg(msg, {
             time: 3000,
@@ -79,7 +79,8 @@ var askHelper = {
             window.parent.layer.closeAll('iframe');
         };
         var msgIndex = 0;
-        o.fail = o.fail || function (result) {};
+        o.fail = o.fail || function (result) { };
+        o.complete= o.complete || function (result) { };
         o.type = o.type || "POST";
         o.data = o.data || {};
         o.dataType = o.dataType || "json";
@@ -103,6 +104,8 @@ var askHelper = {
                 o.before(xhr);
             }, //请求前方法
             success: function (result) {
+                //请求完成
+                o.complete(result);
                 //是否直接返回结果
                 if (o.original) {
                     //关闭加载
@@ -112,14 +115,14 @@ var askHelper = {
                     return o.success(result);
                 }
                 if (result.code === 1) {
-                    layer.msg(result.msg, {
+                    layer.msg(result.msg || "成功", {
                         time: 500,
                         icon: 1
                     }, function () {
                         o.success(result);
                     });
                 } else {
-                    layer.msg(result.msg, {
+                    layer.msg(result.msg || "失败", {
                         time: 2000,
                         icon: 5
                     }, function () {
@@ -129,6 +132,8 @@ var askHelper = {
             },
             error: function (xhr, textStatus) {
                 askHelper.ajaxError(xhr, textStatus, o.error);
+                //请求完成
+                o.complete(result);
             }
         });
     },
@@ -139,11 +144,11 @@ var askHelper = {
     },
     //询问数据请求
     ajaxConfirm: function (o) {
-        o.cancel = o.cancel || function () {};
+        o.cancel = o.cancel || function () { };
         //询问
         var index = layer.confirm(o.msg + '？', {
-                btn: ['确定', '取消'] //按钮
-            },
+            btn: ['确定', '取消'] //按钮
+        },
             function () {
                 //确认
                 layer.close(index);
@@ -166,7 +171,7 @@ var tableHelper = {
         return unit ? height + "px" : height;
     },
     //表格行数适配
-    setPage: function (p) {
+    setPage: function (p, m = false) {
         var header = $(".admin-card-header-auto");
         if (!header || header.length <= 0) {
             return p;
@@ -174,7 +179,9 @@ var tableHelper = {
         var height = parseInt($(window).height() - header.height() - 45);
         var toolbar = $("#toolbar").length <= 0 ? 0 : $("#toolbar").outerHeight();
         var viewHeight = height - toolbar;
-        var pageSize = parseInt((viewHeight - 65) / 35);
+        //表头合并情况容差变多
+        var tolerance = m ? 100 : 65;
+        var pageSize = parseInt((viewHeight - tolerance) / 35);
         //页码容量列表
         if (Array.isArray(p)) {
             p.push(pageSize);
@@ -223,6 +230,50 @@ var tableHelper = {
             }, 1000);
         }
         return btn;
+    },
+    createPicture: function (url, width, height) {
+        //获取文件配置
+        var config = adminConfig || {};
+        var fileConfig = config.file || {};
+        //文件储存域名地址,用于拼接完整资源地址;
+        var domain = fileConfig.domain || "";
+        //表格图片创建助手
+        var original = url;
+        if (!url) {
+            return '';
+        }
+        //图片宽高
+        height = height || 30;
+        width = width || 30;
+        if (url.indexOf('http') === -1) {
+            original = domain + url;
+            var abbreviation = fileConfig.abbreviation || "";
+            if (abbreviation) {
+                if (original.indexOf('?') !== -1) {
+                    abbreviation = "&" + abbreviation;
+                } else {
+                    abbreviation = "?" + abbreviation;
+                }
+            }
+            abbreviation = abbreviation.replace('w/30', 'w/' + width);
+            abbreviation = abbreviation.replace('h/30', 'h/' + height);
+            abbreviation = abbreviation.replace('w_30', 'w_' + width);
+            abbreviation = abbreviation.replace('h_30', 'h_' + height);
+            url = original + abbreviation;
+        }
+        return '<img height="' + height + '" width="' + width + '" src="' + url + '" original="' + original + '"  onClick="pictureHelper.showBig(this)" onerror="pictureHelper.error(this)" >';
+    },
+    createIcon: function (className, colorCode) {
+        //表格图标创建助手
+        if (className.indexOf('layui-icon') !== -1) {
+            className = 'layui-icon ' + className;
+        }
+        var color = '';
+        if (colorCode) {
+            color = 'style="color:#' + colorCode + ';"';
+        }
+        var icon = '<i class="icon ' + className + '" ' + color + '></i>';
+        return icon;
     }
 };
 
@@ -237,7 +288,11 @@ var timeHelper = {
             if (time.indexOf('.') > 0) {
                 time = time.substring(0, time.indexOf('.'));
             }
-
+            time = new Date(time);
+        } else if (typeof time === 'number') {
+            if (time.toString().length <= 10) {
+                time = time * 1000;
+            }
             time = new Date(time);
         }
         var o = {
@@ -313,6 +368,7 @@ var pictureHelper = {
             //超宽处理
             if (width > $(window).width()) {
                 width = $(window).width() - 20;
+                height = width / scale;
             }
             //超高处理
             if (height > $(window).height()) {
@@ -390,6 +446,24 @@ var htmlHelper = {
             div.textContent = value;
         }
         return div.innerHTML;
+    }
+}
+
+/**
+ * 验证助手
+ */
+var validateHelper = {
+    //是否移动设备
+    isMobile: function () {
+        if (navigator.userAgent.match(/Android/i)
+            || navigator.userAgent.match(/webOS/i)
+            || navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/BlackBerry/i)
+            || navigator.userAgent.match(/Windows Phone/i)
+        ) return true;
+        return false;
     }
 }
 
