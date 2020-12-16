@@ -6,7 +6,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
     <link rel="stylesheet" href="/admin/static/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/admin/static/easyui/style/easyui.css" media="all">
-    <link rel="stylesheet" href="/admin/static/style/easySkin.css" media="all">
+    <link rel="stylesheet" href="/admin/static/style/skin.css" media="all">
     <link rel="stylesheet" href="/admin/static/style/menuTree.css" media="all">
     <link rel="stylesheet" href="/admin/static/icomoon/style.css" media="all">
     <link rel="stylesheet" href="/admin/static/style/admin.css" media="all">
